@@ -1,0 +1,52 @@
+  <div class="mx-6 mt-16">
+    <h1 class="text-4xl text-primary-dark font-extrabold mx-auto text-center">Rtravel.</h1>
+
+    @if (!isVerified) {
+      <img ngSrc="/assets/images/icons/mail.svg" class="w-[150px] h-auto block mx-auto mt-6" height="930" width="1148" alt=""/>
+
+
+      <div class="mt-8 flex flex-col items-center ">
+
+
+        <h3>Indique le code reçu par email</h3>
+
+        <p-inputOtp [(ngModel)]="value"  class="mt-10 opt-large-input" (onChange)="onChangeOTP($event)" [disabled]="isSubmitting">
+          <ng-template pTemplate="input" let-token let-events="events">
+            <input
+              pInputText
+              (input)="events.input($event)"
+              (paste)="events.paste($event)"
+              (keydown)="events.keydown($event)"
+              type="number"
+              inputmode="numeric"
+              [attr.value]="token"
+              [maxLength]="1"
+              class="w-[80px] h-[50px]"
+            />
+          </ng-template>
+        </p-inputOtp>
+
+      </div>
+
+      <p-button styleClass="flex mx-auto px-20 mt-8 font-normal" label="Valider" [loading]="isSubmitting" />
+
+      <div class="mt-12">
+        <p class="text-center">Tu n'as pas reçu de code ? </p>
+        <button class="bg-white border-none block mx-auto mt-2 text-primary disabled:opacity-50" [disabled]="isSubmitting" (click)="onResendCode($event)" >Renvoyer un code</button>
+      </div>
+    }
+    @else {
+      <img ngSrc="/assets/images/icons/planet.png" class="w-[150px] h-auto block mx-auto mt-6" height="930" width="1148" alt=""/>
+
+
+      <div class="mt-8 flex flex-col items-center text-center ">
+        <h3 class="text-4xl">Ton compte est maintenant activé !</h3>
+
+        <p class="mt-6">Commence à organiser tes voyages dès maintenant</p>
+
+        <p-button class="mt-12" routerLink="/accueil">Je découvre l'application</p-button>
+      </div>
+    }
+
+
+  </div>

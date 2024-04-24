@@ -1,0 +1,69 @@
+<form [formGroup]="activityForm" class="space-y-5" (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="name" [class]="(activityForm.get('name')?.touched && activityForm.get('name')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Nom</label>
+    <input
+      id="name"
+      pInputText
+      formControlName="name"
+      [class]="(activityForm.get('name')?.touched && activityForm.get('name')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
+
+    />
+  </div>
+
+  <div>
+    <label for="activitydate" [class]="(activityForm.get('start')?.touched && activityForm.get('start')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Date de l'activité</label>
+    <p-calendar
+      id="activitydate"
+      inputId="activitydate"
+      appendTo="body"
+      showIcon
+      styleClass="w-full"
+      [class]="activityForm.get('start')?.touched && activityForm.get('start')?.errors ? 'ng-invalid ng-dirty  ' : ''"
+      formControlName="start"
+      hideOnDateTimeSelect="false"
+      stepMinute="5"
+
+      [showTime]="true"
+      [touchUI]="true"
+      [readonlyInput]="true"
+    />
+  </div>
+
+  <div>
+    <label [class]="(activityForm.get('city')?.touched && activityForm.get('city')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Ville</label>
+    <app-select-location [isError]="!!(activityForm.get('city')?.touched && activityForm.get('city')?.errors)" (onValueChange)="activityForm.patchValue({city: $event})" [defaultValue]="activityToEdit() ? activityToEdit()?.city : undefined" />
+  </div>
+
+  <div>
+    <label for="place" [class]="(activityForm.get('place')?.touched && activityForm.get('place')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Lieu</label>
+    <input
+      id="place"
+      pInputText
+      formControlName="place"
+      [class]="(activityForm.get('place')?.touched && activityForm.get('place')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
+
+    />
+  </div>
+
+  <div>
+    <label for="type" [class]="(activityForm.get('type')?.touched && activityForm.get('type')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Type</label>
+
+    <p-dropdown id="type" [options]="listTypesIcons" optionLabel="Type" [showClear]="true" placeholder="Sélectionne un type d'activité" formControlName="type" styleClass="w-full">
+      <ng-template let-selected pTemplate="selectedItem">
+        <div class="flex items-center gap-2">
+          <img [src]="selected.icon" style="width: 30px"/>
+          <div>{{ selected.name }}</div>
+        </div>
+      </ng-template>
+      <ng-template let-type pTemplate="item">
+        <div class="flex items-center gap-2">
+          <img [src]="(type.icon ?? '')" style="width: 30px"/>
+          <div>{{ type.name }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+  <p-button type="submit" label="Sauvegarder" styleClass="mt-8" [loading]="isSubmitting" />
+</form>

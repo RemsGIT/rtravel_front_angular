@@ -1,0 +1,57 @@
+<section class="space-y-3">
+  <p class="text-sm uppercase text-gray-400 ml-4">
+    Anciens voyages
+  </p>
+
+  @if (trips != null && trips.length > 0) {
+    <swiper-container
+      slides-per-view="2.3"
+      space-between="15"
+      free-mode="true"
+      >
+      @for (trip of trips; track trip) {
+        <swiper-slide class="pb-2">
+          <p-card class="rounded-3xl h-[180px] cursor-pointer" [routerLink]="['/voyage', trip.id]">
+            <ng-template pTemplate="header">
+              <div class="p-0 overflow-hidden rounded-t-[10px]">
+                <img
+                  src="https://www.visittheusa.fr/sites/default/files/styles/hero_l/public/images/hero_media_image/2017-04/7010d1e88b80578f3d4e6fc09c2a2379.jpeg?h=84c61102&itok=7s_epXAP"
+                  width="200"
+                  height="100"
+                  alt=""
+                  class="w-full h-28 object-cover"
+                />
+              </div>
+            </ng-template>
+            <div class="px-2">
+              <div class="mt-2 text-sm relative">
+                <span class="mr-5">{{trip.name}}</span>
+                <lucide-icon name="check" class="w-[16px] h-[16px] bg-primary text-white rounded-full flex items-center justify-center p-0.5 absolute right-0 top-0" />
+              </div>
+              <p class="text-sm text-gray-400 my-2">
+                Il y a
+                @if (dayjs().diff(dayjs(trip.start), 'day') <= 30) {
+                  {{ dayjs().diff(dayjs(trip.start), 'day') }} jours
+                } @else {
+                  @if (dayjs().diff(dayjs(trip.start), 'month') <= 1) {
+                    1 mois
+                  }
+                  @if (dayjs().diff(dayjs(trip.start), 'month') > 1 && dayjs().diff(dayjs(trip.start), 'month') < 12) {
+                    {{ dayjs().diff(dayjs(trip.start), 'month') }} mois
+                  }
+                  @if (dayjs().diff(dayjs(trip.start), 'month') >= 12) {
+                    {{ Math.floor(dayjs().diff(dayjs(trip.start), 'month') / 12) }} an{{ Math.floor(dayjs().diff(dayjs(trip.start), 'month') / 12) > 1 ? 's' : '' }}
+                  }
+                }
+              </p>
+            </div>
+          </p-card>
+        </swiper-slide>
+      }
+    </swiper-container>
+  }
+
+  @if (trips !== null && trips.length === 0) {
+    <p class="m-4  text-sm">Vous n'avez aucun voyage passé</p>
+  }
+</section>

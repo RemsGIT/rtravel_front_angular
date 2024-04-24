@@ -1,0 +1,11 @@
+<p-menu [model]="items" [popup]="true" #menu appendTo="body" styleClass="text-xs w-[110px]">
+  <ng-template pTemplate="item" let-item>
+    <div class="p-menuitem-link space-x-1.5">
+      <lucide-icon [size]="14" [name]="item.icon" class="text-gray-400 h-[14px]"></lucide-icon>
+      <span>{{ item.label }}</span>
+    </div>
+  </ng-template>
+</p-menu>
+<lucide-icon name="ellipsis-vertical" (click)="menu.toggle($event)" class="text-slate-300 cursor-pointer" size="20"></lucide-icon>
+
+<app-edit-activity-btn [sidebarVisible]="sidebarEditOpen"  [activityToEdit]="activity()" (onChangeVisible)="sidebarEditOpen = $event" />

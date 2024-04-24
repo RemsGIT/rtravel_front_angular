@@ -1,0 +1,31 @@
+@if (participant) {
+  <p-card class="h-full">
+    <ng-template pTemplate="header">
+      <div class="space-y-4">
+        <p-avatar size="large" styleClass="block mx-auto mt-2 bg-[#F1F5F9]" image="https://avatar.iran.liara.run/public/26" shape="circle">
+        </p-avatar>
+        <p class="md:text-xl text-center">{{participant?.name}}</p>
+      </div>
+    </ng-template>
+    <hr class="border-[#F1F5F9] border-t-0 border-x-0"/>
+    <div class="pb-2">
+      <p-button outlined styleClass="mx-auto block text-sm px-3 py-1" (click)="confirmDelete()">Supprimer</p-button>
+    </div>
+  </p-card>
+
+  <p-confirmDialog #cd [key]="participant.id.toString()">
+    <ng-template pTemplate="headless" let-message>
+      <div class="flex flex-col items-center p-5 surface-overlay border-round">
+        <div class="rounded-full bg-primary inline-flex justify-center items-center h-[6rem] w-[6rem] -mt-16">
+          <lucide-icon name="circle-help" size="50" class="text-white h-[50px]"></lucide-icon>
+        </div>
+        <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
+        <p class="mb-0 text-center text-gray-400">{{ message.message }}</p>
+        <div class="flex align-items-center gap-2 mt-4">
+          <button pButton label="Supprimer" (click)="cd.accept()"></button>
+          <button pButton label="Annuler" (click)="cd.reject()" outlined></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-confirmDialog>
+}

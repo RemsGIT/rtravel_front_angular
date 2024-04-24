@@ -1,0 +1,87 @@
+<div class="mx-6 mt-16">
+  <h1 class="text-4xl text-primary-dark font-extrabold mx-auto text-center">Rtravel.</h1>
+
+  <div class="mt-8">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate class="space-y-8">
+      <div class="space-y-2 w-full">
+        <label for="username"
+               [class]="registerForm.get('username')?.touched && registerForm.get('username')?.errors ? 'text-red-500' : ''">Nom d'utilisateur</label>
+        <input id="username" pInputText type="text" formControlName="username" class="w-full" placeholder="Matthieu"/>
+      </div>
+      <div class="space-y-2 w-full">
+        <label for="email"
+               [class]="registerForm.get('email')?.touched && registerForm.get('email')?.errors ? 'text-red-500' : ''">Adresse
+          email</label>
+        <input id="email" pInputText type="text" formControlName="email" class="w-full" placeholder="mathieu.dupont@example.com"/>
+        @if (registerForm.get('email')?.touched && registerForm.get('email')?.errors) {
+          <span class="text-red-500 block">
+           Entrez une adresse email valide
+          </span>
+        }
+      </div>
+      <div class="space-y-2 w-full">
+        <label for="password" [class]="registerForm.get('password')?.touched && registerForm.get('password')?.errors ? 'text-red-500' : ''">Mot de passe</label>
+        <div>
+          <p-password
+            id="password"
+            formControlName="password"
+            class="p-fluid"
+            feedback="true"
+            promptLabel="Entre un mot de passe"
+            weakLabel="Mot de passe faible"
+            mediumLabel="Mot de passe moyen"
+            strongLabel="Mot de passe fort"
+            placeholder="• • • • • • •"
+          />
+        </div>
+
+        @if (registerForm.get('password')?.touched && registerForm.get('password')?.errors) {
+          <span class="text-red-500 block">
+           Le mot de passe doit contenir au moins 6 caractères
+          </span>
+        }
+      </div>
+
+      <div class="space-y-2 w-full">
+        <label for="password" [class]="registerForm.get('password')?.touched && registerForm.get('password')?.errors ? 'text-red-500' : ''">Confirmer le mot de passe</label>
+        <div>
+          <p-password
+            id="confirm_password"
+            formControlName="confirm_password"
+            class="p-fluid"
+            feedback="false"
+            placeholder="• • • • • • •"
+          />
+        </div>
+      </div>
+
+      <div class="space-x-3 text-sm ">
+        <p-checkbox
+          id="conditions"
+          formControlName="accept_conditions"
+          [binary]="true"
+          label="J'accepte les conditions générales d'utilisation"
+          [labelStyleClass]="registerForm.get('accept_conditions')?.touched && registerForm.get('accept_conditions')?.errors ? 'text-red-500' : ''"
+        />
+      </div>
+
+      <div class="p-fluid">
+        <p-button label="Créer mon compte" type="submit"/>
+      </div>
+    </form>
+  </div>
+
+  <div class="mt-12 space-y-2">
+    <hr/>
+    <p class="text-sm text-center text-gray-500">Ou continuer avec</p>
+
+    <div>
+      <app-login-oauth/>
+    </div>
+  </div>
+
+  <div class="text-center text-sm mt-8 text-gray-500">
+    Déjà un compte ? <a routerLink="/connexion" class="text-primary no-underline">Connexion</a>
+  </div>
+
+</div>

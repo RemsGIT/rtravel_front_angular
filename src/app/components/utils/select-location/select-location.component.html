@@ -1,0 +1,11 @@
+<p-autoComplete
+  [suggestions]="predictions"
+  forceSelection
+  styleClass="w-full"
+  [inputStyleClass]="(isError() ? 'ng-invalid ng-dirty  ' : '') + ' w-full'"
+  [ngModel]="defaultValue()"
+  (completeMethod)="filterResult($event)"
+  (onSelect)="onChange($event)"
+>
+
+</p-autoComplete>

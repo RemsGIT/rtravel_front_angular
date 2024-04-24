@@ -1,0 +1,37 @@
+<div class='max-w-[2000px] mx-auto block'>
+  <div class='bg-transparent space-x-6 block' aria-label='tabs example'>
+    <swiper-container
+      #swiper
+      slides-per-view="3.8"
+      free-mode="true"
+      space-between="10"
+
+      [breakpoints]="JSON.stringify(swiperBreakpoints)"
+      >
+      @for (date of dates; track date) {
+        <swiper-slide>
+          <p-button
+            severity="secondary"
+            (click)="onChangeTab(date)"
+            [styleClass]="'text-xs rounded-xl ' + (selectedTab === date && 'bg-slate-300') "
+            >
+            {{ dayjs(date).locale('fr').format('ddd DD/MM') }}
+          </p-button>
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+
+  @for (date of dates; track date) {
+    <div>
+      @if (selectedTab === date) {
+        <div class="space-y-4" @fade>
+          <div class="px-4 mt-6">
+            <app-trip-activities-list-by-day [date]="dayjs(date).toDate()" />
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+</div>

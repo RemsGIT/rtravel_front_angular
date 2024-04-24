@@ -1,0 +1,59 @@
+<div class="mx-6 mt-16">
+  <h1 class="text-4xl text-primary-dark font-extrabold mx-auto text-center">Rtravel.</h1>
+
+  <div class="mt-8">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate class="space-y-8">
+      <div class="space-y-2 w-full">
+        <label for="email"
+               [class]="loginForm.get('email')?.touched && loginForm.get('email')?.errors ? 'text-red-500' : ''">Adresse
+          email</label>
+        <input id="email" pInputText type="text" formControlName="email" class="w-full"/>
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.errors) {
+          <span class="text-red-500 block">
+           Entrez une adresse email valide
+          </span>
+        }
+      </div>
+      <div class="space-y-2 w-full">
+        <label for="password" [class]="loginForm.get('password')?.touched && loginForm.get('password')?.errors ? 'text-red-500' : ''">Mot de passe</label>
+        <div>
+          <p-password
+            id="password"
+            formControlName="password"
+            class="p-fluid"
+            feedback="false"
+            promptLabel="Entre un mot de passe"
+            weakLabel="Mot de passe faible"
+            mediumLabel="Mot de passe moyen"
+            strongLabel="Mot de passe fort"
+          />
+        </div>
+
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.errors) {
+          <span class="text-red-500 block">
+           Le mot de passe doit contenir au moins 6 caractères
+          </span>
+        }
+        <a href="#" class="mt-2 block text-sm text-right text-gray-500 no-underline  mr-1 italic">Mot de passe oublié ?</a>
+      </div>
+
+      <div class="p-fluid">
+        <p-button label="Se connecter" type="submit"/>
+      </div>
+    </form>
+  </div>
+
+  <div class="mt-12 space-y-2">
+    <hr/>
+    <p class="text-sm text-center text-gray-500">Ou continuer avec</p>
+
+    <div>
+      <app-login-oauth/>
+    </div>
+  </div>
+
+  <div class="text-center text-sm mt-8 text-gray-500">
+    Pas de compte ? <a routerLink="/inscription" class="text-primary no-underline">Inscription</a>
+  </div>
+
+</div>

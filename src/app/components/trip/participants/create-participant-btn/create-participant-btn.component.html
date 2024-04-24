@@ -1,0 +1,46 @@
+<p-sidebar [(visible)]="sidebarVisible" position="bottom" styleClass="h-[90%] rounded-t-3xl">
+  <ng-template pTemplate="header">
+    <div>
+      <h3 class="text-2xl font-extrabold">Nouveau participant</h3>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <form class="space-y-5" [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+
+      <div>
+        <label for="name" [class]="(participantForm.get('name')?.touched && participantForm.get('name')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Nom</label>
+        <input
+          id="name"
+          pInputText
+          formControlName="name"
+          [class]="(participantForm.get('name')?.touched && participantForm.get('name')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
+        />
+      </div>
+
+      <div>
+        <label for="email" [class]="(participantForm.get('email')?.touched && participantForm.get('email')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Adresse mail</label>
+        <input
+          id="email"
+          pInputText
+          formControlName="email"
+          [class]="(participantForm.get('email')?.touched && participantForm.get('email')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
+          (change)="onEmailChange($event)"
+        />
+      </div>
+
+      <div>
+        <label for="policy" [class]="(participantForm.get('policy')?.touched && participantForm.get('policy')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Permission</label>
+        <p-dropdown id="policy" [options]="[{name: 'Voir', code: 'read'},{name: 'Modification', code: 'write'}]" formControlName="policy" optionLabel="name" optionValue="code" styleClass="w-full" />
+      </div>
+
+      <p-button type="submit" label="Sauvegarder" styleClass="mt-8" [loading]="isSubmitting" />
+    </form>
+  </ng-template>
+</p-sidebar>
+
+<div class="fixed right-3 bottom-5" >
+  <p-button (click)="sidebarVisible = true" styleClass="p-2 rounded-full">
+    <lucide-icon name="plus" size="20" class="h-[20px]" />
+  </p-button>
+</div>
