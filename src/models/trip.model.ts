@@ -20,11 +20,18 @@ export interface Activity {
   icon: string,
 }
 
+export interface ITripRequest {
+  name: string,
+  city: string,
+  start: Date,
+  end: Date,
+  countryCode: string
+}
+
 export interface IActivityRequest {
   name: string,
   start: Date,
   city: string,
   icon: string,
   place: string,
-  tripId?: number
 }

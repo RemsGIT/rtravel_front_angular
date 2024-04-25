@@ -99,7 +99,7 @@ export class CheckEmailComponent {
 
     this.authService.onCreateOTPCode().subscribe({
       next: res => {
-        toast.success('Un nouveau code a été envoyé sur votre adresse email')
+        toast.success('Un nouveau code a été envoyé sur ton adresse email')
       },
       error: err => {
         toast.error(constants.messages.ERROR_GENERIC)

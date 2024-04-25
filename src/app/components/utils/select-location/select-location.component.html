@@ -1,11 +1,31 @@
 <p-autoComplete
   [suggestions]="predictions"
   forceSelection
-  styleClass="w-full"
-  [inputStyleClass]="(isError() ? 'ng-invalid ng-dirty  ' : '') + ' w-full'"
+  styleClass="w-full "
+  [inputStyleClass]="(isError() ? 'ng-invalid ng-dirty  ' : '') + ' w-full ' + (typeLocation() === 'country_city' ? 'p-4' : '')"
   [ngModel]="defaultValue()"
   (completeMethod)="filterResult($event)"
   (onSelect)="onChange($event)"
+  placeholder="Rome, Italie "
+  optionLabel="value"
 >
+  @if (typeLocation() === "country_city") {
+    <ng-template let-country pTemplate="item">
+      <div class="flex justify-between">
+        <div>{{ country.value }}</div>
 
+        @switch (country.type) {
+          @case ('country') {
+            <p-tag styleClass="bg-slate-200 text-black font-normal" value="Pays"></p-tag>
+          }
+          @case ('city') {
+            <p-tag severity="info" value="Ville" styleClass="font-normal"></p-tag>
+          }
+          @case ('island') {
+            <p-tag value="Île" styleClass="bg-primary text-white font-normal"></p-tag>
+          }
+        }
+      </div>
+    </ng-template>
+  }
 </p-autoComplete>

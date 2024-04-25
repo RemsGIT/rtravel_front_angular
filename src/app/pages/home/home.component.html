@@ -1,14 +1,45 @@
-<div class="pb-8 mx-4">
+<div class="pb-8 mx-4 h-[90%]">
+  @if(hasTrip) {
   <div class="space-y-8">
-    <div>
-      <app-trip-upcoming-card />
-    </div>
+      <div>
+        <app-trip-upcoming-card />
+      </div>
 
-    <div>
-      <app-trip-future-slider />
-    </div>
-    <div>
-      <app-trip-past-slider />
-    </div>
+      <div>
+        <app-trip-future-slider />
+      </div>
+      <div>
+        <app-trip-past-slider />
+      </div>
+
   </div>
+  } @else {
+    <div class="mt-8 flex flex-col justify-between h-full">
+      <div class="mx-4">
+        <h1 class="leading-snug text-4xl font-extralight ">Tu n'as pas encore organisé de voyage</h1>
+
+        <p class="mt-3 text-gray-400 text-sm">Ajoute dès maintenant ton premier voyage et découvre toutes les fonctionnalités de Rtravel</p>
+
+      </div>
+
+      <div class="relative mt-8">
+        <img
+          ngSrc="/assets/images/manhattan.jpeg"
+          class="w-full max-w-[700px] block mx-auto h-[420px] md:h-[500px] rounded-[3rem] z-10 relative shadow-2xl"
+          alt=""
+          width="1000"
+          height="500"
+        />
+        <img
+          ngSrc="/assets/images/sunset.jpeg"
+          class="w-[90%] max-w-[600px] rounded-[3rem] absolute -top-10 md:-top-12 left-1/2 z-0 transform -translate-x-1/2 shadow-2xl"
+          alt=""
+          width="400"
+          height="200"
+        />
+
+        <p-button routerLink="/voyage/new" class="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20" styleClass="w-[200px] text-lg">Créer un voyage</p-button>
+      </div>
+    </div>
+  }
 </div>

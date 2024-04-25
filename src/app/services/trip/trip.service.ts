@@ -23,6 +23,10 @@ export class TripService {
       })
   }
 
+  persistTrip() {
+
+  }
+
   persistActivity(data: IActivityRequest, tripId?: number) {
     const trip = tripId ? tripId : this.tripSelected()?.id
 

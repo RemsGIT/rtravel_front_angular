@@ -1,0 +1,79 @@
+<div class="relative">
+
+  @if(step !== "name") {
+    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 cursor-pointer " (click)="goToPreviousStep()" />
+  }
+  @else {
+    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 invisible" (click)="goToPreviousStep()" />
+  }
+
+  <form [formGroup]="tripForm" class="space-y-5 flex justify-center items-center w-full mt-48" (ngSubmit)="onSubmit()">
+
+    <div class="flex flex-col gap-8 mx-8">
+
+      @switch (step) {
+        @case ('name') {
+          <div [@slideInLeft]>
+            <label for="name" class="font-semibold text-xl">Quel est le nom de ton voyage ? </label>
+            <input
+              id="name"
+              pInputText
+              formControlName="name"
+              class="p-4 w-full mt-4"
+              placeholder="Week-end à Rome "
+            />
+          </div>
+
+        }
+        @case ('city') {
+          <div [@slideInLeft]>
+            <label class="font-semibold text-xl">Entre la destination de ton voyage </label>
+            <div class="mt-4">
+              <app-select-location typeLocation="country_city" (onValueChange)="tripForm.patchValue({city: $event.value, countryCode: $event.countryCode})" [defaultValue]="tripForm.get('city')?.value"/>
+            </div>
+          </div>
+        }
+        @case ('dates') {
+          <div class="space-y-10" [@slideInLeft]>
+            <div>
+              <label for="start" class="font-semibold text-xl">Quand commence ton voyage ? </label>
+              <p-calendar
+                id="start"
+                inputId="start"
+                appendTo="body"
+                showIcon
+                styleClass="w-full mt-4"
+                formControlName="start"
+                [touchUI]="true"
+                [readonlyInput]="true"
+              />
+            </div>
+            <div>
+              <label for="end" class="font-semibold text-xl"> Quand se termine ton voyage ? </label>
+              <p-calendar
+                id="end"
+                inputId="end"
+                appendTo="body"
+                showIcon
+                styleClass="w-full mt-4"
+                formControlName="end"
+
+                [touchUI]="true"
+                [readonlyInput]="true"
+              />
+            </div>
+          </div>
+
+        }
+      }
+
+      <p-button class="text-right" styleClass="px-3 py-1.5" (onClick)="goToNextStep()">
+        <lucide-icon name="arrow-right" size="26" strokeWidth="3" class="p-0" />
+      </p-button>
+
+    </div>
+
+  </form>
+
+</div>
+

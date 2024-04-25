@@ -5,6 +5,7 @@ import {HomeComponent} from "./pages/home/home.component";
 import {TripDetailComponent} from "./pages/trip-detail/trip-detail.component";
 import {RegisterComponent} from "./pages/auth/register/register.component";
 import {CheckEmailComponent} from "./pages/auth/check-email/check-email.component";
+import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
 
 export const routes: Routes = [
   {path: 'connexion', component: LoginComponent},
@@ -13,5 +14,6 @@ export const routes: Routes = [
 
 
   {path: 'accueil', component: HomeComponent, canActivate: [authGuard]},
+  {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard]},
   {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard]},
 ];

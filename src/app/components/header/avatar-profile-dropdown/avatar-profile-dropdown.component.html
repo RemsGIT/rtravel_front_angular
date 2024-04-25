@@ -1,0 +1,18 @@
+<p-menu
+  #menu
+  [model]="items"
+  [popup]="true"
+  styleClass="w-[160px]"
+  >
+  <ng-template pTemplate="item" let-item>
+    <div class="p-menuitem-link space-x-2">
+      <lucide-icon [size]="20" [name]="item.icon" class="text-gray-400 h-[20px]"></lucide-icon>
+      <span class="text-xs">{{ item.label }}</span>
+    </div>
+  </ng-template>
+</p-menu>
+
+<div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white" (click)="menu.toggle($event)">
+  {{authService.currentUserSig()?.username?.charAt(0)}}
+</div>
+

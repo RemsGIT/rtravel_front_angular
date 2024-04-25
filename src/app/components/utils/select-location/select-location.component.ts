@@ -1,16 +1,22 @@
 import {Component, inject, input, OnInit, output} from '@angular/core';
-import {GooglePlacesService} from "../../../services/google/google-places.service";
+import {GooglePlacesService, PlaceResult} from "../../../services/google/google-places.service";
 import {TripService} from "../../../services/trip/trip.service";
 import {GooglePlaceOption} from "../../../../models/google.model";
 import {AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent} from "primeng/autocomplete";
 import {FormsModule} from "@angular/forms";
+import {TagModule} from "primeng/tag";
+
+
+type type = "city" | "country" | "country_city"
+
 
 @Component({
   selector: 'app-select-location',
   standalone: true,
   imports: [
     AutoCompleteModule,
-    FormsModule
+    FormsModule,
+    TagModule
   ],
   templateUrl: './select-location.component.html',
 })
@@ -18,23 +24,35 @@ export class SelectLocationComponent implements OnInit{
   tripService = inject(TripService)
   googlePlacesService =  inject(GooglePlacesService)
 
-  predictions: string[] = []
+  predictions: PlaceResult[] = []
 
+  typeLocation = input<type>("city")
   isError = input<boolean>(false)
   defaultValue = input<string | undefined>()
-  onValueChange = output<string>()
+  onValueChange = output<PlaceResult>()
 
   ngOnInit() {
     if(!!this.defaultValue()) {
-      this.predictions.push(this.defaultValue() as string)
+      this.predictions.push({value: this.defaultValue() as string})
     }
   }
 
   filterResult(event: AutoCompleteCompleteEvent) {
-    this.googlePlacesService.searchCitiesByText(event.query)
-      .then(response => {
-        this.predictions = Array.from(new Set(response.map(prediction => prediction)));
-      })
+    switch (this.typeLocation()) {
+      case 'city':
+        this.googlePlacesService.searchCitiesByText(event.query)
+          .then(response => {
+            this.predictions = response.map(prediction => ({ value: prediction.value }));
+          })
+        break;
+      case 'country_city':
+        this.googlePlacesService.searchCountriesAndCitiesByText(event.query)
+          .then(response => {
+            this.predictions = response.map(prediction => ({ value: prediction.value, countryCode: prediction.countryCode, type: prediction.type }));
+          })
+        break;
+    }
+
   }
 
   onChange(event: AutoCompleteSelectEvent) {

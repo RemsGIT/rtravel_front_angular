@@ -1,12 +1,32 @@
 import {ApplicationConfig, importProvidersFrom} from '@angular/core';
 import {provideRouter, withViewTransitions} from '@angular/router';
 
-import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import {routes} from './app.routes';
+import {provideClientHydration} from '@angular/platform-browser';
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {HttpClient, provideHttpClient, withFetch, withInterceptors} from "@angular/common/http";
 import {authInterceptor} from "./interceptors/auth.interceptor";
-import {LucideAngularModule, Check, Clock, Coins, Flag, Hourglass, MapPin, Plane, Map, Plus, CircleHelp, EllipsisVertical, Pencil, Trash} from "lucide-angular";
+import {
+  LucideAngularModule,
+  Check,
+  Clock,
+  Coins,
+  Flag,
+  Hourglass,
+  MapPin,
+  Plane,
+  Map,
+  Plus,
+  CircleHelp,
+  EllipsisVertical,
+  Pencil,
+  Trash,
+  User,
+  LogOut,
+  TentTree,
+  ArrowRight,
+  ArrowLeft
+} from "lucide-angular";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
@@ -20,7 +40,26 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withViewTransitions()),
     provideClientHydration(),
     importProvidersFrom(
-      LucideAngularModule.pick({Hourglass, Check, Map, MapPin, Clock, Flag, Coins, Plane, Plus, CircleHelp, EllipsisVertical, Pencil, Trash}),
+      LucideAngularModule.pick({
+        Hourglass,
+        Check,
+        Map,
+        MapPin,
+        Clock,
+        Flag,
+        Coins,
+        Plane,
+        Plus,
+        CircleHelp,
+        EllipsisVertical,
+        Pencil,
+        Trash,
+        User,
+        LogOut,
+        TentTree,
+        ArrowRight,
+        ArrowLeft
+      }),
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,

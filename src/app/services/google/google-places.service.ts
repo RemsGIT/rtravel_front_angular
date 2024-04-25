@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import {GooglePlaceOption, GooglePlacesPrediction} from "../../../models/google.model";
-import { Client } from '@googlemaps/google-maps-services-js';
 
+
+export interface PlaceResult {
+  value: string;
+  countryCode?: string;
+  type?: 'country' | 'city' | 'island';
+}
 
 @Injectable({
   providedIn: 'root'
@@ -21,24 +25,72 @@ export class GooglePlacesService {
     this.sessionToken = new google.maps.places.AutocompleteSessionToken()
   }
 
-  searchCountriesAndCitiesByTextAndCountry(query: string): Promise<GooglePlacesPrediction[]> {
+  searchCountriesAndCitiesByText(query: string): Promise<PlaceResult[]> {
     return new Promise((resolve, reject) => {
-
       this.autocompleteService.getPlacePredictions({
         input: query,
         sessionToken: this.sessionToken,
+        types: ['country', 'locality', 'administrative_area_level_3', 'natural_feature']
         //@ts-ignore
-      }, (predictions: google.maps.places.AutocompletePrediction[] | null ,status: google.maps.places.PlacesServiceStatus ) => {
-        console.log(predictions)
-      })
-    })
+      }, (predictions: google.maps.places.AutocompletePrediction[] | null, status: google.maps.places.PlacesServiceStatus) => {
+        //@ts-ignore
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          //@ts-ignore
+          if (predictions) {
+            const placesPromises = predictions.map(prediction => {
+              return new Promise<PlaceResult>((resolvePlace, rejectPlace) => {
+                //@ts-ignore
+                const placeService = new google.maps.places.PlacesService(document.createElement('div'));
+                placeService.getDetails({
+                  placeId: prediction.place_id
+                  //@ts-ignore
+                }, (place: google.maps.places.PlaceResult | null, placeStatus: google.maps.places.PlacesServiceStatus) => {
+                  //@ts-ignore
+                  if (placeStatus === google.maps.places.PlacesServiceStatus.OK && place) {
+                    let type: 'country' | 'city' | 'island' = 'city';
+                    if (prediction.types && prediction.types.includes('country')) {
+                      type = 'country';
+                    }
+                    else if(prediction.types.includes('natural_feature')) {
+                      type = 'island'
+                    }
+                    let countryCode = '';
+                    if (place.address_components) {
+                      const countryComponent = place.address_components.find((component: any) =>
+                        component.types.includes('country')
+                      );
+                      if (countryComponent) {
+                        countryCode = countryComponent.short_name;
+                      }
+                    }
+                    resolvePlace({ value: `${prediction.terms[0].value}${prediction.terms.length > 1 ? ', ' + prediction.terms[prediction.terms.length-1].value : ''}`, countryCode, type });
+                  } else {
+                    resolvePlace({ value: `${prediction.terms[0].value}${prediction.terms.length > 1 ? ', ' + prediction.terms[prediction.terms.length-1].value : ''}`, countryCode: '', type: 'city' });
+                  }
+                });
+              });
+            });
+
+            // Attendre que toutes les promises soient résolues
+            Promise.all(placesPromises).then(results => {
+              resolve(results);
+            });
+          } else {
+            resolve([]);
+          }
+        } else {
+          resolve([]);
+        }
+      });
+    });
   }
+
 
   /**
    * Search cities by text and returns format : city, country
    * @param query
    */
-  searchCitiesByText(query: string): Promise<string[]> {
+  searchCitiesByText(query: string): Promise<PlaceResult[]> {
     return new Promise((resolve, reject) => {
       this.autocompleteService.getPlacePredictions({
         input: query,
@@ -49,11 +101,11 @@ export class GooglePlacesService {
         //@ts-ignore
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           if(predictions) {
-            resolve(predictions.map(prediction => `${prediction.terms[0].value}, ${prediction.terms[prediction.terms.length-1].value}`));
-          }
+            resolve(predictions.map(prediction => ({
+              value: `${prediction.terms[0].value}, ${prediction.terms[prediction.terms.length-1].value}`,
+            })));          }
           else resolve([])
         } else {
-          console.log(status)
           resolve([]);
         }
       });
