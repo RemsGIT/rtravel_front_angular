@@ -13,14 +13,7 @@ export class TripService {
 
   getTripById(id: string | number) {
     this.tripSelected.set(undefined)
-    return this.http.get<Trip>(`${apiEndpoint}/trips/${id}`)
-      .subscribe({
-        next: (response) => {
-          this.tripSelected.set(response)
-          console.log(response)
-          return response
-        },
-      })
+    return this.http.get<Trip>(`${apiEndpoint}/trips/${id}`);
   }
 
   persistTrip(data: ITripRequest) {

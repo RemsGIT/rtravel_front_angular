@@ -1,18 +1,18 @@
 <form [formGroup]="activityForm" class="space-y-5" (ngSubmit)="onSubmit()">
 
   <div>
-    <label for="name" [class]="(activityForm.get('name')?.touched && activityForm.get('name')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Nom</label>
+    <label for="name" [class]="(activityForm.get('name')?.touched && activityForm.get('name')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Nom</label>
     <input
       id="name"
       pInputText
       formControlName="name"
       [class]="(activityForm.get('name')?.touched && activityForm.get('name')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
-
+      placeholder="Embarquement, visite du musée..."
     />
   </div>
 
   <div>
-    <label for="activitydate" [class]="(activityForm.get('start')?.touched && activityForm.get('start')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Date de l'activité</label>
+    <label for="activitydate" [class]="(activityForm.get('start')?.touched && activityForm.get('start')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Date de l'activité</label>
     <p-calendar
       id="activitydate"
       inputId="activitydate"
@@ -31,23 +31,23 @@
   </div>
 
   <div>
-    <label [class]="(activityForm.get('city')?.touched && activityForm.get('city')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Ville</label>
+    <label [class]="(activityForm.get('city')?.touched && activityForm.get('city')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Ville</label>
     <app-select-location [isError]="!!(activityForm.get('city')?.touched && activityForm.get('city')?.errors)" (onValueChange)="activityForm.patchValue({city: $event})" [defaultValue]="activityToEdit() ? activityToEdit()?.city : undefined" />
   </div>
 
   <div>
-    <label for="place" [class]="(activityForm.get('place')?.touched && activityForm.get('place')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Lieu</label>
+    <label for="place" [class]="(activityForm.get('place')?.touched && activityForm.get('place')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Lieu</label>
     <input
       id="place"
       pInputText
       formControlName="place"
       [class]="(activityForm.get('place')?.touched && activityForm.get('place')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
-
+      placeholder="Aéroport, colisée..."
     />
   </div>
 
   <div>
-    <label for="type" [class]="(activityForm.get('type')?.touched && activityForm.get('type')?.errors ? 'text-red-500 ' : '') + 'block mb-2'">Type</label>
+    <label for="type" [class]="(activityForm.get('type')?.touched && activityForm.get('type')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Type</label>
 
     <p-dropdown id="type" [options]="listTypesIcons" optionLabel="Type" [showClear]="true" placeholder="Sélectionne un type d'activité" formControlName="type" styleClass="w-full">
       <ng-template let-selected pTemplate="selectedItem">

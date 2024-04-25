@@ -1,6 +1,8 @@
 @if (trip) {
   <section class="mt-12 space-y-3">
-    <p class="text-sm uppercase text-gray-400 ml-4">Voyage en cours</p>
+    <p class="text-sm uppercase text-gray-400 ml-4">
+      {{dayjs(trip.start).isAfter(dayjs()) ? 'Prochain voyage' : 'Voyage en cours'}}
+    </p>
 
     <div>
       <p-card class="rounded-3xl">

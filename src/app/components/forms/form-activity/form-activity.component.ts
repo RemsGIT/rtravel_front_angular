@@ -84,10 +84,11 @@ export class FormActivityComponent implements OnInit{
 
       this.activityForm.patchValue({
         'icon' : this.activityForm.get('type')?.value?.code,
-        'start' : dayjs( this.activityForm.get('start')?.value).format('YYYY-MM-DD HH:mm:ss')
+        'start' : dayjs( this.activityForm.get('start')?.value).format('YYYY-MM-DD HH:mm:ss'),
+        'city' : typeof this.activityForm.get('city')?.value === 'object' ? this.activityForm.get('city')?.value.value : this.activityForm.get('city')?.value
       })
 
-      if(!this.activityToEdit()) {
+      if(!this.activityToEdit(  )) {
         this.tripService.persistActivity(this.activityForm.value)
           .subscribe({
             next: (response: Activity) => {

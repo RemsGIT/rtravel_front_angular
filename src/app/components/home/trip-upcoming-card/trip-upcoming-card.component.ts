@@ -5,6 +5,7 @@ import {apiEndpoint} from "../../../constants";
 import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
+import dayjs from "dayjs";
 
 @Component({
   selector: 'app-trip-upcoming-card',
@@ -35,4 +36,6 @@ export class TripUpcomingCardComponent implements OnInit {
     }
 
   }
+
+  protected readonly dayjs = dayjs;
 }
