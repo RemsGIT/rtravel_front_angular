@@ -46,6 +46,7 @@
                 formControlName="start"
                 [touchUI]="true"
                 [readonlyInput]="true"
+                (onSelect)="onChangeStartDate()"
               />
             </div>
             <div>
@@ -57,7 +58,8 @@
                 showIcon
                 styleClass="w-full mt-4"
                 formControlName="end"
-
+                [defaultDate]="endMinDate ? endMinDate : now"
+                [minDate]="endMinDate"
                 [touchUI]="true"
                 [readonlyInput]="true"
               />
@@ -67,8 +69,10 @@
         }
       }
 
-      <p-button class="text-right" styleClass="px-3 py-1.5" (onClick)="goToNextStep()">
-        <lucide-icon name="arrow-right" size="26" strokeWidth="3" class="p-0" />
+      <p-button class="text-right" styleClass="px-3 py-1.5 w-[52px] h-[44px]" (onClick)="goToNextStep()" [loading]="isSubmitting">
+        @if(!isSubmitting) {
+          <lucide-icon name="arrow-right" size="26" strokeWidth="3" class="p-0" />
+        }
       </p-button>
 
     </div>

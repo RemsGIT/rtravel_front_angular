@@ -1,24 +1,25 @@
 <div class="pb-8 mx-4 h-[90%]">
-  @if(hasTrip) {
-  <div class="space-y-8">
+  @if (hasTrip && isDataLoaded) {
+    <div class="space-y-8">
       <div>
-        <app-trip-upcoming-card />
+        <app-trip-upcoming-card/>
       </div>
 
       <div>
-        <app-trip-future-slider />
+        <app-trip-future-slider/>
       </div>
       <div>
-        <app-trip-past-slider />
+        <app-trip-past-slider/>
       </div>
 
-  </div>
-  } @else {
+    </div>
+  } @else if (isDataLoaded) {
     <div class="mt-8 flex flex-col justify-between h-full">
       <div class="mx-4">
         <h1 class="leading-snug text-4xl font-extralight ">Tu n'as pas encore organisé de voyage</h1>
 
-        <p class="mt-3 text-gray-400 text-sm">Ajoute dès maintenant ton premier voyage et découvre toutes les fonctionnalités de Rtravel</p>
+        <p class="mt-3 text-gray-400 text-sm">Ajoute dès maintenant ton premier voyage et découvre toutes les
+          fonctionnalités de Rtravel</p>
 
       </div>
 
@@ -38,7 +39,9 @@
           height="200"
         />
 
-        <p-button routerLink="/voyage/new" class="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20" styleClass="w-[200px] text-lg">Créer un voyage</p-button>
+        <p-button routerLink="/voyage/new" class="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20"
+                  styleClass="w-[200px] text-lg">Créer un voyage
+        </p-button>
       </div>
     </div>
   }

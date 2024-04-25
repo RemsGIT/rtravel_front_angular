@@ -9,6 +9,9 @@ import confetti from "canvas-confetti";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {toast} from "ngx-sonner";
 import {constants} from "../../../constants";
+import {TripService} from "../../../services/trip/trip.service";
+import dayjs from "dayjs";
+import {Router} from "@angular/router";
 
 type StepType = "name" | "city" | "dates"
 
@@ -37,9 +40,13 @@ type StepType = "name" | "city" | "dates"
 export class FormCreateTripComponent {
   tripForm!: FormGroup
 
-  step: StepType  = "name"
+  step: StepType  = "dates"
+  isSubmitting = false
 
-  constructor(private fb: FormBuilder) {
+  endMinDate = undefined
+  now = new Date()
+
+  constructor(private fb: FormBuilder, private tripService: TripService, private router: Router) {
     this.tripForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -69,9 +76,28 @@ export class FormCreateTripComponent {
   }
 
   onSubmit() {
-    console.log(this.tripForm.value)
     if(this.tripForm.valid) {
-      console.log('valid -- submit')
+      this.isSubmitting = true
+
+      this.tripForm.patchValue({
+        'start' : dayjs( this.tripForm.get('start')?.value).format('YYYY-MM-DD HH:mm:ss'),
+        'end' : dayjs( this.tripForm.get('end')?.value).format('YYYY-MM-DD HH:mm:ss')
+      })
+      this.tripService.persistTrip(this.tripForm.value)
+        .subscribe({
+          next: response => {
+            this.isSubmitting = false
+            this.router.navigateByUrl(`/voyage/${response.id}`)
+
+            toast.success(constants.messages.trip.SUCCESS_CREATE)
+          },
+          error: err => {
+            this.isSubmitting = false
+
+            toast.error(constants.messages.ERROR_CREATE)
+          }
+        })
+
       confetti({
         particleCount: 100,
         spread: 160,
@@ -106,4 +132,22 @@ export class FormCreateTripComponent {
      toast.error(constants.messages.ERROR_GENERIC)
    }
   }
+
+  onChangeStartDate() {
+    if(this.tripForm.get('start')?.value) {
+      this.endMinDate = this.tripForm.get('start')?.value
+    }
+
+    // Check if end date is set and check if < start date
+    if(this.tripForm.get('end')?.value) {
+      const startDate = dayjs(this.tripForm.get('start')?.value);
+      const endDate = dayjs(this.tripForm.get('end')?.value);
+
+      if(endDate.isBefore(startDate)) {
+        this.tripForm.patchValue({end: undefined})
+      }
+    }
+  }
+
+  protected readonly Date = Date;
 }

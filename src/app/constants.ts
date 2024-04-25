@@ -2,6 +2,9 @@
 export const constants = {
   TOKEN_NAME: 'rtravel_tk',
   messages: {
+    trip: {
+      SUCCESS_CREATE: "Votre nouveau voyage a été ajouté"
+    },
     activity: {
       SUCCESS_CREATE: "L'activité a bien été ajoutée",
       SUCCESS_UPDATE: "L'activité a bien été modifiée",

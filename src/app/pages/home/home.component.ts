@@ -25,12 +25,14 @@ export class HomeComponent implements OnInit{
   http= inject(HttpClient)
 
   hasTrip = false
+  isDataLoaded = false
 
   ngOnInit(): void {
     this.http.get(`${apiEndpoint}/user/hastrips`)
       .subscribe({
         next: (res: any) => {
-          this.hasTrip = res.result
+            this.hasTrip = res.result
+            this.isDataLoaded = true
         }
       })
   }

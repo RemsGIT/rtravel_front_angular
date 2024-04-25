@@ -1,5 +1,5 @@
 import {Injectable, signal} from '@angular/core';
-import {Activity, IActivityRequest, Trip} from "../../../models/trip.model";
+import {Activity, IActivityRequest, ITripRequest, Trip} from "../../../models/trip.model";
 import {apiEndpoint} from "../../constants";
 import {HttpClient} from "@angular/common/http";
 import {toObservable} from "@angular/core/rxjs-interop";
@@ -23,8 +23,8 @@ export class TripService {
       })
   }
 
-  persistTrip() {
-
+  persistTrip(data: ITripRequest) {
+    return this.http.post<Trip>(`${apiEndpoint}/trips`, data)
   }
 
   persistActivity(data: IActivityRequest, tripId?: number) {
