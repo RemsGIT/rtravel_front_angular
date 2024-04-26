@@ -22,10 +22,17 @@ import {
   Pencil,
   Trash,
   User,
+  Users,
   LogOut,
   TentTree,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  BedDouble,
+  Car,
+  Train,
+  Bus
+
+
 } from "lucide-angular";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
@@ -55,10 +62,15 @@ export const appConfig: ApplicationConfig = {
         Pencil,
         Trash,
         User,
+        Users,
         LogOut,
         TentTree,
         ArrowRight,
-        ArrowLeft
+        ArrowLeft,
+        BedDouble,
+        Car,
+        Train,
+        Bus
       }),
       TranslateModule.forRoot({
         loader: {

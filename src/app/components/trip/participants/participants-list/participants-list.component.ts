@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Participant} from "../../../../../models/participant.model";
+import {Participant, ParticipantPolicy} from "../../../../../models/participant.model";
 import {apiEndpoint} from "../../../../constants";
 import {TripService} from "../../../../services/trip/trip.service";
 
@@ -8,6 +8,7 @@ import {ParticipantCardComponent} from "../participant-card/participant-card.com
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {CreateParticipantBtnComponent} from "../create-participant-btn/create-participant-btn.component";
+import {IUser} from "../../../../../models/auh.model";
 
 @Component({
   selector: 'app-participants-list',
@@ -26,10 +27,24 @@ export class ParticipantsListComponent implements OnInit {
 
   participants: Participant[] | null = null
 
+  tripOwner: Participant | undefined = undefined
+
   ngOnInit() {
-    this.http.get<{ participants: Participant[] }>(`${apiEndpoint}/trips/${this.tripService.tripSelected()?.id}/participants`)
+    this.http.get<{ participants: Participant[], owner: IUser }>(`${apiEndpoint}/trips/${this.tripService.tripSelected()?.id}/participants`)
       .subscribe(response => {
         this.participants = response.participants
+
+        if(response.owner) {
+          this.tripOwner = {
+            id: -1,
+            name: response.owner.username,
+            email: response.owner.email,
+            policy: ParticipantPolicy.WRITE,
+            tripId: this.tripService.tripSelected()?.id as number,
+            createdAt: new Date(),
+            isOwner: true
+          }
+        }
       })
   }
 

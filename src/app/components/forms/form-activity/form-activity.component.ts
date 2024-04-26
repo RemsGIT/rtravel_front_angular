@@ -88,10 +88,11 @@ export class FormActivityComponent implements OnInit{
         'city' : typeof this.activityForm.get('city')?.value === 'object' ? this.activityForm.get('city')?.value.value : this.activityForm.get('city')?.value
       })
 
-      if(!this.activityToEdit(  )) {
+      if(!this.activityToEdit()) {
         this.tripService.persistActivity(this.activityForm.value)
           .subscribe({
             next: (response: Activity) => {
+              this.isSubmitting = false
               this.onSubmitSuccess.emit()
 
               // Add new activity to list
@@ -103,9 +104,15 @@ export class FormActivityComponent implements OnInit{
               this.activityForm.reset()
             },
             error: (e: any) => {
+              this.isSubmitting = false
+              if(e.status === 400) {
+                if(e.error.error === "NOT_AUTHORIZED") {
+                  toast.warning(constants.messages.ERROR_NEED_WRITE)
+                  return
+                }
+              }
               toast.error(constants.messages.ERROR_CREATE)
             },
-            complete: () => this.isSubmitting = false
           })
       }
       else {
@@ -131,6 +138,14 @@ export class FormActivityComponent implements OnInit{
               this.activityForm.reset()
             },
             error: (e: any) => {
+              this.isSubmitting = false
+              if(e.status === 400) {
+                if(e.error.error === "NOT_AUTHORIZED") {
+
+                  toast.warning(constants.messages.ERROR_NEED_WRITE)
+                  return
+                }
+              }
               toast.error(constants.messages.ERROR_UPDATE)
             },
             complete: () => this.isSubmitting = false

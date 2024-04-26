@@ -11,6 +11,8 @@ import {constants} from "../../../../constants";
 import {ParticipantService} from "../../../../services/participant/participant.service";
 import {toast} from "ngx-sonner";
 import {TripService} from "../../../../services/trip/trip.service";
+import {AuthService} from "../../../../services/auth/auth.service";
+import {TagModule} from "primeng/tag";
 
 @Component({
   selector: 'app-participant-card',
@@ -22,6 +24,7 @@ import {TripService} from "../../../../services/trip/trip.service";
     ButtonModule,
     ConfirmDialogModule,
     LucideAngularModule,
+    TagModule,
   ],
   templateUrl: './participant-card.component.html',
 })
@@ -32,17 +35,19 @@ export class ParticipantCardComponent {
 
   onDeleteParticipant = output<number>();
 
-  constructor(private confirmationService: ConfirmationService,private tripService: TripService, private participantService: ParticipantService) {}
+  constructor(private confirmationService: ConfirmationService, protected authService: AuthService, private tripService: TripService, private participantService: ParticipantService) {}
 
   confirmDelete() {
-    this.confirmationService.confirm({
-      key: this.participant?.id.toString(),
-      header: "Êtes-vous sûr ?",
-      message: 'Supprimer un participant supprimera toutes les données associés à celui-ci',
-      accept: () => {
-        this.deleteParticipant()
-      }
-    })
+    if(this.participant && (this.participant.email !== this.authService?.currentUserSig()?.email && !this.participant.isOwner)) {
+      this.confirmationService.confirm({
+        key: this.participant?.id.toString(),
+        header: "Êtes-vous sûr ?",
+        message: 'Supprimer un participant supprimera toutes les données associés à celui-ci',
+        accept: () => {
+          this.deleteParticipant()
+        }
+      })
+    }
   }
 
 

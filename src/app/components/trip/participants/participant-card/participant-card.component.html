@@ -1,15 +1,33 @@
 @if (participant) {
-  <p-card class="h-full">
+  <p-card class="h-full" styleClass="h-full">
     <ng-template pTemplate="header">
-      <div class="space-y-4">
+      <div class="space-y-4 min-h-[120px]">
         <p-avatar size="large" styleClass="block mx-auto mt-2 bg-[#F1F5F9]" image="https://avatar.iran.liara.run/public/26" shape="circle">
         </p-avatar>
-        <p class="md:text-xl text-center">{{participant?.name}}</p>
+        <p class="md:text-xl text-center">
+          {{participant?.name}}
+          <br/>
+          @if(participant.isOwner) {
+            <p-tag styleClass="font-normal px-2 py-0.5 mt-2">Gérant</p-tag>
+          }
+          @else if(participant.email === authService?.currentUserSig()?.email) {
+            <p class="text-center text-xs text-gray-500 mt-2">(Moi)</p>
+          }
+
+        </p>
+
       </div>
     </ng-template>
     <hr class="border-[#F1F5F9] border-t-0 border-x-0"/>
     <div class="pb-2">
-      <p-button outlined styleClass="mx-auto block text-sm px-3 py-1" (click)="confirmDelete()">Supprimer</p-button>
+      <p-button
+        outlined
+        styleClass="mx-auto block text-sm px-3 py-1"
+        (click)="confirmDelete()"
+        [disabled]="participant.email === authService?.currentUserSig()?.email || participant.isOwner"
+        >
+          Supprimer
+      </p-button>
     </div>
   </p-card>
 

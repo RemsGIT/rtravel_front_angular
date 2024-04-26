@@ -16,7 +16,8 @@ export const constants = {
     ERROR_CREATE: "Erreur lors de la création, réessayez plus tard",
     ERROR_UPDATE: "Erreur lors de la modification, réessayez plus tard",
     ERROR_DELETE: "Erreur lors de la suppression, réessayez plus tard",
-    ERROR_GENERIC: "Une erreur est survenue, réessayez plus tard"
+    ERROR_GENERIC: "Une erreur est survenue, réessayez plus tard",
+    ERROR_NEED_WRITE: "Tu n'as pas le droit de modifier ce voyage"
 
   }
 }

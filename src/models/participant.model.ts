@@ -4,7 +4,8 @@ export interface Participant {
   email?: string,
   policy: ParticipantPolicy,
   createdAt: Date,
-  tripId: number
+  tripId: number,
+  isOwner?: boolean
 }
 
 export interface IParticipantRequest {

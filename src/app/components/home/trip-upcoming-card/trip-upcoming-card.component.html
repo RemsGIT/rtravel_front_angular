@@ -7,11 +7,15 @@
     <div>
       <p-card class="rounded-3xl">
         <ng-template pTemplate="header" >
-          <div class="p-0 h-[200px] overflow-hidden rounded-t-[10px]  ">
+          <div class="p-0 h-[200px] overflow-hidden rounded-t-[10px] relative">
             <img
               src="https://a.cdn-hotels.com/gdcs/production40/d811/5e89ad90-8f10-11e8-b6b0-0242ac110007.jpg?impolicy=fcrop&w=1600&h=1066&q=medium"
               class="w-full object-cover h-full"
               width=800 height=400 alt="" />
+
+            @if(trip.isShared) {
+              <app-tag-trip-shared />
+            }
           </div>
         </ng-template>
         <ng-template pTemplate="content">

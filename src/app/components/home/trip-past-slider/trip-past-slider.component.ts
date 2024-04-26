@@ -7,15 +7,21 @@ import dayjs from 'dayjs';
 
 import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";
+import {TagModule} from "primeng/tag";
+import {TooltipModule} from "primeng/tooltip";
+import {TagTripSharedComponent} from "../../trip/utils/tag-trip-shared/tag-trip-shared.component";
 
 @Component({
   selector: 'app-trip-past-slider',
   standalone: true,
-    imports: [
-        LucideAngularModule,
-        RouterLink,
-        CardModule
-    ],
+  imports: [
+    LucideAngularModule,
+    RouterLink,
+    CardModule,
+    TagModule,
+    TooltipModule,
+    TagTripSharedComponent
+  ],
   templateUrl: './trip-past-slider.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

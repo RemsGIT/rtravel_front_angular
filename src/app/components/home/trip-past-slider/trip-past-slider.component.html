@@ -13,7 +13,7 @@
         <swiper-slide class="pb-2">
           <p-card class="rounded-3xl h-[180px] cursor-pointer" [routerLink]="['/voyage', trip.id]">
             <ng-template pTemplate="header">
-              <div class="p-0 overflow-hidden rounded-t-[10px]">
+              <div class="p-0 overflow-hidden rounded-t-[10px] relative">
                 <img
                   src="https://www.visittheusa.fr/sites/default/files/styles/hero_l/public/images/hero_media_image/2017-04/7010d1e88b80578f3d4e6fc09c2a2379.jpeg?h=84c61102&itok=7s_epXAP"
                   width="200"
@@ -21,6 +21,9 @@
                   alt=""
                   class="w-full h-28 object-cover"
                 />
+                @if(trip.isShared) {
+                  <app-tag-trip-shared />
+                }
               </div>
             </ng-template>
             <div class="px-2">

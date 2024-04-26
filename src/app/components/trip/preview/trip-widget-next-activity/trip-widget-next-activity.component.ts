@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {LucideAngularModule} from "lucide-angular";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
+import {TripService} from "../../../../services/trip/trip.service";
+import dayjs from "dayjs";
+import {Activity} from "../../../../../models/trip.model";
+import fr from "dayjs/locale/fr";
 
 @Component({
   selector: 'app-trip-widget-next-activity',
@@ -15,6 +19,27 @@ import {CalendarModule} from "primeng/calendar";
   ],
   templateUrl: './trip-widget-next-activity.component.html',
 })
-export class TripWidgetNextActivityComponent {
+export class TripWidgetNextActivityComponent implements OnInit{
 
+  tripService = inject(TripService)
+
+  nextActivity: Activity | undefined
+
+  ngOnInit(): void {
+    const currentDate = dayjs();
+
+    if(this.tripService.tripSelected()?.activities) {
+      const activities = this.tripService.tripSelected()?.activities as Activity[]
+      const closestActivity = this.tripService.tripSelected()?.activities?.filter(activity => dayjs(activity.start).isAfter(currentDate))
+        .reduce((closest, activity) =>
+          dayjs(activity.start).isBefore(dayjs(closest.start)) ? activity : closest, activities[0]);
+
+      this.nextActivity = closestActivity
+    }
+
+  }
+
+
+  protected readonly dayjs = dayjs;
+  protected readonly fr = fr;
 }

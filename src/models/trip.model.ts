@@ -8,7 +8,8 @@ export interface Trip {
   start: Date,
   end: Date,
   activities?: Activity[],
-  participants?: Participant[]
+  participants?: Participant[],
+  isShared?: boolean
 }
 
 export interface Activity {

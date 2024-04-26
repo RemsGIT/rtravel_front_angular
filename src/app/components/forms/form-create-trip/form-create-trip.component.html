@@ -4,7 +4,7 @@
     <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 cursor-pointer " (click)="goToPreviousStep()" />
   }
   @else {
-    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 invisible" (click)="goToPreviousStep()" />
+    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 " routerLink="/accueil" />
   }
 
   <form [formGroup]="tripForm" class="space-y-5 flex justify-center items-center w-full mt-48" (ngSubmit)="onSubmit()">

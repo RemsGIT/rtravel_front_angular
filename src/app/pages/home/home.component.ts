@@ -7,18 +7,20 @@ import {apiEndpoint} from "../../constants";
 import {NgOptimizedImage} from "@angular/common";
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
+import {LucideAngularModule} from "lucide-angular";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    TripUpcomingCardComponent,
-    TripFutureSliderComponent,
-    TripPastSliderComponent,
-    NgOptimizedImage,
-    ButtonModule,
-    RouterLink
-  ],
+    imports: [
+        TripUpcomingCardComponent,
+        TripFutureSliderComponent,
+        TripPastSliderComponent,
+        NgOptimizedImage,
+        ButtonModule,
+        RouterLink,
+        LucideAngularModule
+    ],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit{

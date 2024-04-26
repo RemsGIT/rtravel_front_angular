@@ -11,7 +11,7 @@ import {toast} from "ngx-sonner";
 import {constants} from "../../../constants";
 import {TripService} from "../../../services/trip/trip.service";
 import dayjs from "dayjs";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 type StepType = "name" | "city" | "dates"
 
@@ -25,7 +25,8 @@ type StepType = "name" | "city" | "dates"
     ButtonModule,
     LucideAngularModule,
     SelectLocationComponent,
-    CalendarModule
+    CalendarModule,
+    RouterLink
   ],
   templateUrl: './form-create-trip.component.html',
   animations: [
@@ -40,7 +41,7 @@ type StepType = "name" | "city" | "dates"
 export class FormCreateTripComponent {
   tripForm!: FormGroup
 
-  step: StepType  = "dates"
+  step: StepType  = "name"
   isSubmitting = false
 
   endMinDate = undefined

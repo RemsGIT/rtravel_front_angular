@@ -7,6 +7,8 @@ import {apiEndpoint} from "../../../constants";
 import dayjs from "dayjs";
 import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";
+import {TagModule} from "primeng/tag";
+import {TagTripSharedComponent} from "../../trip/utils/tag-trip-shared/tag-trip-shared.component";
 
 @Component({
   selector: 'app-trip-future-slider',
@@ -14,7 +16,9 @@ import {CardModule} from "primeng/card";
   imports: [
     LucideAngularModule,
     RouterLink,
-    CardModule
+    CardModule,
+    TagModule,
+    TagTripSharedComponent
   ],
   templateUrl: './trip-future-slider.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

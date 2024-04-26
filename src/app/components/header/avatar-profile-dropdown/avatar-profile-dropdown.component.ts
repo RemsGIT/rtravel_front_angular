@@ -34,7 +34,7 @@ export class AvatarProfileDropdownComponent implements OnInit{
         label: 'Mes voyages',
         icon: 'tent-tree',
         command: () => {
-
+          this.router.navigateByUrl('/accueil')
         }
       },
       {

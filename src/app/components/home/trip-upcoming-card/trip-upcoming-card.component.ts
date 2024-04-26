@@ -6,6 +6,10 @@ import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import dayjs from "dayjs";
+import {LucideAngularModule} from "lucide-angular";
+import {TagModule} from "primeng/tag";
+import {TooltipModule} from "primeng/tooltip";
+import {TagTripSharedComponent} from "../../trip/utils/tag-trip-shared/tag-trip-shared.component";
 
 @Component({
   selector: 'app-trip-upcoming-card',
@@ -13,7 +17,11 @@ import dayjs from "dayjs";
   imports: [
     RouterLink,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    LucideAngularModule,
+    TagModule,
+    TooltipModule,
+    TagTripSharedComponent
   ],
   templateUrl: './trip-upcoming-card.component.html',
 })

@@ -55,13 +55,19 @@ export class CreateParticipantBtnComponent {
             this.sidebarVisible = false
             this.participantForm.reset()
             this.participantForm.controls['name'].enable()
+            this.isSubmitting = false
 
           },
           error: (e: any) => {
-            toast.error(constants.messages.ERROR_CREATE)
             this.isSubmitting = false
+            if(e.status === 400) {
+              if(e.error.error === "NOT_AUTHORIZED") {
+                toast.warning(constants.messages.ERROR_NEED_WRITE)
+                return
+              }
+            }
+            toast.error(constants.messages.ERROR_CREATE)
           },
-          complete: () => this.isSubmitting = false
         })
     }
     else {

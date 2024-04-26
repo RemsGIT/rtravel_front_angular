@@ -1,34 +1,27 @@
-<p-card>
-  <ng-template pTemplate="header">
-    <div class="flex gap-2 items-center font-semibold p-3">
-      <lucide-icon name="flag" size="16" strokeWidth="4" />
-      <h3>Prochaine activité</h3>
+@if(nextActivity) {
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex gap-2 items-center font-semibold p-3">
+        <lucide-icon name="flag" size="16" strokeWidth="4" />
+        <h3>Prochaine activité</h3>
+      </div>
+    </ng-template>
+
+    <div class="p-6 pt-0">
+      <h4 class="text-lg">{{nextActivity?.name}}</h4>
+
+      <div class="space-y-2 mt-2">
+        <p class="text-xs text-muted-foreground flex gap-2">
+          <lucide-icon name="map-pin" size="16" />
+          {{nextActivity?.place ? nextActivity.place+' - ':''}}{{nextActivity?.city}}
+        </p>
+
+        <p class="text-xs text-muted-foreground flex gap-2">
+          <lucide-icon name="clock" size="16" />
+          {{dayjs(nextActivity?.start).locale(fr).format('DD MMMM YYYY à HH:mm')}}
+        </p>
+      </div>
     </div>
-  </ng-template>
+  </p-card>
 
-  <div class="p-6 pt-0">
-    <h4 class="text-lg">Visite du colisée</h4>
-
-    <div class="space-y-2 mt-2">
-      <p class="text-xs text-muted-foreground flex gap-2">
-        <lucide-icon name="map-pin" size="16" />
-        Rome, Italie
-      </p>
-
-      <p class="text-xs text-muted-foreground flex gap-2">
-        <lucide-icon name="clock" size="16" />
-        13/02/1975
-      </p>
-
-    </div>
-
-    <div class="flex justify-between">
-      <span></span>
-      <p-button loadingIcon styleClass="gap-1">
-        <lucide-icon name="map" size="16" class="mt-0.5" />
-        <span>Y Aller</span>
-      </p-button>
-    </div>
-
-  </div>
-</p-card>
+}
