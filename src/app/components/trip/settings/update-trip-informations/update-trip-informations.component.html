@@ -1,0 +1,167 @@
+<div class="w-full px-2">
+  <div class="py-2 space-y-2 font-normal text-sm ">
+    <div class="flex justify-between items-center border-bottom pb-2">
+      <span>Nom</span>
+      <div class='flex items-center gap-2 font-light'>
+        <span class="text-sm">{{tripService.tripSelected()?.name}}</span>
+        <lucide-icon name="arrow-right" size="16" class='h-[16px]' (click)="edit_name_visible = true" />
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center border-bottom pb-2">
+      <span>Ville</span>
+      <div class='flex items-center gap-2 font-light'>
+        <span class="text-sm">{{tripService.tripSelected()?.city}}</span>
+        <lucide-icon name="arrow-right" size="16" class='h-[16px]' (click)="edit_city_visible = true" />
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center border-bottom pb-2">
+      <span>Début</span>
+      <div class='flex items-center gap-2 font-light'>
+        <span class="text-sm">{{dayjs(tripService.tripSelected()?.start).locale(fr).format('DD MMMM YYYY')}}</span>
+        <lucide-icon name="arrow-right" size="16" class='h-[16px]' (click)="edit_start_visible = true" />
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center border-bottom pb-2">
+      <span>Fin</span>
+      <div class='flex items-center gap-2 font-light'>
+        <span class="text-sm">{{dayjs(tripService.tripSelected()?.end).locale(fr).format('DD MMMM YYYY')}}</span>
+        <lucide-icon name="arrow-right" size="16" class='h-[16px]' (click)="edit_end_visible = true" />
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center border-bottom pb-2">
+      <span>Vignette</span>
+      <div class='flex items-center gap-2 font-light'>
+        <span class="text-sm">Modifier</span>
+        <lucide-icon name="arrow-right" size="16" class='h-[16px]' (click)="edit_thumbnail_visible = true" />
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <span>Photo de couverture</span>
+      <div class='flex items-center gap-2 font-light'>
+        <span class="text-sm">Modifier</span>
+        <lucide-icon name="arrow-right" size="16" class='h-[16px]' (click)="edit_cover_visible = true" />
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+@if([edit_name_visible, edit_city_visible, edit_start_visible, edit_end_visible, edit_thumbnail_visible, edit_cover_visible].includes(true)) {
+  <div class="absolute w-full h-full z-50 bg-white top-0 left-0 update-sidebar" [@slideInRight]>
+    @if(edit_name_visible) {
+      <div class="relative mt-3 w-full">
+        <lucide-icon name="arrow-left" class="absolute left-2" (click)="edit_name_visible = false" />
+        <h3 class="text-center mt-0 font-semibold">Modifier le nom</h3>
+        <hr class="mt-3 border-gray-100">
+      </div>
+
+      <input type="text" [(ngModel)]="name">
+
+      <p-button styleClass="w-5/6 flex mx-auto mt-24  " (onClick)="onChangeName()" [loading]="is_submitting" label="Enregistrer"></p-button>
+    } @else if (edit_city_visible) {
+      <div class="relative mt-3 w-full">
+        <lucide-icon name="arrow-left" class="absolute left-2" (click)="edit_city_visible = false" />
+        <h3 class="text-center mt-0 font-semibold">Modifier la destination</h3>
+        <hr class="mt-3 border-gray-100">
+      </div>
+
+      <app-select-location typeLocation="country_city" (onValueChange)="city = {city: $event.value ?? '', countryCode: $event.countryCode ?? ''}" [defaultValue]="city.city"/>
+
+
+      <p-button styleClass="w-5/6 flex mx-auto mt-24  " (onClick)="onChangeCity()" [loading]="is_submitting" label="Enregistrer"></p-button>
+    } @else if (edit_start_visible) {
+      <div class="relative mt-3 w-full">
+        <lucide-icon name="arrow-left" class="absolute left-2" (click)="edit_start_visible = false" />
+        <h3 class="text-center mt-0 font-semibold">Modifier la date de début</h3>
+        <hr class="mt-3 border-gray-100">
+      </div>
+
+      <p-calendar
+        id="start"
+        inputId="start"
+        appendTo="body"
+        showIcon
+        styleClass="w-5/6 flex mx-auto mt-8"
+        [(ngModel)]="start"
+        [touchUI]="true"
+        [readonlyInput]="true"
+        [maxDate]="end"
+      />
+
+
+      <p-button styleClass="w-5/6 flex mx-auto mt-24  " (onClick)="onChangeStart()" [loading]="is_submitting" label="Enregistrer"></p-button>
+    } @else if (edit_end_visible) {
+      <div class="relative mt-3 w-full">
+        <lucide-icon name="arrow-left" class="absolute left-2" (click)="edit_end_visible = false" />
+        <h3 class="text-center mt-0 font-semibold">Modifier la date de fin</h3>
+        <hr class="mt-3 border-gray-100">
+      </div>
+
+      <p-calendar
+        id="end"
+        inputId="end"
+        appendTo="body"
+        showIcon
+        styleClass="w-5/6 flex mx-auto mt-8"
+        [(ngModel)]="end"
+        [touchUI]="true"
+        [readonlyInput]="true"
+        [minDate]="start"
+      />
+
+
+      <p-button styleClass="w-5/6 flex mx-auto mt-24  " (onClick)="onChangeEnd()" [loading]="is_submitting" label="Enregistrer"></p-button>
+    } @else if(edit_thumbnail_visible) {
+      <div class="relative mt-3 w-full">
+        <lucide-icon name="arrow-left" class="absolute left-2" (click)="edit_thumbnail_visible = false" />
+        <h3 class="text-center mt-0 font-semibold">Modifier la vignette</h3>
+        <hr class="mt-3 border-gray-100">
+      </div>
+
+
+      <input
+        class="flex h-9 mt-8 w-5/6 mx-auto rounded-md border border-input
+         bg-background px-3 py-1 text-sm shadow-sm transition-colors border-1
+         file:border-0 file:bg-primary file:text-white file:text-sm file:font-medium file:p-2
+         placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
+         disabled:cursor-not-allowed disabled:opacity-50"
+        (change)="onChangeFileThumbnail($event)"
+        type="file"
+      >
+
+
+      <p-button styleClass="w-5/6 flex mx-auto mt-24  " (onClick)="onChangeThumbnail()" [loading]="is_submitting" label="Enregistrer"></p-button>
+
+    }
+    @else if(edit_cover_visible) {
+      <div class="relative mt-3 w-full">
+        <lucide-icon name="arrow-left" class="absolute left-2" (click)="edit_cover_visible = false" />
+        <h3 class="text-center mt-0 font-semibold">Modifier la photo de couverture</h3>
+        <hr class="mt-3 border-gray-100">
+      </div>
+
+
+      <input
+        class="flex h-9 mt-8 w-5/6 mx-auto rounded-md border border-input
+         bg-background px-3 py-1 text-sm shadow-sm transition-colors border-1
+         file:border-0 file:bg-primary file:text-white file:text-sm file:font-medium file:p-2
+         placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
+         disabled:cursor-not-allowed disabled:opacity-50"
+        (change)="onChangeFileCover($event)"
+        type="file"
+      >
+
+
+      <p-button styleClass="w-5/6 flex mx-auto mt-24" (onClick)="onChangeCover()" [loading]="is_submitting" label="Enregistrer"></p-button>
+
+    }
+  </div>
+}
+

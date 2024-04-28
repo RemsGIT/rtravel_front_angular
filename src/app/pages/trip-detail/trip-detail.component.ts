@@ -7,6 +7,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {TripRecapCardComponent} from "../../components/trip/trip-recap-card/trip-recap-card.component";
 import {TripNavigationTabsComponent} from "../../components/trip/trip-navigation-tabs/trip-navigation-tabs.component";
 import {toast} from "ngx-sonner";
+import {apiEndpoint, constants} from "../../constants";
 
 @Component({
   selector: 'app-trip-detail',
@@ -43,4 +44,7 @@ export class TripDetailComponent implements OnInit{
 
 
   }
+
+  protected readonly constants = constants;
+  protected readonly apiEndpoint = apiEndpoint;
 }

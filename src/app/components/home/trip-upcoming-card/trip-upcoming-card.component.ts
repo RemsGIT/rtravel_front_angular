@@ -1,7 +1,7 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {Trip} from "../../../../models/trip.model";
 import {HttpClient} from "@angular/common/http";
-import {apiEndpoint} from "../../../constants";
+import {apiEndpoint, constants} from "../../../constants";
 import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
@@ -10,6 +10,7 @@ import {LucideAngularModule} from "lucide-angular";
 import {TagModule} from "primeng/tag";
 import {TooltipModule} from "primeng/tooltip";
 import {TagTripSharedComponent} from "../../trip/utils/tag-trip-shared/tag-trip-shared.component";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-trip-upcoming-card',
@@ -21,7 +22,8 @@ import {TagTripSharedComponent} from "../../trip/utils/tag-trip-shared/tag-trip-
     LucideAngularModule,
     TagModule,
     TooltipModule,
-    TagTripSharedComponent
+    TagTripSharedComponent,
+    NgOptimizedImage
   ],
   templateUrl: './trip-upcoming-card.component.html',
 })
@@ -46,4 +48,6 @@ export class TripUpcomingCardComponent implements OnInit {
   }
 
   protected readonly dayjs = dayjs;
+  protected readonly constants = constants;
+  protected readonly apiEndpoint = apiEndpoint;
 }

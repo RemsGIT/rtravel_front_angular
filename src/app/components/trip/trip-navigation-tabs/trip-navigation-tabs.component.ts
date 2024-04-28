@@ -12,6 +12,7 @@ import {ParticipantsListComponent} from "../participants/participants-list/parti
 import {TabViewChangeEvent, TabViewModule} from "primeng/tabview";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TripWidgetTicketsComponent} from "../preview/trip-widget-tickets/trip-widget-tickets.component";
+import {UpdateTripSettingsComponent} from "../settings/update-trip-settings/update-trip-settings.component";
 
 
 type Tabs = "preview" | "activities" | "participants" | "budget"
@@ -25,7 +26,8 @@ type Tabs = "preview" | "activities" | "participants" | "budget"
     TripActivitiesDateTabsComponent,
     ParticipantsListComponent,
     TabViewModule,
-    TripWidgetTicketsComponent
+    TripWidgetTicketsComponent,
+    UpdateTripSettingsComponent
   ],
   templateUrl: './trip-navigation-tabs.component.html',
   animations: [

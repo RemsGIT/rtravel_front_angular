@@ -7,6 +7,8 @@ export interface Trip {
   countryCode: string,
   start: Date,
   end: Date,
+  thumbnail?: string,
+  cover?: string,
   activities?: Activity[],
   participants?: Participant[],
   isShared?: boolean
@@ -26,7 +28,18 @@ export interface ITripRequest {
   city: string,
   start: Date,
   end: Date,
-  countryCode: string
+  countryCode: string,
+
+}
+
+export interface ITripUpdateRequest {
+  name?: string,
+  city?: string,
+  start?: Date | string,
+  end?: Date | string,
+  countryCode?: string,
+  thumbnail?: string,
+  cover?: string,
 }
 
 export interface IActivityRequest {

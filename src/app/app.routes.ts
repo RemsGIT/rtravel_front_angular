@@ -8,12 +8,12 @@ import {CheckEmailComponent} from "./pages/auth/check-email/check-email.componen
 import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
 
 export const routes: Routes = [
-  {path: 'connexion', component: LoginComponent},
-  {path: 'inscription', component: RegisterComponent},
-  {path: 'verification-mail', component: CheckEmailComponent},
+  {path: 'connexion', component: LoginComponent, title: "Rtravel | Planificateur de voyage"},
+  {path: 'inscription', component: RegisterComponent, title: "Rtravel | Planificateur de voyage"},
+  {path: 'verification-mail', component: CheckEmailComponent, title: "Rtravel | Planificateur de voyage"},
 
 
-  {path: 'accueil', component: HomeComponent, canActivate: [authGuard]},
-  {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard]},
+  {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages"},
+  {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage"},
   {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard]},
 ];

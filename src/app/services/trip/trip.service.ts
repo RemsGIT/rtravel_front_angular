@@ -1,5 +1,5 @@
 import {Injectable, signal} from '@angular/core';
-import {Activity, IActivityRequest, ITripRequest, Trip} from "../../../models/trip.model";
+import {Activity, IActivityRequest, ITripRequest, ITripUpdateRequest, Trip} from "../../../models/trip.model";
 import {apiEndpoint} from "../../constants";
 import {HttpClient} from "@angular/common/http";
 import {toObservable} from "@angular/core/rxjs-interop";
@@ -18,6 +18,10 @@ export class TripService {
 
   persistTrip(data: ITripRequest) {
     return this.http.post<Trip>(`${apiEndpoint}/trips`, data)
+  }
+
+  updateTrip(data: ITripUpdateRequest | FormData, tripId: number) {
+    return this.http.patch<Trip>(`${apiEndpoint}/trips/${tripId}`, data)
   }
 
   persistActivity(data: IActivityRequest, tripId?: number) {

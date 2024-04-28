@@ -55,3 +55,10 @@ body,h1,h2,h3,h4,h5,h6 {
 .ol-timeline-border {
   border-left: 1px solid rgb(229 231 235 / var(--tw-border-opacity)) !important;
 }
+
+.update-sidebar input:not([type="file"]) {
+  @apply mt-8 border-b-[0.8px] border-t-0 border-l-0 border-r-0 border-black px-0 pt-0 rounded-none text-sm pb-4 ring-0 outline-0 w-[90%] mx-auto block
+}
+.update-sidebar .p-calendar input {
+  @apply mt-0
+}
