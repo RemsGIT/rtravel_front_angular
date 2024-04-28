@@ -1,7 +1,7 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Participant, ParticipantPolicy} from "../../../../../models/participant.model";
-import {apiEndpoint} from "../../../../constants";
+import {apiEndpoint, constants} from "../../../../constants";
 import {TripService} from "../../../../services/trip/trip.service";
 
 import {ParticipantCardComponent} from "../participant-card/participant-card.component";
@@ -30,7 +30,11 @@ export class ParticipantsListComponent implements OnInit {
   tripOwner: Participant | undefined = undefined
 
   ngOnInit() {
-    this.http.get<{ participants: Participant[], owner: IUser }>(`${apiEndpoint}/trips/${this.tripService.tripSelected()?.id}/participants`)
+    this.http.get<{ participants: Participant[], owner: IUser }>(`${apiEndpoint}/trips/${this.tripService.tripSelected()?.id}/participants`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(constants.TOKEN_NAME) ?? ''}`
+      }
+    })
       .subscribe(response => {
         this.participants = response.participants
 

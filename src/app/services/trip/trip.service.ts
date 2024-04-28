@@ -2,7 +2,6 @@ import {Injectable, signal} from '@angular/core';
 import {Activity, IActivityRequest, ITripRequest, ITripUpdateRequest, Trip} from "../../../models/trip.model";
 import {apiEndpoint} from "../../constants";
 import {HttpClient} from "@angular/common/http";
-import {toObservable} from "@angular/core/rxjs-interop";
 
 @Injectable({
   providedIn: 'root'

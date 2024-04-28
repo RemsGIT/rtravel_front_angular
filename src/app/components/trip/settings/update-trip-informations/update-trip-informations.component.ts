@@ -9,10 +9,11 @@ import {InputTextModule} from "primeng/inputtext";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {toast} from "ngx-sonner";
-import {constants} from "../../../../constants";
+import {apiEndpoint, constants} from "../../../../constants";
 import {SelectLocationComponent} from "../../../utils/select-location/select-location.component";
 import {CalendarModule} from "primeng/calendar";
 import {FileUploadModule} from "primeng/fileupload";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-update-trip-informations',
@@ -26,7 +27,8 @@ import {FileUploadModule} from "primeng/fileupload";
     SelectLocationComponent,
     CalendarModule,
     ReactiveFormsModule,
-    FileUploadModule
+    FileUploadModule,
+    NgOptimizedImage
   ],
   templateUrl: './update-trip-informations.component.html',
   styleUrl: './update-trip-informations.scss',
@@ -237,4 +239,7 @@ export class UpdateTripInformationsComponent {
   }
 
 
+  protected readonly apiEndpoint = apiEndpoint;
+  protected readonly constants = constants;
+  protected readonly URL = URL;
 }
