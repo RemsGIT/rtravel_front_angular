@@ -1,0 +1,43 @@
+<p-sidebar [(visible)]="sidebarVisible" position="bottom" styleClass="h-[35%] rounded-t-3xl" [showCloseIcon]="false" >
+  <ng-template pTemplate="content">
+    <div class="flex flex-col gap-4">
+      @if(!isBudgetExist()) {
+        <div class="border border-gray-200 border-solid flex gap-4 p-4 rounded-xl items-center cursor-pointer transition hover:bg-slate-50" (click)="openFormBudget=true">
+          <lucide-icon name="piggy-bank" size="50" class="text-primary"/>
+          <div>
+            <span class="text-xl font-bold text-primary">Créer un budget</span>
+            <br>
+            <span class="text-xs text-gray-400">Rtravel te proposera des fonctionnalités pour t'aider à gérer au mieux ton budget de voyage.</span>
+          </div>
+        </div>
+      }
+      @else {
+        <div class="border border-gray-200 border-solid flex gap-4 p-4 rounded-xl items-center cursor-pointer transition hover:bg-slate-50">
+          <lucide-icon name="piggy-bank" size="50" class="text-gray-400"/>
+          <div>
+            <span class="text-xl font-bold text-gray-400">Créer un budget</span>
+            <br>
+            <span class="text-xs text-gray-400">Rtravel te proposera des fonctionnalités pour t'aider à gérer au mieux ton budget de voyage.</span>
+          </div>
+        </div>
+      }
+      <div class="border border-gray-200 border-solid flex gap-4 p-4 rounded-xl items-center cursor-pointer transition hover:bg-slate-50">
+        <lucide-icon name="coins" size="50" class="text-primary"/>
+        <div>
+          <span class="text-xl font-bold text-primary">Ajouter une dépense</span>
+          <br>
+          <span class="text-xs text-gray-400">Renseigne des dépenses par participant et calcule à la fin une répartition égale.</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-sidebar>
+
+<div class="fixed right-3 bottom-5" >
+  <p-button (click)="sidebarVisible = true" styleClass="p-2 rounded-full">
+    <lucide-icon name="plus" size="20" class="h-[20px]" />
+  </p-button>
+</div>
+
+<app-form-budget [sidebarVisible]="openFormBudget" (onCreateBudget)="onCreateBudget.emit($event)"
+                 (onChangeVisibility)="onChangeVisibilityFormBudget($event)"/>

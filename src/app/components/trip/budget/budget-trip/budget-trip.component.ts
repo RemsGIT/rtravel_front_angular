@@ -8,6 +8,7 @@ import {FormBudgetComponent} from "../form-budget/form-budget.component";
 import {Budget, Payment} from "../../../../../models/budget.model";
 import {BudgetService} from "../../../../services/budget/budget.service";
 import {TripService} from "../../../../services/trip/trip.service";
+import {CreateBudgetPaymentBtnComponent} from "../create-budget-payment-btn/create-budget-payment-btn.component";
 
 @Component({
   selector: 'app-budget-trip',
@@ -18,7 +19,8 @@ import {TripService} from "../../../../services/trip/trip.service";
     ButtonModule,
     LucideAngularModule,
     CardModule,
-    FormBudgetComponent
+    FormBudgetComponent,
+    CreateBudgetPaymentBtnComponent
   ],
   templateUrl: './budget-trip.component.html',
 })
@@ -38,8 +40,11 @@ export class BudgetTripComponent implements OnInit{
         next: response => {
           this.budget = response
           this.isLoaded = true
+
+          console.log(this.budget)
         }
       })
+
 
     this.budgetService.getAllPaymentsByTrip(this.tripService.tripSelected()?.id as number)
       .subscribe({
