@@ -13,6 +13,7 @@ import {DecimalPipe} from "@angular/common";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {toast} from "ngx-sonner";
 import {constants} from "../../constants";
+import {DividerModule} from "primeng/divider";
 
 @Component({
   selector: 'app-list-payments',
@@ -24,7 +25,8 @@ import {constants} from "../../constants";
     SharedModule,
     ConfirmDialogModule,
     FormPaymentComponent,
-    DecimalPipe
+    DecimalPipe,
+    DividerModule
   ],
   providers: [ConfirmationService],
   templateUrl: './list-payments.component.html',
@@ -39,6 +41,7 @@ export class ListPaymentsComponent implements OnInit {
   isLoaded = false
 
   paymentToEdit: Payment | undefined
+  participantsWithTotal: any[] = []
 
   constructor(private tripService: TripService, private budgetService: BudgetService, private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) { }
 
@@ -59,6 +62,8 @@ export class ListPaymentsComponent implements OnInit {
           this.isLoaded = true
 
           this.payments = response
+
+          this.participantsWithTotal = this.getTotalByParticipant()
         }
       })
 
@@ -84,6 +89,7 @@ export class ListPaymentsComponent implements OnInit {
 
 
           this.paymentToEdit = this.payments.find(p => p.id === Number(id) )
+
 
         }
       },
@@ -205,6 +211,32 @@ export class ListPaymentsComponent implements OnInit {
           toast.error(constants.messages.ERROR_DELETE)
         }
       })
+  }
+
+  getTotalByParticipant(): any[] {
+    this.payments.forEach(payment => {
+      const participantId = payment.participantId || payment.userId;
+      const participantName = payment.participant?.name || payment.user?.username; // Supposons que le nom soit inclus dans les paiements
+      const amount = payment.amount;
+
+      if (this.participantsWithTotal[participantId as number]) {
+        // Ajoute le montant du paiement au total des dépenses existant pour ce participant
+        this.participantsWithTotal[participantId as number  ].total += amount;
+      } else {
+        // Initialise un nouveau total des dépenses pour ce participant
+        this.participantsWithTotal[participantId as number  ] = {
+          id: participantId,
+          name: participantName,
+          total: amount
+        };
+      }
+    });
+
+    // Conversion de l'objet en tableau et tri par nom du participant
+    const totalsArray = Object.values(this.participantsWithTotal);
+    totalsArray.sort((a, b) => (a.name < b.name ? -1 : 1)); // Tri par nom du participant
+
+    return totalsArray;
   }
 
 }
