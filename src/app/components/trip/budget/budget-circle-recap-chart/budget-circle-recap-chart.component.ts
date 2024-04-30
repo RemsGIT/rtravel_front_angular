@@ -7,6 +7,10 @@ import {MenuModule} from "primeng/menu";
 import {MenuItem} from "primeng/api";
 import {FormBudgetComponent} from "../form-budget/form-budget.component";
 import {Budget} from "../../../../../models/budget.model";
+import {BudgetService} from "../../../../services/budget/budget.service";
+import {TripService} from "../../../../services/trip/trip.service";
+import {toast} from "ngx-sonner";
+import {constants} from "../../../../constants";
 
 @Component({
   selector: 'app-budget-circle-recap-chart',
@@ -29,6 +33,10 @@ export class BudgetCircleRecapChartComponent implements OnInit{
   totalPaymentsAmount = input.required<number>()
 
   onUpdateBudget = output<Budget>()
+  onRemoveBudget = output()
+
+  constructor(private budgetService: BudgetService, private tripService: TripService) {
+  }
 
   ngOnInit() {
     this.items = [
@@ -43,7 +51,22 @@ export class BudgetCircleRecapChartComponent implements OnInit{
         label: 'Supprimer',
         icon: 'trash',
         command: () => {
-
+          this.budgetService.removeBudget(this.budget().id, this.tripService.tripSelected()?.id as number)
+            .subscribe({
+              next: response => {
+                toast.success("Le budget a été supprimé")
+                this.onRemoveBudget.emit()
+              },
+              error: e => {
+                if(e.status === 400) {
+                  if(e.error.error === "NOT_AUTHORIZED") {
+                    toast.warning(constants.messages.ERROR_NEED_WRITE)
+                    return
+                  }
+                }
+                toast.error(constants.messages.ERROR_DELETE)
+              }
+            })
         }
       }
     ];
