@@ -1,0 +1,52 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex font-semibold p-3 justify-between">
+      <div class="flex gap-2 items-center">
+        <lucide-icon name="coins" size="30"/>
+        <span>Dernières dépenses</span>
+      </div>
+      <div>
+        <p-menu [model]="items" [popup]="true" #menu appendTo="body" styleClass="text-xs w-[110px]">
+          <ng-template pTemplate="item" let-item>
+            <div class="p-menuitem-link space-x-1.5">
+              <lucide-icon [size]="14" [name]="item.icon" class="text-gray-400 h-[14px]"></lucide-icon>
+              <span>{{ item.label }}</span>
+            </div>
+          </ng-template>
+        </p-menu>
+        <lucide-icon name="ellipsis-vertical" (click)="menu.toggle($event)" class="text-slate-300 cursor-pointer" size="20"></lucide-icon>
+      </div>
+    </div>
+  </ng-template>
+  <div class="p-4 flex flex-col justify-center items-center pt-0 gap-3 mt-3">
+    @for (payment of lastPayments(); track payment; let first = $first) {
+      <div class="w-full flex justify-between items-center">
+        <div class="flex gap-3 items-center">
+          <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
+            @if (payment.user) {
+              {{ payment.user.username?.[0] }}
+            } @else {
+              {{ payment.participant?.name?.[0] }}
+            }
+          </div>
+
+          <div class="flex flex-col">
+            <span >
+              @if (payment.user) {
+                {{ payment.user.username }}
+              } @else {
+                {{ payment.participant?.name }}
+              }
+            </span>
+            <span class="text-xs text-gray-400 uppercase-first">{{dayjs(payment.createdAt).locale(fr).format('dddd DD MMMM')}}</span>
+          </div>
+        </div>
+
+
+        <div>
+          {{payment.amount}} €
+        </div>
+      </div>
+    }
+  </div>
+</p-card>

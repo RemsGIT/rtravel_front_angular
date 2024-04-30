@@ -6,6 +6,7 @@ import {TripDetailComponent} from "./pages/trip-detail/trip-detail.component";
 import {RegisterComponent} from "./pages/auth/register/register.component";
 import {CheckEmailComponent} from "./pages/auth/check-email/check-email.component";
 import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
+import {ListPaymentsComponent} from "./pages/list-payments/list-payments.component";
 
 export const routes: Routes = [
   {path: 'connexion', component: LoginComponent, title: "Rtravel | Planificateur de voyage"},
@@ -16,4 +17,6 @@ export const routes: Routes = [
   {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages"},
   {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage"},
   {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard]},
+
+  {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage'},
 ];

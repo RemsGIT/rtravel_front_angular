@@ -37,8 +37,8 @@ export class BudgetService {
     return this.http.post<Payment>(`${apiEndpoint}/trips/${tripId}/payments`, data)
   }
 
-  updatePayment(data: PaymentRequest, tripId: number) {
-    return this.http.patch<Payment>(`${apiEndpoint}/trips/${tripId}/payments`, data)
+  updatePayment(paymentId: number, data: PaymentRequest, tripId: number) {
+    return this.http.patch<Payment>(`${apiEndpoint}/trips/${tripId}/payments/${paymentId}`, data)
   }
 
   removePayment(paymentId: number, tripId: number) {

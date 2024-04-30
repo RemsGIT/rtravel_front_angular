@@ -1,3 +1,6 @@
+import {IUser} from "./auh.model";
+import {Participant} from "./participant.model";
+
 export interface Budget {
   id: number,
   amount: number,
@@ -16,6 +19,9 @@ export interface Payment {
   updatedById?: number,
   createdAt: Date,
   updatedAt: Date,
+
+  user?: IUser;
+  participant?: Participant
 }
 
 

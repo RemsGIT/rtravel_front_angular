@@ -62,21 +62,12 @@ export class FormPaymentComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.paymentEditingValue()) {
-      this.paymentForm.patchValue({
-        amount: this.paymentEditingValue()?.amount,
-        description: this.paymentEditingValue()?.description,
-        category: this.paymentEditingValue()?.category,
-        participantId: this.paymentEditingValue()?.participantId
-      })
-    }
-
     this.tripService.getParticipants()
       .subscribe({
         next: (response: any) => {
           // Owner
           this.participantsOptions.push({
-            code: response.owner.id,
+            code: response.owner.id.toString(),
             name: response.owner.username
           })
 
@@ -88,6 +79,14 @@ export class FormPaymentComponent implements OnInit{
             })
           })
 
+          if(this.paymentEditingValue()) {
+            this.paymentForm.patchValue({
+              amount: this.paymentEditingValue()?.amount,
+              description: this.paymentEditingValue()?.description,
+              category: this.paymentEditingValue()?.category,
+              participantId: this.paymentEditingValue()?.participantId?.toString() ?? this.paymentEditingValue()?.userId?.toString()
+            })
+          }
         }
       })
   }
@@ -98,24 +97,47 @@ export class FormPaymentComponent implements OnInit{
 
   onSubmitCreatePayment() {
     if (this.paymentForm.valid) {
-      this.budgetService.persistPayment(this.paymentForm.value, this.tripService.tripSelected()?.id as number)
-        .subscribe({
-          next: response => {
-            this.paymentForm.reset()
-            this.onCreatePayment.emit(response)
-            this.onChangeVisibility.emit(false)
-            toast.success("La dépense a été enregistrée")
-          },
-          error: e => {
-            if(e.status === 400) {
-              if(e.error.error === "NOT_AUTHORIZED") {
-                toast.warning(constants.messages.ERROR_NEED_WRITE)
-                return
+      if(!this.paymentEditingValue()) {
+        this.budgetService.persistPayment(this.paymentForm.value, this.tripService.tripSelected()?.id as number)
+          .subscribe({
+            next: response => {
+              this.paymentForm.reset()
+              this.onCreatePayment.emit(response)
+              this.onChangeVisibility.emit(false)
+              toast.success("La dépense a été enregistrée")
+            },
+            error: e => {
+              if(e.status === 400) {
+                if(e.error.error === "NOT_AUTHORIZED") {
+                  toast.warning(constants.messages.ERROR_NEED_WRITE)
+                  return
+                }
               }
+              toast.error(constants.messages.ERROR_CREATE)
             }
-            toast.error(constants.messages.ERROR_CREATE)
-          }
-        })
+          })
+      }
+      else {
+
+        this.budgetService.updatePayment(this.paymentEditingValue()?.id as number, this.paymentForm.value, this.tripService.tripSelected()?.id as number)
+          .subscribe({
+            next: response => {
+              this.paymentForm.reset()
+              this.onCreatePayment.emit(response)
+              this.onChangeVisibility.emit(false)
+              toast.success("La dépense a été modifiée")
+            },
+            error: e => {
+              if(e.status === 400) {
+                if(e.error.error === "NOT_AUTHORIZED") {
+                  toast.warning(constants.messages.ERROR_NEED_WRITE)
+                  return
+                }
+              }
+              toast.error(constants.messages.ERROR_UPDATE)
+            }
+          })
+      }
     } else {
       this.paymentForm.markAllAsTouched()
     }

@@ -19,6 +19,7 @@
           formControlName="amount"
           currency="EUR"
           locale="fr-FR"
+
           [class]="(paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full block mt-2'"
           styleClass="w-full"
 
@@ -47,6 +48,7 @@
           formControlName="category"
           styleClass="w-full"
           optionValue="code"
+
           [class]="(paymentForm.get('category')?.touched && paymentForm.get('category')?.errors ? 'ng-invalid ng-dirty  ' : '')"
         />
       </div>

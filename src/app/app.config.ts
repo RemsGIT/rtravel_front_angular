@@ -31,7 +31,9 @@ import {
   Car,
   Train,
   Bus,
-  PiggyBank
+  PiggyBank,
+  Eye,
+  Search
 
 
 } from "lucide-angular";
@@ -72,7 +74,9 @@ export const appConfig: ApplicationConfig = {
         Car,
         Train,
         Bus,
-        PiggyBank
+        PiggyBank,
+        Eye,
+        Search
       }),
       TranslateModule.forRoot({
         loader: {

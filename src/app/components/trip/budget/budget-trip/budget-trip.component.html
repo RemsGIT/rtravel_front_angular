@@ -17,9 +17,11 @@
             <p class="text-xs text-gray-400 italic">dépensés</p>
           </div>
         </p-card>
+
+        <app-budget-widget-last-payments [lastPayments]="payments.slice(0, 5)" />
       }
 
-      <app-create-budget-payment-btn [isBudgetExist]="budget !== undefined && budget !== null" (onCreateBudget)="budget = $event" (onCreatePayment)="payments.push($event)" />
+      <app-create-budget-payment-btn [isBudgetExist]="budget !== undefined && budget !== null" (onCreateBudget)="budget = $event" (onCreatePayment)="payments.unshift($event)" />
     </div>
   } @else {
     <div class="mt-6">
