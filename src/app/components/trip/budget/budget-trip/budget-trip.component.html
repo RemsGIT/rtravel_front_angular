@@ -1,0 +1,54 @@
+@if (isLoaded) {
+  @if (budget || payments.length > 0) {
+    <!-- or at least one payment -->
+
+    <div class="flex flex-col gap-4 ">
+
+      @if (budget) {
+        <app-budget-circle-recap-chart [budget]="budget" [totalPaymentsAmount]="getTotalPaymentsAmount()" (onUpdateBudget)="budget = $event" />
+      }
+      @if (payments.length > 0) {
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="flex gap-2 items-center font-semibold p-3 pb-0">
+              <lucide-icon name="coins" size="30"/>
+            </div>
+          </ng-template>
+          <div class="p-4 flex flex-col justify-center items-center pt-0">
+            <p class="text-4xl font-bold">{{getTotalPaymentsAmount()}} €</p>
+            <p class="text-xs text-gray-400 italic">dépensés</p>
+          </div>
+        </p-card>
+      }
+    </div>
+  } @else {
+    <div class="mt-6">
+      <h3 class="text-center">Gère le budget de ton voyage !</h3>
+      <img
+        ngSrc="/assets/images/icons/Coins-amico.svg"
+        width="300"
+        height="200"
+        class="block mx-auto mt-5"
+      />
+
+      <p class="text-sm text-center text-gray-500 mt-4">Renseigne les dépenses par participant et calcule une
+        répartition équitable à la fin du voyage</p>
+
+      <div class="mt-4 space-x-2 flex justify-center">
+        <p-button styleClass="text-sm gap-2" outlined (click)="openFormBudget = true">
+          <lucide-icon name="piggy-bank"/>
+          Créer un budget
+        </p-button>
+        <p-button styleClass="text-sm gap-2" outlined>
+          <lucide-icon name="coins"/>
+          Ajouter une dépense
+        </p-button>
+      </div>
+
+    </div>
+
+    <app-form-budget [sidebarVisible]="openFormBudget" (onCreateBudget)="budget = $event"
+                     (onChangeVisibility)="openFormBudget = $event"/>
+  }
+
+}

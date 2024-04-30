@@ -1,0 +1,38 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex font-semibold p-3 justify-between">
+      <div class="flex gap-2 items-center">
+        <lucide-icon name="flag" size="16" strokeWidth="4" />
+        <h3>Budget</h3>
+      </div>
+      <div>
+        <p-menu [model]="items" [popup]="true" #menu appendTo="body" styleClass="text-xs w-[110px]">
+          <ng-template pTemplate="item" let-item>
+            <div class="p-menuitem-link space-x-1.5">
+              <lucide-icon [size]="14" [name]="item.icon" class="text-gray-400 h-[14px]"></lucide-icon>
+              <span>{{ item.label }}</span>
+            </div>
+          </ng-template>
+        </p-menu>
+        <lucide-icon name="ellipsis-vertical" (click)="menu.toggle($event)" class="text-slate-300 cursor-pointer" size="20"></lucide-icon>
+      </div>
+    </div>
+  </ng-template>
+  <div class="flex justify-center pb-4">
+    <ngx-gauge
+      [size]="180"
+      type="arch"
+      [thick]="15"
+      [value]="totalPaymentsAmount() > 0 ? Number((((totalPaymentsAmount() / budget().amount ))*100).toFixed(0)) : 0"
+      cap="round"
+      [label]="budget().amount  + ' €'"
+      append="%"
+      class="mx-auto"
+      foregroundColor="#12B981"
+      [duration]="600"
+    />
+  </div>
+</p-card>
+
+
+<app-form-budget [sidebarVisible]="isEditingBudget" [budgetEditingValue]="budget()" (onChangeVisibility)="isEditingBudget = $event" (onCreateBudget)="onEditBudget($event)"  />
