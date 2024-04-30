@@ -33,7 +33,8 @@ import {
   Bus,
   PiggyBank,
   Eye,
-  Search
+  Search,
+  Calculator
 
 
 } from "lucide-angular";
@@ -76,7 +77,8 @@ export const appConfig: ApplicationConfig = {
         Bus,
         PiggyBank,
         Eye,
-        Search
+        Search,
+        Calculator,
       }),
       TranslateModule.forRoot({
         loader: {
