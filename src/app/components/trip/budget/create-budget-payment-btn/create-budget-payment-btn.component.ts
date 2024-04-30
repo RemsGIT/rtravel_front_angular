@@ -8,7 +8,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "primeng/api";
 import {SidebarModule} from "primeng/sidebar";
 import {FormBudgetComponent} from "../form-budget/form-budget.component";
-import {Budget} from "../../../../../models/budget.model";
+import {Budget, Payment} from "../../../../../models/budget.model";
+import {FormPaymentComponent} from "../form-payment/form-payment.component";
 
 @Component({
   selector: 'app-create-budget-payment-btn',
@@ -22,19 +23,27 @@ import {Budget} from "../../../../../models/budget.model";
     ReactiveFormsModule,
     SharedModule,
     SidebarModule,
-    FormBudgetComponent
+    FormBudgetComponent,
+    FormPaymentComponent
   ],
   templateUrl: './create-budget-payment-btn.component.html',
 })
 export class CreateBudgetPaymentBtnComponent {
   protected sidebarVisible: boolean = false
   protected openFormBudget = false
+  protected openFormPayment = false
   isBudgetExist = input(false)
 
   onCreateBudget = output<Budget>()
+  onCreatePayment = output<Payment>()
 
   onChangeVisibilityFormBudget (state: boolean) {
     this.openFormBudget = state
+    if(!state) this.sidebarVisible = false
+  }
+
+  onChangeVisibilityFormPayment (state: boolean) {
+    this.openFormPayment = state
     if(!state) this.sidebarVisible = false
   }
 }

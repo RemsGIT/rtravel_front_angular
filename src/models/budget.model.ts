@@ -8,8 +8,10 @@ export interface Budget {
 export interface Payment {
   id: number,
   amount: number,
+  description?: string,
   category: EPaymentCategory,
-  participantId: number,
+  participantId?: number,
+  userId?: number,
   createdById: number
   updatedById?: number,
   createdAt: Date,
@@ -35,6 +37,7 @@ export interface BudgetRequest {
 
 export interface PaymentRequest {
   amount: number,
+  description: string,
   category: EPaymentCategory,
   participantId: number,
 }

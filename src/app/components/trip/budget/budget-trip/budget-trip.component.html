@@ -19,7 +19,7 @@
         </p-card>
       }
 
-      <app-create-budget-payment-btn [isBudgetExist]="budget !== undefined && budget !== null" (onCreateBudget)="budget = $event" />
+      <app-create-budget-payment-btn [isBudgetExist]="budget !== undefined && budget !== null" (onCreateBudget)="budget = $event" (onCreatePayment)="payments.push($event)" />
     </div>
   } @else {
     <div class="mt-6">

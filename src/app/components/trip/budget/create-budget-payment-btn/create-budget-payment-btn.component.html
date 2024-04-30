@@ -21,7 +21,7 @@
           </div>
         </div>
       }
-      <div class="border border-gray-200 border-solid flex gap-4 p-4 rounded-xl items-center cursor-pointer transition hover:bg-slate-50">
+      <div class="border border-gray-200 border-solid flex gap-4 p-4 rounded-xl items-center cursor-pointer transition hover:bg-slate-50" (click)="openFormPayment = true">
         <lucide-icon name="coins" size="50" class="text-primary"/>
         <div>
           <span class="text-xl font-bold text-primary">Ajouter une dépense</span>
@@ -41,3 +41,6 @@
 
 <app-form-budget [sidebarVisible]="openFormBudget" (onCreateBudget)="onCreateBudget.emit($event)"
                  (onChangeVisibility)="onChangeVisibilityFormBudget($event)"/>
+
+<app-form-payment [sidebarVisible]="openFormPayment" (onCreatePayment)="onCreatePayment.emit($event)" (onChangeVisibility)="onChangeVisibilityFormPayment($event)" />
+

@@ -36,4 +36,8 @@ export class TripService {
   deleteActivity(id: string | number) {
     return this.http.delete(`${apiEndpoint}/trips/${this.tripSelected()?.id}/activities/${id}`)
   }
+
+  getParticipants() {
+    return this.http.get(`${apiEndpoint}/trips/${this.tripSelected()?.id}/participants`)
+  }
 }
