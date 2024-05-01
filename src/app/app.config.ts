@@ -34,7 +34,8 @@ import {
   PiggyBank,
   Eye,
   Search,
-  Calculator
+  Calculator,
+  List
 
 
 } from "lucide-angular";
@@ -79,6 +80,7 @@ export const appConfig: ApplicationConfig = {
         Eye,
         Search,
         Calculator,
+        List
       }),
       TranslateModule.forRoot({
         loader: {

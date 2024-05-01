@@ -16,9 +16,17 @@
     <div class="flex justify-between items-center mx-6 mt-2">
       <p class="text-4xl font-semibold tracking-wider">{{ getTotalPaymentsAmount() % 1 !== 0 ? (getTotalPaymentsAmount() | number:'1.2-2') :getTotalPaymentsAmount() }} €</p>
 
-      <div class="w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
-        <lucide-icon name="calculator" size="20" class="h-[20px]"/>
-      </div>
+      @if(showRepartition) {
+        <div class="w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center" (click)="showRepartition = false">
+          <lucide-icon name="list" size="20" class="h-[20px]"/>
+        </div>
+      }
+      @else {
+        <div class="w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center" (click)="showRepartition = true; ; firstLoad = false">
+          <lucide-icon name="calculator" size="20" class="h-[20px]"/>
+        </div>
+      }
+
 
     </div>
 
@@ -38,69 +46,97 @@
 
     <p-divider></p-divider>
 
-    <div class="p-4 flex flex-col pt-0 gap-8 mt-6">
-      @for (group of getOrganizedPayments(); track group.date) {
-        @if(group) {
-          <div class="space-y-4">
-            <h4 class="text-gray-600 first-letter:uppercase">{{ group.date }}</h4>
+    @if(showRepartition) {
+      <div [@slideInRight] class="px-4 mt-6">
+
+        <h3>Répartition égale entre chaque participant</h3>
+
+        <div class="space-y-6 mt-4">
+          @for(participant of transactionsRepartitionByParticipant();let i = $index;  track i) {
+            <div class="border border-solid border-slate-300 p-4 rounded-xl">
+              <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
+                  {{participant.name[0]}}
+                </div>
+                <span>{{participant.name}}</span>
+              </div>
+              <ul class="m-0 space-y-3 mt-3">
+                @for(transaction of participant.transactions; let j = $index; track j) {
+                  <li>
+                    Doit {{ transaction.amount.toFixed(2) }} € à {{ transaction.to }}
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    @else {
+      <div [@slideInLeft] [@.disabled]="firstLoad" class="p-4 flex flex-col pt-0 gap-8 mt-6">
+        @for (group of getOrganizedPayments(); track group.date) {
+          @if(group) {
             <div class="space-y-4">
-              @if (group.payments.length > 0) {
-                @for (payment of group.payments; track payment) {
-                  <!-- Affichage de chaque paiement -->
-                  <div class="w-full flex justify-between items-center">
-                    <div class="flex gap-3 items-center">
-                      <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
-                        {{ payment.user ? payment.user.username?.[0] : payment.participant?.name?.[0] }}
-                      </div>
-                      <div class="flex flex-col">
-                        <span>{{ payment.user ? payment.user.username : payment.participant?.name }}</span>
-                        @if(payment.description) {
-                          <span
-                            class="text-xs text-gray-400">
+              <h4 class="text-gray-600 first-letter:uppercase">{{ group.date }}</h4>
+              <div class="space-y-4">
+                @if (group.payments.length > 0) {
+                  @for (payment of group.payments; track payment) {
+                    <!-- Affichage de chaque paiement -->
+                    <div class="w-full flex justify-between items-center">
+                      <div class="flex gap-3 items-center">
+                        <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
+                          {{ payment.user ? payment.user.username?.[0] : payment.participant?.name?.[0] }}
+                        </div>
+                        <div class="flex flex-col">
+                          <span>{{ payment.user ? payment.user.username : payment.participant?.name }}</span>
+                          @if(payment.description) {
+                            <span
+                              class="text-xs text-gray-400">
                             {{ payment.description.length > 35 ? payment.description.substring(0, 35) + '...' : payment.description}}
                         </span>
-                        }
+                          }
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        {{ payment.amount % 1 !== 0 ? (payment.amount | number:'1.2-2') : payment.amount }} €
+
+                        <p-menu [model]="items" [popup]="true" #menu appendTo="body" styleClass="text-xs w-[110px]" [attr.payment]="payment.id">
+                          <ng-template pTemplate="item" let-item >
+                            <div class="p-menuitem-link space-x-1.5" [attr.payment]="payment.id">
+                              <lucide-icon [size]="14" [name]="item.icon" class="text-gray-400 h-[14px]" [attr.payment]="payment.id"></lucide-icon>
+                              <span [attr.payment]="payment.id">{{ item.label }}</span>
+                            </div>
+                          </ng-template>
+                        </p-menu>
+                        <lucide-icon name="ellipsis-vertical" (click)="menu.toggle($event)" class="text-slate-400 cursor-pointer h-full block" size="20"></lucide-icon>
                       </div>
                     </div>
-                    <div class="flex items-center gap-1">
-                      {{ payment.amount % 1 !== 0 ? (payment.amount | number:'1.2-2') : payment.amount }} €
 
-                      <p-menu [model]="items" [popup]="true" #menu appendTo="body" styleClass="text-xs w-[110px]" [attr.payment]="payment.id">
-                        <ng-template pTemplate="item" let-item >
-                          <div class="p-menuitem-link space-x-1.5" [attr.payment]="payment.id">
-                            <lucide-icon [size]="14" [name]="item.icon" class="text-gray-400 h-[14px]" [attr.payment]="payment.id"></lucide-icon>
-                            <span [attr.payment]="payment.id">{{ item.label }}</span>
+                    <p-confirmDialog #cd [key]="payment.id.toString()" styleClass="w-5/6">
+                      <ng-template pTemplate="headless" let-message>
+                        <div class="flex flex-col items-center p-3 surface-overlay border-round">
+                          <div class="rounded-full bg-primary inline-flex justify-center items-center h-[5rem] w-[5rem] -mt-16">
+                            <lucide-icon name="circle-help" size="45" class="text-white h-[45px]"></lucide-icon>
                           </div>
-                        </ng-template>
-                      </p-menu>
-                      <lucide-icon name="ellipsis-vertical" (click)="menu.toggle($event)" class="text-slate-400 cursor-pointer h-full block" size="20"></lucide-icon>
-                    </div>
-                  </div>
-
-                  <p-confirmDialog #cd [key]="payment.id.toString()" styleClass="w-5/6">
-                    <ng-template pTemplate="headless" let-message>
-                      <div class="flex flex-col items-center p-3 surface-overlay border-round">
-                        <div class="rounded-full bg-primary inline-flex justify-center items-center h-[5rem] w-[5rem] -mt-16">
-                          <lucide-icon name="circle-help" size="45" class="text-white h-[45px]"></lucide-icon>
+                          <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
+                          <p class="mb-0 text-center text-gray-400">{{ message.message }}</p>
+                          <div class="flex align-items-center gap-2 mt-4">
+                            <button pButton label="Supprimer" (click)="cd.accept()"></button>
+                            <button pButton label="Annuler" (click)="cd.reject()" outlined></button>
+                          </div>
                         </div>
-                        <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
-                        <p class="mb-0 text-center text-gray-400">{{ message.message }}</p>
-                        <div class="flex align-items-center gap-2 mt-4">
-                          <button pButton label="Supprimer" (click)="cd.accept()"></button>
-                          <button pButton label="Annuler" (click)="cd.reject()" outlined></button>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </p-confirmDialog>
+                      </ng-template>
+                    </p-confirmDialog>
+                  }
                 }
-              }
+              </div>
             </div>
-          </div>
+
+          }
 
         }
-
-      }
-    </div>
+      </div>
+    }
 
   }
 

@@ -14,6 +14,18 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {toast} from "ngx-sonner";
 import {constants} from "../../constants";
 import {DividerModule} from "primeng/divider";
+import {animate, style, transition, trigger} from "@angular/animations";
+
+interface Transaction {
+  from: string;
+  to: string;
+  amount: number;
+}
+
+interface TransactionsByPerson {
+  name: string;
+  transactions: Transaction[];
+}
 
 @Component({
   selector: 'app-list-payments',
@@ -30,6 +42,20 @@ import {DividerModule} from "primeng/divider";
   ],
   providers: [ConfirmationService],
   templateUrl: './list-payments.component.html',
+  animations: [
+    trigger('slideInRight', [
+      transition(':enter', [
+        style({transform: 'translateX(100%)'}),
+        animate('150ms ease-out', style({transform: 'translateX(0)'})),
+      ])
+    ]),
+    trigger('slideInLeft', [
+      transition(':enter', [
+        style({transform: 'translateX(-100%)'}),
+        animate('150ms ease-out', style({transform: 'translateX(0)'})),
+      ]),
+    ])
+  ]
 })
 export class ListPaymentsComponent implements OnInit {
   protected readonly fr = fr;
@@ -38,12 +64,17 @@ export class ListPaymentsComponent implements OnInit {
   items: MenuItem[] = []
   payments: Payment[] = []
 
+  firstLoad = true // use for disable animation at first load
   isLoaded = false
+  showRepartition = false
 
   paymentToEdit: Payment | undefined
   participantsWithTotal: any[] = []
 
-  constructor(private tripService: TripService, private budgetService: BudgetService, private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) { }
+  transactionRepartition: Transaction[] = []
+
+  constructor(private tripService: TripService, private budgetService: BudgetService, private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) {
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id') ?? ''
@@ -64,6 +95,8 @@ export class ListPaymentsComponent implements OnInit {
           this.payments = response
 
           this.participantsWithTotal = this.getTotalByParticipant()
+
+          this.transactionRepartition = this.calculateEqualDistribution()
         }
       })
 
@@ -74,21 +107,20 @@ export class ListPaymentsComponent implements OnInit {
         command: (event) => {
           let id: string
           //@ts-ignore
-          if(event.originalEvent?.srcElement.parentElement.getAttribute('payment') !== null) {
+          if (event.originalEvent?.srcElement.parentElement.getAttribute('payment') !== null) {
             //@ts-ignore
             id = event.originalEvent?.srcElement.parentElement.getAttribute('payment')
           }
           //@ts-ignore
-          else if(event.originalEvent?.srcElement.parentElement.parentElement.getAttribute('payment') !== null){
+          else if (event.originalEvent?.srcElement.parentElement.parentElement.getAttribute('payment') !== null) {
             //@ts-ignore
             id = event.originalEvent?.srcElement.parentElement.parentElement.getAttribute('payment')
-          }
-          else { //@ts-ignore
+          } else { //@ts-ignore
             id = event.originalEvent?.srcElement.getAttribute('payment')
           }
 
 
-          this.paymentToEdit = this.payments.find(p => p.id === Number(id) )
+          this.paymentToEdit = this.payments.find(p => p.id === Number(id))
 
 
         }
@@ -99,16 +131,15 @@ export class ListPaymentsComponent implements OnInit {
         command: (event) => {
           let id: string
           //@ts-ignore
-          if(event.originalEvent?.srcElement.parentElement.getAttribute('payment') !== null) {
+          if (event.originalEvent?.srcElement.parentElement.getAttribute('payment') !== null) {
             //@ts-ignore
             id = event.originalEvent?.srcElement.parentElement.getAttribute('payment')
           }
           //@ts-ignore
-          else if(event.originalEvent?.srcElement.parentElement.parentElement.getAttribute('payment') !== null){
+          else if (event.originalEvent?.srcElement.parentElement.parentElement.getAttribute('payment') !== null) {
             //@ts-ignore
             id = event.originalEvent?.srcElement.parentElement.parentElement.getAttribute('payment')
-          }
-          else { //@ts-ignore
+          } else { //@ts-ignore
             id = event.originalEvent?.srcElement.getAttribute('payment')
           }
 
@@ -173,7 +204,7 @@ export class ListPaymentsComponent implements OnInit {
   }
 
   onChangeVisibility(state: boolean) {
-    if(!state) {
+    if (!state) {
       this.paymentToEdit = undefined
     }
   }
@@ -182,7 +213,7 @@ export class ListPaymentsComponent implements OnInit {
     // Find the payment
     let paymentToEdit = this.payments.find(p => p.id === payment.id)
 
-    if(paymentToEdit) {
+    if (paymentToEdit) {
       paymentToEdit = payment
     }
 
@@ -197,13 +228,13 @@ export class ListPaymentsComponent implements OnInit {
         next: response => {
           const index = this.payments.findIndex(p => p.id === paymentId)
 
-          if(index !== -1) this.payments.splice(index, 1);
+          if (index !== -1) this.payments.splice(index, 1);
 
           toast.success("La dépense a été supprimée")
         },
         error: e => {
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
+          if (e.status === 400) {
+            if (e.error.error === "NOT_AUTHORIZED") {
               toast.warning(constants.messages.ERROR_NEED_WRITE)
               return
             }
@@ -214,29 +245,107 @@ export class ListPaymentsComponent implements OnInit {
   }
 
   getTotalByParticipant(): any[] {
+    console.log('ok')
+    const participantsMap = new Map<number, { id: number; name: string; total: number }>();
+
     this.payments.forEach(payment => {
       const participantId = payment.participantId || payment.userId;
-      const participantName = payment.participant?.name || payment.user?.username; // Supposons que le nom soit inclus dans les paiements
+      const participantName = payment.participant?.name || payment.user?.username;
       const amount = payment.amount;
 
-      if (this.participantsWithTotal[participantId as number]) {
-        // Ajoute le montant du paiement au total des dépenses existant pour ce participant
-        this.participantsWithTotal[participantId as number  ].total += amount;
-      } else {
-        // Initialise un nouveau total des dépenses pour ce participant
-        this.participantsWithTotal[participantId as number  ] = {
-          id: participantId,
-          name: participantName,
-          total: amount
-        };
+      if (participantId && participantName) {
+        if (participantsMap.has(participantId)) {
+          // Ajouter le montant du paiement au total existant pour ce participant
+          const participant = participantsMap.get(participantId)!;
+          participant.total += amount;
+        } else {
+          // Initialiser un nouveau total pour ce participant
+          participantsMap.set(participantId, {id: participantId, name: participantName, total: amount});
+        }
       }
     });
 
-    // Conversion de l'objet en tableau et tri par nom du participant
-    const totalsArray = Object.values(this.participantsWithTotal);
-    totalsArray.sort((a, b) => (a.name < b.name ? -1 : 1)); // Tri par nom du participant
+    // Convertir la Map en tableau et trier par nom du participant
+    const totalsArray = Array.from(participantsMap.values()).sort((a, b) => (a.name < b.name ? -1 : 1));
 
     return totalsArray;
   }
 
+  calculateEqualDistribution(): Transaction[] {
+    const participants = JSON.parse(JSON.stringify(this.participantsWithTotal)); // Clone the array of participants
+
+    const sum = participants.reduce((acc: any, participant: any) => acc + participant.total, 0);
+    const mean = sum / participants.length;
+
+    participants.sort((a: any, b: any) => a.total - b.total); // Sort participants by total payments
+
+    const transactions: Transaction[] = [];
+
+    for (let i = 0, j = participants.length - 1; i < j;) {
+      const sender = participants[i];
+      const receiver = participants[j];
+
+      const senderDeficit = mean - sender.total;
+      const receiverExcess = receiver.total - mean;
+
+      const debt = Math.min(senderDeficit, receiverExcess);
+
+      if (debt > 0) {
+        transactions.push({
+          from: receiver.name,
+          to: sender.name,
+          amount: debt
+        });
+
+        // Update participants' totals
+        sender.total += debt;
+        receiver.total -= debt;
+
+        // Move to the next participants if their balances are settled
+        if (sender.total === mean) {
+          i++;
+        }
+        if (receiver.total === mean) {
+          j--;
+        }
+      }
+    }
+
+    // Reverse the transactions to ensure correct direction (payer to payee)
+    const reversedTransactions = transactions.map(({from, to, amount}) => ({
+      from: to,
+      to: from,
+      amount
+    }));
+
+    return reversedTransactions;
+  }
+
+  transactionsRepartitionByParticipant() {
+    const expensesByPerson: TransactionsByPerson[] = [];
+
+    this.transactionRepartition.forEach(transaction => {
+
+      const existingPerson = expensesByPerson.find(person => person.name === transaction.from);
+
+      if (existingPerson) {
+        existingPerson.transactions.push({
+          from: transaction.from,
+          to: transaction.to,
+          amount: transaction.amount
+        });
+      } else {
+        expensesByPerson.push({
+          name: transaction.from,
+          transactions: [{
+            from: transaction.from,
+            to: transaction.to,
+            amount: transaction.amount
+          }]
+        });
+      }
+    });
+
+    return expensesByPerson
+  }
 }
