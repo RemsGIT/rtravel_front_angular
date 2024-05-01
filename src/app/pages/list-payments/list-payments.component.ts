@@ -121,8 +121,6 @@ export class ListPaymentsComponent implements OnInit {
 
 
           this.paymentToEdit = this.payments.find(p => p.id === Number(id))
-
-
         }
       },
       {
@@ -220,6 +218,9 @@ export class ListPaymentsComponent implements OnInit {
     this.payments = this.payments.map(p => {
       return p.id === paymentToEdit?.id ? paymentToEdit : p
     });
+
+    this.participantsWithTotal = this.getTotalByParticipant()
+    this.transactionRepartition = this.calculateEqualDistribution()
   }
 
   handleDeletePayment(paymentId: number) {
@@ -231,6 +232,9 @@ export class ListPaymentsComponent implements OnInit {
           if (index !== -1) this.payments.splice(index, 1);
 
           toast.success("La dépense a été supprimée")
+
+          this.participantsWithTotal = this.getTotalByParticipant()
+          this.transactionRepartition = this.calculateEqualDistribution()
         },
         error: e => {
           if (e.status === 400) {
@@ -245,7 +249,6 @@ export class ListPaymentsComponent implements OnInit {
   }
 
   getTotalByParticipant(): any[] {
-    console.log('ok')
     const participantsMap = new Map<number, { id: number; name: string; total: number }>();
 
     this.payments.forEach(payment => {

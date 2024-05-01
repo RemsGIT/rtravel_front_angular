@@ -65,6 +65,10 @@ export class CreateParticipantBtnComponent {
                 toast.warning(constants.messages.ERROR_NEED_WRITE)
                 return
               }
+              else if(e.error.error === "ALREADY_EXISTS") {
+                toast.warning(constants.messages.participant.ERROR_EXISTS)
+                return
+              }
             }
             toast.error(constants.messages.ERROR_CREATE)
           },
