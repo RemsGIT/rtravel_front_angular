@@ -26,10 +26,10 @@
       <div class="relative mt-8">
         <img
           ngSrc="/assets/images/manhattan.jpeg"
-          class="w-full max-w-[700px] block mx-auto h-[420px] md:h-[500px] rounded-[3rem] z-10 relative shadow-2xl"
+          class="w-full max-w-[700px] block mx-auto h-[320px] md:h-[500px] rounded-[3rem] z-10 relative shadow-2xl"
           alt=""
-          width="1000"
-          height="500"
+          width="500"
+          height="200"
         />
         <img
           ngSrc="/assets/images/sunset.jpeg"
@@ -48,8 +48,11 @@
 </div>
 
 
-<div class="fixed right-3 bottom-5 z-30" >
-  <p-button routerLink="/voyage/new" styleClass="p-2 rounded-full">
-    <lucide-icon name="plus" size="20" class="h-[20px]" />
-  </p-button>
-</div>
+@if(hasTrip) {
+  <div class="fixed right-3 bottom-5 z-30" >
+    <p-button routerLink="/voyage/new" styleClass="p-2 rounded-full">
+      <lucide-icon name="plus" size="20" class="h-[20px]" />
+    </p-button>
+  </div>
+
+}
