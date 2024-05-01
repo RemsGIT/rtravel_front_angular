@@ -24,7 +24,7 @@
       <app-create-budget-payment-btn [isBudgetExist]="budget !== undefined && budget !== null" (onCreateBudget)="budget = $event" (onCreatePayment)="payments.unshift($event)" />
     </div>
   } @else {
-    <div class="mt-6">
+    <div class="mt-1">
       <h3 class="text-center">Gère le budget de ton voyage !</h3>
       <img
         ngSrc="/assets/images/icons/Coins-amico.svg"
