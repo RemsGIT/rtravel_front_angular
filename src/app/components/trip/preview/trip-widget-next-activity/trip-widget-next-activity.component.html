@@ -1,27 +1,30 @@
-@if(nextActivity) {
-  <p-card>
-    <ng-template pTemplate="header">
-      <div class="flex gap-2 items-center font-semibold p-3">
-        <lucide-icon name="flag" size="16" strokeWidth="4" />
-        <h3>Prochaine activité</h3>
-      </div>
-    </ng-template>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex gap-2 items-center font-semibold p-3">
+      <lucide-icon name="flag" size="16" strokeWidth="4"/>
+      <h3>Prochaine activité</h3>
+    </div>
+  </ng-template>
 
-    <div class="p-6 pt-0">
-      <h4 class="text-lg">{{nextActivity?.name}}</h4>
+  <div class="p-6 pt-0">
+    @if (nextActivity) {
+      <h4 class="text-lg">{{ nextActivity?.name }}</h4>
 
       <div class="space-y-2 mt-2">
         <p class="text-xs text-muted-foreground flex gap-2">
-          <lucide-icon name="map-pin" size="16" />
-          {{nextActivity?.place ? nextActivity.place+' - ':''}}{{nextActivity?.city}}
+          <lucide-icon name="map-pin" size="16"/>
+          {{ nextActivity?.place ? nextActivity.place + ' - ' : '' }}{{ nextActivity?.city }}
         </p>
 
         <p class="text-xs text-muted-foreground flex gap-2">
-          <lucide-icon name="clock" size="16" />
-          {{dayjs(nextActivity?.start).locale(fr).format('DD MMMM YYYY à HH:mm')}}
+          <lucide-icon name="clock" size="16"/>
+          {{ dayjs(nextActivity?.start).locale(fr).format('DD MMMM YYYY à HH:mm') }}
         </p>
       </div>
-    </div>
-  </p-card>
+    } @else {
+        <p class="text-sm text-gray-400 mt-4 text-center">Tu n'as pas encore ajouté d'activité</p>
+    }
+  </div>
 
-}
+</p-card>
+

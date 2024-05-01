@@ -23,7 +23,7 @@
                     <div class="space-y-2 mt-2">
                       <p class="text-xs text-muted-foreground flex gap-2">
                         <lucide-icon name="map-pin" size="16" />
-                        {{activity.place && activity.place + ','}} {{tripService.tripSelected()?.city}}
+                        {{activity.place ? activity.place+' - ':''}}{{activity.city}}
                       </p>
                     </div>
                   </div>

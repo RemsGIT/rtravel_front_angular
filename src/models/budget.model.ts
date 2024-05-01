@@ -31,7 +31,7 @@ export enum EPaymentCategory {
   food = 'food',
   activities = 'activities',
   shopping = 'shopping',
-  services = 'service',
+  museum = 'museum',
   other = 'other'
 }
 

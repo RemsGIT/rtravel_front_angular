@@ -1,4 +1,5 @@
 import {Participant} from "./participant.model";
+import {IUser} from "./auh.model";
 
 export interface Trip {
   id: number,
@@ -10,6 +11,7 @@ export interface Trip {
   thumbnail?: string,
   cover?: string,
   activities?: Activity[],
+  user?: IUser,
   participants?: Participant[],
   isShared?: boolean
 }

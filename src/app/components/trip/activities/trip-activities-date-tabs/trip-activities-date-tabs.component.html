@@ -13,9 +13,10 @@
           <p-button
             severity="secondary"
             (click)="onChangeTab(date)"
-            [styleClass]="'text-xs rounded-xl ' + (selectedTab === date && 'bg-slate-300') "
+            [styleClass]="'text-xs rounded-xl flex flex-col w-full ' + (selectedTab === date ? 'bg-slate-300' : '') "
             >
-            {{ dayjs(date).locale('fr').format('ddd DD/MM') }}
+            <span class="first-letter:uppercase">{{ dayjs(date).locale('fr').format('ddd') }}</span>
+            <span>{{ dayjs(date).locale('fr').format('DD/MM') }}</span>
           </p-button>
         </swiper-slide>
       }

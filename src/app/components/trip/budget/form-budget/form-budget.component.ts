@@ -51,7 +51,7 @@ export class FormBudgetComponent implements OnInit {
 
   onSubmitCreateBudget() {
     if(!this.budgetValue) {
-      toast.warning("Saisi la valeur de ton budget")
+      toast.warning("Entre la valeur de ton budget")
     }
     else {
       if(this.budgetEditingValue()) {

@@ -45,7 +45,7 @@ export class FormPaymentComponent implements OnInit{
     {code: EPaymentCategory.food, name: 'Nourriture' },
     {code: EPaymentCategory.accommodation, name: 'Logement' },
     {code: EPaymentCategory.shopping, name: 'Magasin' },
-    {code: EPaymentCategory.services, name: 'Service' },
+    {code: EPaymentCategory.museum, name: 'Musée' },
     {code: EPaymentCategory.other, name: 'Autre' },
   ]
   participantsOptions: {code: string, name: string}[] = []

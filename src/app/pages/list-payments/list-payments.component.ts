@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import {ConfirmationService, MenuItem, SharedModule} from "primeng/api";
 import {MenuModule} from "primeng/menu";
 import {FormPaymentComponent} from "../../components/trip/budget/form-payment/form-payment.component";
-import {DecimalPipe} from "@angular/common";
+import {DecimalPipe, NgOptimizedImage} from "@angular/common";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {toast} from "ngx-sonner";
 import {constants} from "../../constants";
@@ -38,7 +38,8 @@ interface TransactionsByPerson {
     ConfirmDialogModule,
     FormPaymentComponent,
     DecimalPipe,
-    DividerModule
+    DividerModule,
+    NgOptimizedImage
   ],
   providers: [ConfirmationService],
   templateUrl: './list-payments.component.html',
@@ -83,21 +84,20 @@ export class ListPaymentsComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.tripService.tripSelected.set(response)
+
+          this.budgetService.getAllPaymentsByTrip(Number(id))
+            .subscribe({
+              next: response => {
+                this.isLoaded = true
+
+                this.payments = response
+
+                this.participantsWithTotal = this.getTotalByParticipant()
+
+                this.transactionRepartition = this.calculateEqualDistribution()
+              }
+            })
         },
-      })
-
-
-    this.budgetService.getAllPaymentsByTrip(Number(id))
-      .subscribe({
-        next: response => {
-          this.isLoaded = true
-
-          this.payments = response
-
-          this.participantsWithTotal = this.getTotalByParticipant()
-
-          this.transactionRepartition = this.calculateEqualDistribution()
-        }
       })
 
     this.items = [
@@ -250,6 +250,25 @@ export class ListPaymentsComponent implements OnInit {
 
   getTotalByParticipant(): any[] {
     const participantsMap = new Map<number, { id: number; name: string; total: number }>();
+
+    // Add all participants with 0 payment by default
+    if(this.tripService.tripSelected()?.user) {
+      participantsMap.set(this.tripService.tripSelected()?.user?.id as number, {
+        id: this.tripService.tripSelected()?.user?.id as number,
+        name: this.tripService.tripSelected()?.user?.username as string,
+        total: 0
+      })
+    }
+
+    console.log(this.tripService.tripSelected())
+
+    this.tripService.tripSelected()?.participants?.forEach(participant => {
+      participantsMap.set(participant.id, {
+        id: participant.id,
+        name: participant.name,
+        total: 0
+      });
+    })
 
     this.payments.forEach(payment => {
       const participantId = payment.participantId || payment.userId;
