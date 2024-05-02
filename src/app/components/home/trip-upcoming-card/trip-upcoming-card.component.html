@@ -9,7 +9,7 @@
         <ng-template pTemplate="header" >
           <div class="p-0 h-[200px] overflow-hidden rounded-t-[10px] relative">
             <img
-              [ngSrc]="trip.thumbnail ? apiEndpoint+'/'+trip.thumbnail : constants.defaults.image_colosseum"
+              [ngSrc]="trip.thumbnail ? trip.thumbnail : constants.defaults.image_colosseum"
               class="w-full object-cover h-full"
               width=800 height=400 alt="" />
 

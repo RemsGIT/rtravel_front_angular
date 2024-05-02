@@ -1,7 +1,7 @@
 @if (tripService.tripSelected()) {
   <section>
     <img
-      [ngSrc]="tripService.tripSelected()?.cover ? apiEndpoint+'/'+tripService.tripSelected()?.cover :  constants.defaults.image_colosseum"
+      [ngSrc]="tripService.tripSelected()?.cover ? (tripService.tripSelected()?.cover ?? '') :  constants.defaults.image_colosseum"
       width=800
       height=400
       class="absolute top-0 -z-10 rounded-b-[40%] w-full h-[200px] object-cover"

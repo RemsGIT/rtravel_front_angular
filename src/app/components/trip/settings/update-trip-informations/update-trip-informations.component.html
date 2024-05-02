@@ -166,7 +166,7 @@
       <div class="text-center space-y-4">
         <p>Photo de couverture actuelle </p>
         <img
-          [src]="tripService.tripSelected()?.cover ? apiEndpoint+'/'+tripService.tripSelected()?.cover : constants.defaults.image_colosseum"
+          [src]="tripService.tripSelected()?.cover ? (tripService.tripSelected()?.cover ?? '') : constants.defaults.image_colosseum"
           class="w-[250px] rounded-2xl"
 
         />
