@@ -3,18 +3,22 @@ import {
   animate,
   transition,
   style,
-  query,
+  query, group,
 } from '@angular/animations';
 
 export const fadeAnimation = trigger('fadeAnimation', [
-  transition('* => *', [
-    query(
-      ':enter',
-      [
-        style({ opacity: 0 }),
-        animate('0.4s', style({ opacity: 1 })),
-      ],
-      { optional: true }
-    ),
-  ]),
+  trigger('routerTransition', [
+    transition('* <=> *', [
+      query(':enter, :leave', style({ position: 'fixed', opacity: 1 })),
+      group([
+        query(':enter', [
+          style({ opacity:0 }),
+          animate('1200ms ease-in-out', style({ opacity:1 }))
+        ]),
+        query(':leave', [
+          style({ opacity:1 }),
+          animate('1200ms ease-in-out', style({ opacity:0 }))]),
+      ])
+    ])
+  ])
 ]);
