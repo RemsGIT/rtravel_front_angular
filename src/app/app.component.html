@@ -5,6 +5,6 @@
   <app-header />
 }
 
-<main role="main" [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
-  <router-outlet #outlet="outlet" />
-</main>
+<div [@routeAnimations]="getRouteAnimationData()">
+  <router-outlet></router-outlet>
+</div>

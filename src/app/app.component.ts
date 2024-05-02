@@ -1,5 +1,5 @@
 import {Component, inject, Inject, PLATFORM_ID} from '@angular/core';
-import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import {ChildrenOutletContexts, NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {ButtonModule} from "primeng/button";
 import {NgxSonnerToaster} from "ngx-sonner";
 import {isPlatformBrowser, Location} from "@angular/common";
@@ -12,7 +12,7 @@ import {HeaderComponent} from "./components/header/header.component";
 import {PrimeNGConfig} from "primeng/api";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CalendarModule} from "primeng/calendar";
-import {fadeAnimation} from "./animations";
+import {slideInAnimation} from "./animations";
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,10 @@ import {fadeAnimation} from "./animations";
   imports: [RouterOutlet, ButtonModule, NgxSonnerToaster, HeaderComponent, TranslateModule, CalendarModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  animations: [fadeAnimation],
+  animations: [
+    slideInAnimation,
+    // animation triggers go here
+  ],
 })
 export class AppComponent {
   authService = inject(AuthService)
@@ -37,7 +40,7 @@ export class AppComponent {
   routesWithoutHeader = ['/','/connexion', '/inscription', '/verification-mail']
   routesWithoutAuth = ['/','/connexion', '/inscription', '/verification-mail']
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private config: PrimeNGConfig, private translateService: TranslateService) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts) {
 
     this.router.events.subscribe(val => {
       if(val instanceof NavigationEnd) {
@@ -89,6 +92,10 @@ export class AppComponent {
 
   changeLang(lang: string) {
     this.translateService.use(lang);
+  }
+
+  getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 
 
