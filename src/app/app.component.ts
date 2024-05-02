@@ -13,12 +13,13 @@ import {PrimeNGConfig} from "primeng/api";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CalendarModule} from "primeng/calendar";
 import {fadeAnimation} from "./animations";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule, NgxSonnerToaster, HeaderComponent, TranslateModule, CalendarModule],
+  imports: [RouterOutlet, ButtonModule, NgxSonnerToaster, HeaderComponent, TranslateModule, CalendarModule, BrowserAnimationsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [fadeAnimation],
