@@ -49,7 +49,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withViewTransitions()),
+    provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(
       LucideAngularModule.pick({

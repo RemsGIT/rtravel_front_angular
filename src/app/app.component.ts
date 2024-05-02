@@ -12,6 +12,7 @@ import {HeaderComponent} from "./components/header/header.component";
 import {PrimeNGConfig} from "primeng/api";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CalendarModule} from "primeng/calendar";
+import {fadeAnimation} from "./animations";
 
 
 @Component({
@@ -19,7 +20,8 @@ import {CalendarModule} from "primeng/calendar";
   standalone: true,
   imports: [RouterOutlet, ButtonModule, NgxSonnerToaster, HeaderComponent, TranslateModule, CalendarModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  animations: [fadeAnimation],
 })
 export class AppComponent {
   authService = inject(AuthService)

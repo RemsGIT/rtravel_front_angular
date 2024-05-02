@@ -4,4 +4,7 @@
 @if (showHeader) {
   <app-header />
 }
-<router-outlet />
+
+<main role="main" [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
+  <router-outlet #outlet="outlet" />
+</main>
