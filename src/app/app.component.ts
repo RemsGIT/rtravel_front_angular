@@ -94,9 +94,4 @@ export class AppComponent {
     this.translateService.use(lang);
   }
 
-  getRouteAnimationData() {
-    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
-  }
-
-
 }

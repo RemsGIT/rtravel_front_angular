@@ -14,9 +14,9 @@ export const routes: Routes = [
   {path: 'verification-mail', component: CheckEmailComponent, title: "Rtravel | Planificateur de voyage"},
 
 
-  {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages", data: {animation: 'HomePage'}},
+  {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages"},
   {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage"},
-  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'AboutPage'}},
+  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard]},
 
   {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage'},
 ];
