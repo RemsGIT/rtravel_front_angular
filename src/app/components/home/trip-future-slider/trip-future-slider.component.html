@@ -1,52 +1,55 @@
-<section class="space-y-3">
-  <p class="text-sm uppercase text-gray-400 ml-4">
-    Voyage à venir
-  </p>
-  @if (trips != null && trips.length > 0) {
-    <swiper-container
-      slides-per-view="2.3"
-      space-between="15"
-      free-mode="true"
+@if(isLoaded) {
+  <section class="space-y-3">
+    <p class="text-sm uppercase text-gray-400 ml-4">
+      Voyage à venir
+    </p>
+    @if (trips != null && trips.length > 0) {
+      <swiper-container
+        slides-per-view="2.3"
+        space-between="15"
+        free-mode="true"
       >
-      @for (trip of trips; track trip) {
-        <swiper-slide class="pb-2">
-          <p-card class="rounded-3xl h-[180px] cursor-pointer" [routerLink]="['/voyage', trip.id]">
-            <ng-template pTemplate="header">
-              <div class="p-0 overflow-hidden rounded-t-[10px] relative">
-                <img
-                  [ngSrc]="trip.thumbnail ? trip.thumbnail : constants.defaults.image_colosseum"
-                  width="200"
-                  height="100"
-                  alt=""
-                  class="w-full h-28 object-cover"
-                />
-                @if(trip.isShared) {
-                  <app-tag-trip-shared />
-                }
+        @for (trip of trips; track trip) {
+          <swiper-slide class="pb-2">
+            <p-card class="rounded-3xl h-[180px] cursor-pointer" [routerLink]="['/voyage', trip.id]">
+              <ng-template pTemplate="header">
+                <div class="p-0 overflow-hidden rounded-t-[10px] relative">
+                  <img
+                    [ngSrc]="trip.thumbnail ? trip.thumbnail : constants.defaults.image_colosseum"
+                    width="200"
+                    height="100"
+                    alt=""
+                    class="w-full h-28 object-cover"
+                  />
+                  @if(trip.isShared) {
+                    <app-tag-trip-shared />
+                  }
+                </div>
+              </ng-template>
+              <div class="px-2">
+                <div class="mt-2 text-sm relative">
+                  <span class="mr-5">{{trip.name}}</span>
+                  <lucide-icon name="hourglass" class="w-[16px] h-[16px] bg-purple-400 text-white rounded-full flex items-center justify-center p-0.5 absolute right-0 top-0" />
+                </div>
+                <p class="text-sm text-gray-400 my-2">
+                  Dans
+                  @if (dayjs(trip.start).diff(dayjs(), 'day') <= 30) {
+                    {{ dayjs(trip.start).diff(dayjs(), 'day') }} jours
+                  } @else {
+                    {{ dayjs(trip.start).diff(dayjs(), 'month') }} mois
+                  }
+                </p>
               </div>
-            </ng-template>
-            <div class="px-2">
-              <div class="mt-2 text-sm relative">
-                <span class="mr-5">{{trip.name}}</span>
-                <lucide-icon name="hourglass" class="w-[16px] h-[16px] bg-purple-400 text-white rounded-full flex items-center justify-center p-0.5 absolute right-0 top-0" />
-              </div>
-              <p class="text-sm text-gray-400 my-2">
-                Dans
-                @if (dayjs(trip.start).diff(dayjs(), 'day') <= 30) {
-                  {{ dayjs(trip.start).diff(dayjs(), 'day') }} jours
-                } @else {
-                  {{ dayjs(trip.start).diff(dayjs(), 'month') }} mois
-                }
-              </p>
-            </div>
-          </p-card>
-        </swiper-slide>
-      }
-    </swiper-container>
-  }
- @else {
-   <p class="m-4  text-sm">Vous n'avez aucun voyage à venir</p>
+            </p-card>
+          </swiper-slide>
+        }
+      </swiper-container>
+    }
+    @else {
+      <p class="m-4  text-sm">Vous n'avez aucun voyage à venir</p>
 
- }
+    }
 
-</section>
+  </section>
+}
+

@@ -30,10 +30,13 @@ export class TripFutureSliderComponent implements OnInit {
 
   trips: Trip[] | null = null
 
+  isLoaded = false
+
   ngOnInit(): void {
     this.http.get<{trips: Trip[]}>(`${apiEndpoint}/trips/future`)
       .subscribe(response => {
         this.trips = response.trips
+        this.isLoaded = true
       })
   }
 

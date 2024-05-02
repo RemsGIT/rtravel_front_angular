@@ -32,10 +32,13 @@ export class TripPastSliderComponent {
 
   trips: Trip[] | null = null
 
+  isLoaded = false
+
   ngOnInit(): void {
     this.http.get<{trips: Trip[]}>(`${apiEndpoint}/trips/past`)
       .subscribe(response => {
           this.trips = response.trips
+        this.isLoaded = true
       })
   }
 
