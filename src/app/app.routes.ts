@@ -9,14 +9,14 @@ import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
 import {ListPaymentsComponent} from "./pages/list-payments/list-payments.component";
 
 export const routes: Routes = [
-  {path: 'connexion', component: LoginComponent, title: "Rtravel | Planificateur de voyage"},
-  {path: 'inscription', component: RegisterComponent, title: "Rtravel | Planificateur de voyage"},
-  {path: 'verification-mail', component: CheckEmailComponent, title: "Rtravel | Planificateur de voyage"},
+  {path: 'connexion', component: LoginComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'ConnectPage'}},
+  {path: 'inscription', component: RegisterComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'RegisterPage'}},
+  {path: 'verification-mail', component: CheckEmailComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'CheckEmailPage'}},
 
 
-  {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages"},
-  {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage"},
-  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard]},
+  {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages", data: {animation: 'HomePage'}},
+  {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage", data: {animation: 'CreateTripPage'}},
+  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'NewTripPage'}},
 
-  {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage'},
+  {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage', data: {animation: 'PaymentsPage'}},
 ];

@@ -5,6 +5,6 @@
   <app-header />
 }
 
-<main role="main" [@routeAnimations]="outlet.isActivated ? outlet.activatedRoute : ''">
+<div [@routeAnimations]="getRouteAnimationData()">
   <router-outlet #outlet="outlet" />
-</main>
+</div>
