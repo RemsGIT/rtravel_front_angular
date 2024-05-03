@@ -1,15 +1,30 @@
 <section class="bg-[#F5F1E6] text-black h-full">
   <header>
-    <div class="flex items-center p-3 ">
-      <img
-        ngSrc="assets/images/logo-no-text.svg"
-        width="80"
-        height="58"
-        alt=""
-        class="w-[40px] md:w-[80px] h-auto"
-      />
-      <p class="font-bold text-lg md:text-2xl tracking-widest mt-0.5 md:mt-3">Rtravel</p>
+    <div class="grid grid-cols-3">
+      <div class="flex items-center p-3 ">
+        <img
+          ngSrc="assets/images/logo-no-text.svg"
+          width="80"
+          height="58"
+          alt=""
+          class="w-[40px] md:w-[80px] h-auto"
+        />
+        <p class="font-bold text-lg md:text-2xl tracking-widest mt-0.5 md:mt-1.5">Rtravel</p>
 
+      </div>
+      <div></div>
+      <!-- Menu desktop -->
+      <div class="hidden md:flex gap-8 items-center justify-center mt-3">
+        <a href="#functionnalities" class="no-underline text-primary-dark text-lg">Fonctionnalités</a>
+        <a href="" class="no-underline text-primary-dark text-lg">Connexion</a>
+        <a href="" class="no-underline text-primary-dark text-lg">Contact</a>
+      </div>
+      <!-- Menu hidden -->
+      <div class="flex md:hidden items-center justify-end mt-0.5 mr-6">
+        <p-button styleClass="w-[32px] h-[32px] rounded-full">
+          <lucide-icon name="user" size="20" class="h-[20px]" />
+        </p-button>
+      </div>
     </div>
 
     <div class="bg-[#E3DCCF] block h-[2px]"></div>
@@ -24,7 +39,7 @@
       </h1>
       <p class="text-center mt-6 leading-7 font-thin">Créez, organisez et gérez le budget de votre voyage dans une application gratuite conçue pour les vacances.</p>
 
-      <p-button styleClass="block mx-auto w-[130px] mt-4">C'est parti </p-button>
+      <p-button styleClass="block mx-auto w-[130px] mt-4" routerLink="/accueil">C'est parti </p-button>
 
     </div>
 
@@ -37,7 +52,7 @@
     </div>
 
     <!-- Separator -->
-    <img src="/assets/images/line_separator.svg" alt="" class="w-[90%] block mx-auto">
+    <img id="functionnalities" src="/assets/images/line_separator.svg" alt="" class="w-[90%] block mx-auto">
 
 
     <!-- Functionnalities -->

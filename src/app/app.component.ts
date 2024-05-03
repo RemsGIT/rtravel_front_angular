@@ -37,14 +37,14 @@ export class AppComponent {
   title = 'rtravel-angular-primeng';
 
 
-  routesWithoutHeader = ['/','/connexion', '/inscription', '/verification-mail']
-  routesWithoutAuth = ['/','/connexion', '/inscription', '/verification-mail']
+  routesWithoutHeader = ['','/connexion', '/inscription', '/verification-mail']
+  routesWithoutAuth = ['','/connexion', '/inscription', '/verification-mail']
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts) {
 
     this.router.events.subscribe(val => {
       if(val instanceof NavigationEnd) {
-        this.showHeader = !this.routesWithoutHeader.includes(val.url)
+        this.showHeader = !this.routesWithoutHeader.includes(this.location.path())
       }
     })
 
@@ -63,6 +63,8 @@ export class AppComponent {
 
     // If routes = login/signup or landing page, not check
     if(this.routesWithoutAuth.includes(this.location.path())) return;
+
+    console.log('ok')
 
     if(typeof localStorage !== 'undefined') { // Execute only in CSR -> need localstorage
       this.http.get<IUser>(`${apiEndpoint}/auth/me`)
