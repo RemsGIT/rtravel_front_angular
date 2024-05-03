@@ -1,6 +1,6 @@
-<section class="h-screen relative overflow-hidden bg-[#F5F1E6] text-black">
-  <header class="relative z-30">
-    <div class="flex items-center m-3 relative">
+<section class="bg-[#F5F1E6] text-black h-full">
+  <header>
+    <div class="flex items-center p-3 ">
       <img
         ngSrc="assets/images/logo-no-text.svg"
         width="80"
@@ -28,11 +28,100 @@
 
     </div>
 
+    <!-- Traveler illustration -->
     <div class="mt-4 md:mt-24">
       <img
         src="/assets/images/illustrations/traveler.png"
         class="w-full"
       />
     </div>
+
+    <!-- Separator -->
+    <img src="/assets/images/line_separator.png" alt="" class="w-[90%] block mx-auto">
+
+
+    <!-- Functionnalities -->
+    <div class="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-16">
+
+      <div class="h-[180px] w-full relative border-solid border-[1px] border-primary rounded-xl">
+
+        <!-- absolute icon -->
+
+        <img
+          ngSrc="assets/images/icons/passport.png"
+          width="80"
+          height="100"
+          class="w-[80px] h-auto absolute left-1/2 transform -translate-x-1/2 -top-10"
+        />
+
+        <div class="flex flex-col items-center mt-14 gap-4 mx-4">
+          <h3 class="text-2xl font-semibold text-primary">Voyage</h3>
+
+          <p class="text-center text-xs">Garde un historique de tes voyages pour des souvenirs</p>
+
+        </div>
+
+      </div>
+
+      <div class="h-[180px] w-full relative border-solid border-[1px] border-primary rounded-xl">
+
+        <!-- absolute icon -->
+
+        <img
+          ngSrc="assets/images/icons/travelers_group.png"
+          width="100"
+          height="100"
+          class="w-[95px] h-auto absolute left-1/2 transform -translate-x-1/2 top-[-3rem] bg-[#F5F1E6]"
+        />
+
+        <div class="flex flex-col items-center mt-14 gap-4 mx-4">
+          <h3 class="text-2xl font-semibold text-primary">Participant</h3>
+
+          <p class="text-center text-xs">Contrôle le voyage avec tes amis </p>
+
+        </div>
+
+      </div>
+      <div class="h-[180px] w-full relative border-solid border-[1px] border-primary rounded-xl">
+
+        <!-- absolute icon -->
+
+        <img
+          ngSrc="assets/images/icons/money_sac.png"
+          width="80"
+          height="100"
+          class="w-[80px] h-auto absolute left-1/2 transform -translate-x-1/2 -top-10 "
+        />
+
+        <div class="flex flex-col items-center mt-14 gap-4 mx-4">
+          <h3 class="text-2xl font-semibold text-primary">Budget</h3>
+
+          <p class="text-center text-xs">Gère le budget de ton voyage en listant les dépenses</p>
+
+        </div>
+
+      </div>
+      <div class="h-[180px] w-full relative border-solid border-[1px] border-primary rounded-xl">
+
+        <!-- absolute icon -->
+
+        <img
+          ngSrc="assets/images/icons/money_repartition.png"
+          width="100"
+          height="100"
+          class="w-[85px] h-auto absolute left-1/2 transform -translate-x-1/2 top-[-2.8rem] bg-[#F5F1E6]"
+        />
+
+        <div class="flex flex-col items-center mt-14 gap-4 mx-3">
+          <h3 class="text-2xl font-semibold text-primary">Répartition</h3>
+
+          <p class="text-center text-xs pb-2">Calcule une répartition équitable entre chaque participant</p>
+
+        </div>
+
+      </div>
+    </div>
+
   </main>
+
 </section>
