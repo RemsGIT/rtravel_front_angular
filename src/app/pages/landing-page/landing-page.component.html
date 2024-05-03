@@ -18,8 +18,8 @@
 
 
   <main class="mx-4">
-    <div class="z-30 relative">
-      <h1 class="text-center text-3xl md:text-4xl mt-6 font-bold">
+    <div class="">
+      <h1 class="text-center text-3xl md:text-6xl mt-6 font-bold">
         Rtravel t'aide à <br><span class="text-primary">planifier</span><br> tes voyages
       </h1>
       <p class="text-center mt-6 leading-7 font-thin">Créez, organisez et gérez le budget de votre voyage dans une application gratuite conçue pour les vacances.</p>
@@ -29,10 +29,10 @@
     </div>
 
     <!-- Traveler illustration -->
-    <div class="mt-4 md:mt-24">
+    <div class="mt-4 md:mt-0">
       <img
         src="/assets/images/illustrations/traveler.png"
-        class="w-full"
+        class="w-full md:w-[50%] md:max-w-[600px] md:block md:mx-auto"
       />
     </div>
 
@@ -122,6 +122,53 @@
       </div>
     </div>
 
+
+
   </main>
+
+  <!-- Separator -->
+  <img src="/assets/images/line_separator.png" alt="" class="w-[90%] block mx-auto mt-10">
+
+  <footer class="mt-4">
+    <div class="max-w-screen-lg px-4 sm:px-6 text-gray-800 grid grid-cols-2 md:grid-cols-4 mx-auto">
+        <div class="p-5">
+          <img
+            ngSrc="assets/images/logo-text.svg"
+            width="200"
+            height="100"
+            alt=""
+            class="w-[100px] h-auto"
+          />
+        </div>
+        <div class="p-5">
+          <div class="text-sm uppercase text-primary-dark font-bold">Liens utiles</div>
+          <a class="my-3 block text-black no-underline" routerLink="/connexion">Se connecter</a>
+          <a class="my-3 block text-black no-underline" routerLink="/inscription">S'inscrire</a>
+        </div>
+        <div class="p-5">
+          <div class="text-sm uppercase text-primary-dark font-bold">Support</div>
+          <a class="my-3 block text-black no-underline" routerLink="#">Conditions</a>
+          <a class="my-3 block text-black no-underline" routerLink="#">Politique de confidentialité</a>
+        </div>
+        <div class="p-5">
+          <div class="text-sm uppercase text-primary-dark font-bold">Contactez-nous</div>
+          <a class="my-3 block text-black no-underline" href="/#">Formulaire</a>
+          <a class="my-3 text-black no-underline flex items-center gap-2" href="mailto:contact@rcastro.fr">
+            <lucide-icon name="mail" size="20" strokeWidth="2" class="text-primary-dark" />
+            {{"contact@rcastro.fr"}}
+          </a>
+        </div>
+      </div>
+
+    <div>
+
+      <p-divider styleClass="w-[50%] mx-auto" />
+
+      <div class="pb-5 px-3 pt-5 border-t text-gray-800 text-sm text-center">
+        <p>Développé par <a href="https://rcastro.fr" target="_blank">Rémy Castro</a></p>
+        <div class="my-3">© Copyright {{dayjs().year()}}. Tous droits réservés.</div>
+      </div>
+    </div>
+  </footer>
 
 </section>

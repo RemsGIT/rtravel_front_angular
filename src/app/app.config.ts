@@ -35,7 +35,8 @@ import {
   Eye,
   Search,
   Calculator,
-  List
+  List,
+  Mail
 
 
 } from "lucide-angular";
@@ -80,7 +81,8 @@ export const appConfig: ApplicationConfig = {
         Eye,
         Search,
         Calculator,
-        List
+        List,
+        Mail
       }),
       TranslateModule.forRoot({
         loader: {
