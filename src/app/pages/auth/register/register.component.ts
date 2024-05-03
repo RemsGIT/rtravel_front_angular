@@ -53,15 +53,12 @@ export class RegisterComponent {
           let errorMessage = "Erreur lors de la création de votre compte. Réessayez plus tard"
           switch(err.status) {
             case 400:
-              if(err.error.errors.some((error: any) => error.field === 'email')) {
+              if(err.error.errors.some((error: any) => error.field === 'email' && error.rule === 'database.unique')) {
                 errorMessage = "L'adresse email est déjà utilisée"
-              }
-              else {
               }
               break;
           }
-          toast.error(JSON.stringify(err))
-          //toast.error(errorMessage)
+          toast.error(errorMessage)
         },
       })
     }
