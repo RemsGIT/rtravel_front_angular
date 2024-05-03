@@ -58,11 +58,10 @@ export class RegisterComponent {
               }
               else {
               }
-              toast.error(JSON.stringify(err))
-
               break;
           }
-          toast.error(errorMessage)
+          toast.error(JSON.stringify(err))
+          //toast.error(errorMessage)
         },
       })
     }
