@@ -1,5 +1,12 @@
-<div class="mx-6 mt-16">
-  <h1 class="text-4xl text-primary-dark font-extrabold mx-auto text-center">Rtravel.</h1>
+<div class="w-full h-full min-h-screen relative overflow-hidden">
+  <div class="mx-6 pt-2">
+    <div class="flex items-center justify-center">
+      <img
+        src="assets/images/logo-text.svg"
+        class="w-[100px]"
+      />
+
+    </div>
 
   <div class="mt-8">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate class="space-y-8">
@@ -85,5 +92,28 @@
   <div class="text-center text-sm mt-8 text-gray-500">
     Déjà un compte ? <a routerLink="/connexion" class="text-primary no-underline">Connexion</a>
   </div>
+
+    <img
+      src="/assets/images/icons/bubble-dark.png"
+      class="absolute -top-20 -left-28 w-[200px] z-20"
+      alt=""
+    >
+    <img
+      src="/assets/images/icons/bubble-light.png"
+      class="absolute -top-16 -left-4 w-[150px]"
+      alt=""
+    >
+
+    <img
+      src="/assets/images/icons/bubble-dark.png"
+      class="absolute -bottom-28  w-[200px] -right-36 rotate-45"
+      alt=""
+    >
+    <img
+      src="/assets/images/icons/bubble-light.png"
+      class="absolute -right-24 w-[200px] rotate-45 z-20"
+      alt=""
+    >
+
 
 </div>
