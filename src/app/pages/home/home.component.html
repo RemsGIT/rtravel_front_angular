@@ -1,6 +1,6 @@
 <div class="pb-8 mx-4 h-[90%]">
   @if (hasTrip && isDataLoaded) {
-    <div class="space-y-8">
+    <div class="space-y-8 pb-6">
       <div>
         <app-trip-upcoming-card/>
       </div>
@@ -14,7 +14,7 @@
 
     </div>
   } @else if (isDataLoaded) {
-    <div class="mt-8 flex flex-col justify-between h-full">
+    <div class="mt-6 flex flex-col justify-between h-full">
       <div class="mx-4">
         <h1 class="leading-snug text-4xl font-extralight ">Tu n'as pas encore organisé de voyage</h1>
 
@@ -26,14 +26,14 @@
       <div class="relative mt-8">
         <img
           ngSrc="/assets/images/manhattan.jpeg"
-          class="w-[95%] max-w-[700px] block mx-auto h-[350px] md:h-[500px] rounded-[3rem] z-10 relative shadow-2xl"
+          class="w-[95%] max-w-[700px] block mx-auto h-[280px] md:h-[500px] rounded-[3rem] z-10 relative shadow-2xl"
           alt=""
           width="500"
           height="200"
         />
         <img
           ngSrc="/assets/images/sunset.jpeg"
-          class="w-[90%] max-w-[600px] rounded-[3rem] absolute -top-10 md:-top-12 left-1/2 z-0 transform -translate-x-1/2 shadow-2xl"
+          class="w-[90%] max-w-[600px] rounded-[3rem] absolute -top-6 md:-top-12 left-1/2 z-0 transform -translate-x-1/2 shadow-2xl"
           alt=""
           width="400"
           height="200"

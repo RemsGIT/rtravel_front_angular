@@ -9,6 +9,7 @@ import {PaginatorModule} from "primeng/paginator";
 import {PasswordModule} from "primeng/password";
 import {CheckboxModule} from "primeng/checkbox";
 import {toast} from "ngx-sonner";
+import {constants} from "../../../constants";
 
 @Component({
   selector: 'app-register',
@@ -45,6 +46,13 @@ export class RegisterComponent {
           if(res.email) {
             // Connect automatically the user
             this.authService.onLoginWithCredentials({email: res.email, password: this.registerForm.value.password})
+              .subscribe({
+                next: res => {
+                  this.authService.onCreateOTPCode().subscribe({
+                    next: res => {}
+                  })
+                }
+              })
 
             this.router.navigateByUrl('/verification-mail')
           }

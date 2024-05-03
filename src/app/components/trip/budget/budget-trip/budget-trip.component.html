@@ -1,6 +1,6 @@
 @if (isLoaded) {
   @if (budget || payments.length > 0) {
-    <div class="flex flex-col gap-4 ">
+    <div class="flex flex-col gap-4 pb-6">
 
       @if (budget) {
         <app-budget-circle-recap-chart [budget]="budget" [totalPaymentsAmount]="getTotalPaymentsAmount()" (onUpdateBudget)="budget = $event" (onRemoveBudget)="budget = undefined" />

@@ -63,8 +63,6 @@ export class AppComponent {
     // If routes = login/signup or landing page, not check
     if(this.routesWithoutAuth.includes(this.location.path())) return;
 
-    console.log('ok')
-
     if(typeof localStorage !== 'undefined') { // Execute only in CSR -> need localstorage
       this.http.get<IUser>(`${apiEndpoint}/auth/me`)
         .subscribe({

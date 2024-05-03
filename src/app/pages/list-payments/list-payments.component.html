@@ -1,4 +1,4 @@
-<section>
+<section class="pb-6">
 
   <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 mt-4 cursor-pointer " (click)="returnToBudgetPage()" />
 
@@ -106,7 +106,7 @@
                           @if(payment.description) {
                             <span
                               class="text-xs text-gray-400">
-                            {{ payment.description.length > 35 ? payment.description.substring(0, 35) + '...' : payment.description}}
+                            {{ payment.description.length > 25 ? payment.description.substring(0, 25) + '...' : payment.description}}
                         </span>
                           }
                         </div>
