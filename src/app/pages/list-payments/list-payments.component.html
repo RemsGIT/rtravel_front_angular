@@ -51,7 +51,7 @@
 
 
         @if(transactionsRepartitionByParticipant().length > 0) {
-          <h3>Répartition égale entre chaque participant</h3>
+          <h3 class="text-sm">Répartition égale entre chaque participant</h3>
 
           <div class="space-y-6 mt-4">
             @for(participant of transactionsRepartitionByParticipant();let i = $index;  track i) {
