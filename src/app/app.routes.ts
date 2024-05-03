@@ -7,8 +7,12 @@ import {RegisterComponent} from "./pages/auth/register/register.component";
 import {CheckEmailComponent} from "./pages/auth/check-email/check-email.component";
 import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
 import {ListPaymentsComponent} from "./pages/list-payments/list-payments.component";
+import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 
 export const routes: Routes = [
+
+  {path: '', component: LandingPageComponent, title: 'Rtravel | Planificateur de voyage'},
+
   {path: 'connexion', component: LoginComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'ConnectPage'}},
   {path: 'inscription', component: RegisterComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'RegisterPage'}},
   {path: 'verification-mail', component: CheckEmailComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'CheckEmailPage'}},
