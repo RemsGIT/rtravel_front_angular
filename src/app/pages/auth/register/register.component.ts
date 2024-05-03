@@ -57,8 +57,9 @@ export class RegisterComponent {
                 errorMessage = "L'adresse email est déjà utilisée"
               }
               else {
-                console.log(err)
               }
+              toast.error(JSON.stringify(err))
+
               break;
           }
           toast.error(errorMessage)
