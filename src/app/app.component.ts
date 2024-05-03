@@ -12,7 +12,7 @@ import {HeaderComponent} from "./components/header/header.component";
 import {PrimeNGConfig} from "primeng/api";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CalendarModule} from "primeng/calendar";
-import {slideInAnimation} from "./animations";
+import {fadeAnimation} from "./animations";
 
 @Component({
   selector: 'app-root',
@@ -21,8 +21,7 @@ import {slideInAnimation} from "./animations";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
-    slideInAnimation,
-    // animation triggers go here
+    fadeAnimation,
   ],
 })
 export class AppComponent {

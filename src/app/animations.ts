@@ -6,7 +6,7 @@ import {
   query, group, animateChild, stagger, keyframes,
 } from '@angular/animations';
 
-export const slideInAnimation =
+export const fadeAnimation =
   trigger('routeAnimations', [
     transition(
       '* <=> *',
