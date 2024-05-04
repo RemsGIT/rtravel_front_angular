@@ -91,6 +91,12 @@ export class FormCreateTripComponent {
             this.router.navigateByUrl(`/voyage/${response.id}`)
 
             toast.success(constants.messages.trip.SUCCESS_CREATE)
+
+            confetti({
+              particleCount: 100,
+              spread: 160,
+              origin: { y: 0.5 },
+            });
           },
           error: err => {
             this.isSubmitting = false
@@ -98,13 +104,6 @@ export class FormCreateTripComponent {
             toast.error(constants.messages.ERROR_CREATE)
           }
         })
-
-      confetti({
-        particleCount: 100,
-        spread: 160,
-        origin: { y: 0.5 },
-      });
-
     }
     else {
       //this.tripForm.markAllAsTouched()
