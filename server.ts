@@ -24,11 +24,6 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
-  // Don't SSR trip details route
-  server.get('/voyage/**', (req, res) => {
-    return res.sendFile(browserDistFolder+'/index.html')
-  })
-
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
