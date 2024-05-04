@@ -129,7 +129,7 @@
         <p>Vignette actuelle </p>
         <img
           [src]="tripService.tripSelected()?.thumbnail ? tripService.tripSelected()?.thumbnail : constants.defaults.thumbnail"
-          class="w-[200px] rounded-2xl"
+          class="w-[200px] rounded-2xl max-h-[180px object-cover"
 
         />
       </div>
@@ -148,7 +148,7 @@
       @if(thumbnail) {
         <img
           [src]="URL.createObjectURL(thumbnail)"
-          class="w-[200px] block mx-auto mt-8"
+          class="w-[200px] block mx-auto mt-8 object-cover max-h-[180px"
         />
       }
 
@@ -167,7 +167,7 @@
         <p>Photo de couverture actuelle </p>
         <img
           [src]="tripService.tripSelected()?.cover ? (tripService.tripSelected()?.cover ?? '') : constants.defaults.cover"
-          class="w-[250px] rounded-2xl"
+          class="w-[250px] rounded-2xl max-h-[180px] object-cover"
 
         />
       </div>
@@ -186,7 +186,7 @@
       @if(cover) {
         <img
           [src]="URL.createObjectURL(cover)"
-          class="w-[200px] block mx-auto mt-8"
+          class="w-[200px] block mx-auto mt-8 object-cover max-h-[180px]"
         />
       }
 
