@@ -14,6 +14,7 @@ import {SelectLocationComponent} from "../../../utils/select-location/select-loc
 import {CalendarModule} from "primeng/calendar";
 import {FileUploadModule} from "primeng/fileupload";
 import {NgOptimizedImage} from "@angular/common";
+import imageCompression from "browser-image-compression";
 
 @Component({
   selector: 'app-update-trip-informations',
@@ -177,57 +178,66 @@ export class UpdateTripInformationsComponent {
   onChangeThumbnail() {
     this.is_submitting = true
 
-    const formData = new FormData()
-    formData.append('thumbnail', this.thumbnail as File)
 
-    console.log(this.thumbnail)
+    imageCompression(this.thumbnail as File, {maxSizeMB: 3})
+      .then(file => {
+        const formData = new FormData()
 
-    this.tripService.updateTrip(formData, this.tripService.tripSelected()?.id as number)
-      .subscribe({
-        next: response => {
-          this.is_submitting = false
-          this.edit_thumbnail_visible = false
-          this.tripService.tripSelected.set(response)
-          toast.success(constants.messages.trip.SUCCESS_UPDATE)
-        },
-        error: e => {
-          this.is_submitting = false
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
-              toast.warning(constants.messages.ERROR_NEED_WRITE)
-              return
+        formData.append('thumbnail', file)
+
+        this.tripService.updateTrip(formData, this.tripService.tripSelected()?.id as number)
+          .subscribe({
+            next: response => {
+              this.is_submitting = false
+              this.edit_thumbnail_visible = false
+              this.tripService.tripSelected.set(response)
+              toast.success(constants.messages.trip.SUCCESS_UPDATE)
+            },
+            error: e => {
+              this.is_submitting = false
+              if(e.status === 400) {
+                if(e.error.error === "NOT_AUTHORIZED") {
+                  toast.warning(constants.messages.ERROR_NEED_WRITE)
+                  return
+                }
+              }
+              toast.error(constants.messages.ERROR_UPDATE)
             }
-          }
-          toast.error(constants.messages.ERROR_UPDATE)
-        }
+          })
       })
+
   }
 
   onChangeCover() {
     this.is_submitting = true
 
     const formData = new FormData()
-    formData.append('cover', this.cover as File)
 
-    this.tripService.updateTrip(formData, this.tripService.tripSelected()?.id as number)
-      .subscribe({
-        next: response => {
-          this.is_submitting = false
-          this.edit_cover_visible = false
-          this.tripService.tripSelected.set(response)
-          toast.success(constants.messages.trip.SUCCESS_UPDATE)
-        },
-        error: e => {
-          this.is_submitting = false
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
-              toast.warning(constants.messages.ERROR_NEED_WRITE)
-              return
+    imageCompression(this.cover as File, {maxSizeMB: 3})
+      .then(file => {
+        formData.append('cover', file)
+
+        this.tripService.updateTrip(formData, this.tripService.tripSelected()?.id as number)
+          .subscribe({
+            next: response => {
+              this.is_submitting = false
+              this.edit_cover_visible = false
+              this.tripService.tripSelected.set(response)
+              toast.success(constants.messages.trip.SUCCESS_UPDATE)
+            },
+            error: e => {
+              this.is_submitting = false
+              if(e.status === 400) {
+                if(e.error.error === "NOT_AUTHORIZED") {
+                  toast.warning(constants.messages.ERROR_NEED_WRITE)
+                  return
+                }
+              }
+              toast.error(constants.messages.ERROR_UPDATE)
             }
-          }
-          toast.error(constants.messages.ERROR_UPDATE)
-        }
+          })
       })
+
   }
 
   onChangeFileThumbnail(event: any) {

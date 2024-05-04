@@ -25,6 +25,7 @@
     "@ngx-translate/http-loader": "^8.0.0",
     "@types/canvas-confetti": "^1.6.4",
     "@types/google.maps": "^3.55.7",
+    "browser-image-compression": "^2.0.2",
     "canvas-confetti": "^1.9.2",
     "chart.js": "^4.4.2",
     "dayjs": "^1.11.10",
