@@ -5,6 +5,7 @@ import {DividerModule} from "primeng/divider";
 import {RouterLink} from "@angular/router";
 import {LucideAngularModule} from "lucide-angular";
 import dayjs from "dayjs";
+import {window} from "rxjs";
 
 @Component({
   selector: 'app-landing-page',
@@ -22,4 +23,6 @@ import dayjs from "dayjs";
 export class LandingPageComponent {
 
   protected readonly dayjs = dayjs;
+  protected readonly window = window;
+  protected readonly document = document;
 }

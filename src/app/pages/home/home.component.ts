@@ -8,6 +8,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
 import {LucideAngularModule} from "lucide-angular";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,14 @@ import {LucideAngularModule} from "lucide-angular";
         LucideAngularModule
     ],
   templateUrl: './home.component.html',
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 }))
+      ]),
+    ])
+  ]
 })
 export class HomeComponent implements OnInit{
   http= inject(HttpClient)

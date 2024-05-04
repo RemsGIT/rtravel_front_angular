@@ -8,6 +8,7 @@ import {TripRecapCardComponent} from "../../components/trip/trip-recap-card/trip
 import {TripNavigationTabsComponent} from "../../components/trip/trip-navigation-tabs/trip-navigation-tabs.component";
 import {toast} from "ngx-sonner";
 import {apiEndpoint, constants} from "../../constants";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-trip-detail',
@@ -18,6 +19,14 @@ import {apiEndpoint, constants} from "../../constants";
     TripNavigationTabsComponent
   ],
   templateUrl: './trip-detail.component.html',
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 }))
+      ]),
+    ])
+  ]
 })
 export class TripDetailComponent implements OnInit {
   authService = inject(AuthService)
