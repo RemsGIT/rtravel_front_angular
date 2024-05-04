@@ -179,7 +179,7 @@ export class UpdateTripInformationsComponent {
     this.is_submitting = true
 
 
-    imageCompression(this.thumbnail as File, {maxSizeMB: 3})
+    imageCompression(this.thumbnail as File, {maxSizeMB: 2})
       .then(file => {
         const formData = new FormData()
 
@@ -213,7 +213,7 @@ export class UpdateTripInformationsComponent {
 
     const formData = new FormData()
 
-    imageCompression(this.cover as File, {maxSizeMB: 3})
+    imageCompression(this.cover as File, {maxSizeMB: 2})
       .then(file => {
         formData.append('cover', file)
 
