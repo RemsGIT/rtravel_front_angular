@@ -35,7 +35,7 @@ export class TripDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id') ?? ''
+    const id = 8
 
     this.tripService.getTripById(id)
       .subscribe({
