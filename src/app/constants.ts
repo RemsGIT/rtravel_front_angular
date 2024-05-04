@@ -5,7 +5,9 @@ export const constants = {
   messages: {
     trip: {
       SUCCESS_CREATE: "Votre nouveau voyage a été ajouté",
-      SUCCESS_UPDATE: "Voyage modifié"
+      SUCCESS_UPDATE: "Voyage modifié",
+      SUCCESS_DELETE: "Le voyage a bien été supprimé",
+      ERROR_DELETE_NOT_OWNER: "Seul le gérant peut supprimer un voyage",
     },
     activity: {
       SUCCESS_CREATE: "L'activité a bien été ajoutée",
