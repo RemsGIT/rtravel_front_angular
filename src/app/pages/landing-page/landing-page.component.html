@@ -21,7 +21,7 @@
       </div>
       <!-- Menu hidden -->
       <div class="flex md:hidden items-center justify-end mt-0.5 mr-6">
-        <p-button styleClass="w-[32px] h-[32px] rounded-full" (click)="document.location.href = '/accueil'">
+        <p-button styleClass="w-[32px] h-[32px] rounded-full" routerLink="/accueil">
           <lucide-icon name="user" size="20" class="h-[20px]" />
         </p-button>
       </div>
@@ -39,7 +39,7 @@
       </h1>
       <p class="text-center mt-6 leading-7 font-thin">Créez, organisez et gérez le budget de votre voyage dans une application gratuite conçue pour les vacances.</p>
 
-      <p-button styleClass="block mx-auto w-[130px] mt-4" (click)="document.location.href = '/accueil'">C'est parti </p-button>
+      <p-button styleClass="block mx-auto w-[130px] mt-4" routerLink="/accueil">C'est parti </p-button>
 
     </div>
 
