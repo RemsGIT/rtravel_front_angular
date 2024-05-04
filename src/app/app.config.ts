@@ -1,4 +1,4 @@
-import {ApplicationConfig, importProvidersFrom} from '@angular/core';
+import {ApplicationConfig, importProvidersFrom, isDevMode} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
@@ -42,6 +42,7 @@ import {
 } from "lucide-angular";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { provideServiceWorker } from '@angular/service-worker';
 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -52,8 +53,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
-    importProvidersFrom(
-      LucideAngularModule.pick({
+    importProvidersFrom(LucideAngularModule.pick({
         Hourglass,
         Check,
         Map,
@@ -83,16 +83,18 @@ export const appConfig: ApplicationConfig = {
         Calculator,
         List,
         Mail
-      }),
-      TranslateModule.forRoot({
+    }), TranslateModule.forRoot({
         loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
         },
-      })
-    ),
+    })),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAnimations(),
-  ]
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    })
+]
 };
