@@ -34,7 +34,7 @@
                 <p class="text-sm text-gray-400 my-2">
                   Dans
                   @if (dayjs(trip.start).diff(dayjs(), 'day') <= 30) {
-                    {{ dayjs(trip.start).diff(dayjs(), 'day') }} jours
+                    {{ dayjs(trip.start).diff(dayjs(), 'day')+1 }} jours
                   } @else {
                     {{ dayjs(trip.start).diff(dayjs(), 'month') }} mois
                   }

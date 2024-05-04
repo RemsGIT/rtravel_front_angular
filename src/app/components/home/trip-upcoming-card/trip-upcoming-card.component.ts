@@ -34,6 +34,8 @@ export class TripUpcomingCardComponent implements OnInit {
 
   year: string | undefined
 
+  totalPayments: number = 0
+
   ngOnInit() {
     if(typeof localStorage !== 'undefined') {
       this.http.get<{trip: Trip}>(`${apiEndpoint}/trips/current`)
@@ -41,6 +43,10 @@ export class TripUpcomingCardComponent implements OnInit {
           if(!!response.trip) {
             this.trip = response.trip
             this.year = new Date(response.trip.start).getUTCFullYear().toString()
+
+            if(response.trip.payments) {
+              this.totalPayments = response.trip.payments.reduce((acc, item) => acc + item.amount, 0)
+            }
           }
         })
     }

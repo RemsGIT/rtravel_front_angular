@@ -23,7 +23,19 @@
             <p class="mt-2 text-xl">{{ trip.name }}, {{ year }}</p>
             <p class="text-muted-foreground text-sm mt-1">{{ trip.city }}</p>
             <div class="flex justify-between mt-3 items-center">
-              <p class="border border-solid border-gray-200 p-2 rounded-lg">838€</p>
+              <p class="border border-solid border-gray-200 p-2 rounded-lg">
+                @if(dayjs(trip.start).isAfter(dayjs())) { <!-- future -->
+                  @if (dayjs(trip.start).diff(dayjs(), 'day') <= 30) {
+                    {{ dayjs(trip.start).diff(dayjs(), 'day')+1 }} jours
+                  } @else {
+                    {{ dayjs(trip.start).diff(dayjs(), 'month') }} mois
+                  }
+                }
+                @else { <!-- current -->
+                  {{totalPayments}} €
+                }
+
+              </p>
               <p-button [routerLink]="['/voyage', trip.id]" label="Accéder" />
             </div>
           </div>

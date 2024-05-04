@@ -1,5 +1,6 @@
 import {Participant} from "./participant.model";
 import {IUser} from "./auh.model";
+import {Payment} from "./budget.model";
 
 export interface Trip {
   id: number,
@@ -13,6 +14,7 @@ export interface Trip {
   activities?: Activity[],
   user?: IUser,
   participants?: Participant[],
+  payments?: Payment[],
   isShared?: boolean
 }
 
