@@ -34,13 +34,10 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": {
-              "discoverRoutes": false,
-              "routesFile": "routes.txt"
-            },
+            "prerender": true,
             "ssr": {
               "entry": "server.ts"
-            },
+            }
           },
           "configurations": {
             "production": {
