@@ -8,6 +8,7 @@ import {CheckEmailComponent} from "./pages/auth/check-email/check-email.componen
 import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
 import {ListPaymentsComponent} from "./pages/list-payments/list-payments.component";
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 
 export const routes: Routes = [
 
@@ -21,6 +22,8 @@ export const routes: Routes = [
   {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages", data: {animation: 'HomePage'}},
   {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage", data: {animation: 'CreateTripPage'}},
 
-  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'NewTripPage', ssr: false}},
+  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'NewTripPage'}},
   {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage', data: {animation: 'PaymentsPage'}},
+
+  {path: 'profil', component: ProfileComponent, canActivate: [authGuard], title: 'Rtravel | Profil utilisateur' ,data: {animation: 'ProfilePage'}}
 ];

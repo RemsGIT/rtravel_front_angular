@@ -1,0 +1,15 @@
+<div class="m-4">
+
+  <p-card>
+    <div class="px-4 py-6">
+
+      <div class="w-1/2 h-[80px] bg-primary flex justify-center items-center text-2xl text-white font-semibold rounded-3xl mx-auto">
+        {{authService.currentUserSig()?.username}}
+      </div>
+
+    </div>
+  </p-card>
+
+  <app-profile-tabs />
+
+</div>

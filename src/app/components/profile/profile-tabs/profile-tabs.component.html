@@ -1,0 +1,29 @@
+<div class="mt-4 profile-tabs">
+  <p-tabView  >
+    <p-tabPanel header="Compte" headerStyleClass="text-sm tab-small-padding">
+      <ng-template pTemplate="account" >
+        <div class="space-y-4 mt-2">
+          <div class="flex flex-col gap-2">
+            <label for="username">Nom d'utilisateur</label>
+            <input id="username" type="text" pInputText [(ngModel)]="username">
+          </div>
+
+          <p-button styleClass="mt-4" (click)="onChangeUsername()" [loading]="isSubmitting">Sauvegarder</p-button>
+        </div>
+      </ng-template>
+    </p-tabPanel>
+    <p-tabPanel header="Statistique" headerStyleClass="text-sm tab-small-padding">
+      <ng-template pTemplate="stat">
+        <div class="space-y-4">
+          <app-profile-statistics />
+        </div>
+      </ng-template>
+    </p-tabPanel>
+    <p-tabPanel header="Paramètres" headerStyleClass="text-sm tab-small-padding">
+      <ng-template pTemplate="settings">
+        <p>onglet 3</p>
+      </ng-template>
+
+    </p-tabPanel>
+  </p-tabView>
+</div>
