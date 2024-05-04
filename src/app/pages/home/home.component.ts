@@ -6,9 +6,10 @@ import {HttpClient} from "@angular/common/http";
 import {apiEndpoint} from "../../constants";
 import {NgOptimizedImage} from "@angular/common";
 import {ButtonModule} from "primeng/button";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {LucideAngularModule} from "lucide-angular";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {TokenService} from "../../services/token/token.service";
 
 @Component({
   selector: 'app-home',
@@ -34,6 +35,8 @@ import {animate, style, transition, trigger} from "@angular/animations";
 })
 export class HomeComponent implements OnInit{
   http= inject(HttpClient)
+  router = inject(Router)
+  tokenService = inject(TokenService)
 
   hasTrip = false
   isDataLoaded = false
@@ -44,6 +47,10 @@ export class HomeComponent implements OnInit{
         next: (res: any) => {
             this.hasTrip = res.result
             this.isDataLoaded = true
+        },
+        error: e => { // User is not logged in
+          if(e.status === 401) this.router.navigateByUrl("/connexion")
+          this.tokenService.setToken("")
         }
       })
   }
