@@ -26,7 +26,7 @@ export function app(): express.Express {
 
   // Don't SSR trip details route
   server.get('/voyage/**', (req, res) => {
-    res.sendFile(browserDistFolder+'/index.html')
+    return res.sendFile(browserDistFolder+'/index.html')
   })
 
   // All regular routes use the Angular engine
