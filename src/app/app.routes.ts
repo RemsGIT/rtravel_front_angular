@@ -20,7 +20,7 @@ export const routes: Routes = [
 
   {path: 'accueil', component: HomeComponent, canActivate: [authGuard], title: "Rtravel | Planifie tes voyages", data: {animation: 'HomePage'}},
   {path: 'voyage/new', component: CreateTripComponent, canActivate: [authGuard], title: "Rtravel | Nouveau voyage", data: {animation: 'CreateTripPage'}},
-  {path: 'voyage/details', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'NewTripPage'}},
+  {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'NewTripPage'}},
 
   {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage', data: {animation: 'PaymentsPage'}},
 ];
