@@ -23,6 +23,10 @@ export class TripService {
     return this.http.patch<Trip>(`${apiEndpoint}/trips/${tripId}`, data)
   }
 
+  deleteTrip(tripId: number) {
+    return this.http.delete(`${apiEndpoint}/trips/${tripId}`)
+  }
+
   persistActivity(data: IActivityRequest, tripId?: number) {
     const trip = tripId ? tripId : this.tripSelected()?.id
 
