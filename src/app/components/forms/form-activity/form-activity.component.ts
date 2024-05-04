@@ -102,6 +102,10 @@ export class FormActivityComponent implements OnInit{
 
               toast.success(constants.messages.activity.SUCCESS_CREATE)
               this.activityForm.reset()
+
+              setTimeout(() => {
+                document.getElementById("btn-create-activity-floating")?.classList.remove('hidden')
+              }, 200)
             },
             error: (e: any) => {
               this.isSubmitting = false

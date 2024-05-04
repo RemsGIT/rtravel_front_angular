@@ -79,6 +79,12 @@ export class TripActivitiesDateTabsComponent implements OnInit{
 
 
       this.selectedTab = currentIndex !== -1 ? dates[currentIndex] : dates[0];
+
+      if(this.selectedTab !== dates[0]) {
+        setTimeout(() => {
+          this.swiper.nativeElement.swiper.slideTo(currentIndex)
+        }, 100)
+      }
     }
   }
 
