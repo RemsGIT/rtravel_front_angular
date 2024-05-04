@@ -61,5 +61,4 @@ export class TripDetailComponent implements OnInit {
   }
 
   protected readonly constants = constants;
-  protected readonly apiEndpoint = apiEndpoint;
 }

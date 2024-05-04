@@ -1,17 +1,15 @@
-<div>
+<div class="pb-8 mx-4 h-[90%]">
   @if (tripService.tripSelected()) {
-    <section @fade>
-      <img
-        [ngSrc]="tripService.tripSelected()?.cover ? (tripService.tripSelected()?.cover ?? '') :  constants.defaults.cover"
-        width=800
-        height=400
-        class="absolute top-0 -z-10 rounded-b-[40%] w-full h-[200px] object-cover"
-        priority
-      >
-      <app-trip-recap-card />
-      <app-trip-navigation-tabs />
-    </section>
-  }
-
-
+      <section @fade>
+        <img
+          [ngSrc]="tripService.tripSelected()?.cover ? (tripService.tripSelected()?.cover ?? '') :  constants.defaults.cover"
+          width=800
+          height=400
+          class="absolute top-0 -z-10 rounded-b-[40%] w-full h-[200px] object-cover"
+          priority
+        >
+        <app-trip-recap-card />
+        <app-trip-navigation-tabs />
+      </section>
+    }
 </div>
