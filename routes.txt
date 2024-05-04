@@ -1,0 +1,6 @@
+/
+/connexion
+/inscription
+/verification-mail
+/accueil
+/voyage/new
