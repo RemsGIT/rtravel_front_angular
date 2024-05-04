@@ -24,10 +24,10 @@ export class AvatarProfileDropdownComponent implements OnInit{
   ngOnInit() {
     this.items = [
       {
-        label: 'Mon profile',
+        label: 'Mon profil',
         icon: 'user',
         command: () => {
-
+          this.router.navigateByUrl('/profil')
         }
       },
       {
