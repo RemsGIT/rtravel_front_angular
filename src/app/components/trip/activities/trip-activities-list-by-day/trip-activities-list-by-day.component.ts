@@ -62,8 +62,6 @@ export class TripActivitiesListByDayComponent implements AfterViewInit{
     }
 
     return "plane"
-
-
   }
 
 }

@@ -5,7 +5,7 @@ import {ButtonModule} from "primeng/button";
 import {CalendarModule} from "primeng/calendar";
 import {TripService} from "../../../../services/trip/trip.service";
 import dayjs from "dayjs";
-import {Activity} from "../../../../../models/trip.model";
+import {Activity, listTypesIcons} from "../../../../../models/trip.model";
 import fr from "dayjs/locale/fr";
 
 @Component({
@@ -37,6 +37,16 @@ export class TripWidgetNextActivityComponent implements OnInit{
       this.nextActivity = closestActivity
     }
 
+  }
+
+  getIconByType(icon: string) {
+    const selectedType = listTypesIcons.find(lt => lt.code === icon)
+
+    if(selectedType) {
+      return selectedType.icon
+    }
+
+    return "plane"
   }
 
 
