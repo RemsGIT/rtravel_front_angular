@@ -20,9 +20,9 @@ type type = "city" | "country" | "country_city"
   ],
   templateUrl: './select-location.component.html',
 })
-export class SelectLocationComponent implements OnInit{
+export class SelectLocationComponent implements OnInit {
   tripService = inject(TripService)
-  googlePlacesService =  inject(GooglePlacesService)
+  googlePlacesService = inject(GooglePlacesService)
 
   predictions: PlaceResult[] = []
 
@@ -32,7 +32,7 @@ export class SelectLocationComponent implements OnInit{
   onValueChange = output<PlaceResult>()
 
   ngOnInit() {
-    if(!!this.defaultValue()) {
+    if (!!this.defaultValue()) {
       this.predictions.push({value: this.defaultValue() as string})
     }
   }
@@ -42,13 +42,19 @@ export class SelectLocationComponent implements OnInit{
       case 'city':
         this.googlePlacesService.searchCitiesByText(event.query)
           .then(response => {
-            this.predictions = response.map(prediction => ({ value: prediction.value }));
+            this.predictions = response.map(prediction => ({value: prediction.value}));
           })
         break;
       case 'country_city':
         this.googlePlacesService.searchCountriesAndCitiesByText(event.query)
           .then(response => {
-            this.predictions = response.map(prediction => ({ value: prediction.value, countryCode: prediction.countryCode, type: prediction.type }));
+            this.predictions = response.map(prediction => ({
+              value: prediction.value,
+              countryCode: prediction.countryCode,
+              type: prediction.type,
+              latitude: prediction.latitude,
+              longitude: prediction.longitude
+            }));
           })
         break;
     }

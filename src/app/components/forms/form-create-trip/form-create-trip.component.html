@@ -1,10 +1,10 @@
 <div class="relative mt-6">
 
-  @if(step !== "name") {
-    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 cursor-pointer " (click)="goToPreviousStep()" />
-  }
-  @else {
-    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 " routerLink="/accueil" />
+  @if (step !== "name") {
+    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 cursor-pointer "
+                 (click)="goToPreviousStep()"/>
+  } @else {
+    <lucide-icon name="arrow-left" size="26" strokeWidth="3" class="p-0 ml-2 " routerLink="/accueil"/>
   }
 
   <form [formGroup]="tripForm" class="space-y-5 flex justify-center items-center w-full mt-24" (ngSubmit)="onSubmit()">
@@ -29,7 +29,15 @@
           <div [@slideInLeft]>
             <label class="font-semibold text-xl">Entre la destination de ton voyage </label>
             <div class="mt-4">
-              <app-select-location typeLocation="country_city" (onValueChange)="tripForm.patchValue({city: $event.value, countryCode: $event.countryCode})" [defaultValue]="tripForm.get('city')?.value"/>
+              <app-select-location typeLocation="country_city"
+                                   (onValueChange)="tripForm.patchValue(
+                                   {
+                                            city: $event.value,
+                                            countryCode: $event.countryCode,
+                                            latitude: $event.latitude,
+                                            longitude: $event.longitude
+                                          })"
+                                   [defaultValue]="tripForm.get('city')?.value"/>
             </div>
           </div>
         }
@@ -69,9 +77,10 @@
         }
       }
 
-      <p-button class="text-right" styleClass="px-3 py-1.5 w-[52px] h-[44px]" (onClick)="goToNextStep()" [loading]="isSubmitting">
-        @if(!isSubmitting) {
-          <lucide-icon name="arrow-right" size="26" strokeWidth="3" class="p-0" />
+      <p-button class="text-right" styleClass="px-3 py-1.5 w-[52px] h-[44px]" (onClick)="goToNextStep()"
+                [loading]="isSubmitting">
+        @if (!isSubmitting) {
+          <lucide-icon name="arrow-right" size="26" strokeWidth="3" class="p-0"/>
         }
       </p-button>
 

@@ -54,6 +54,8 @@ export class FormCreateTripComponent {
       start: new FormControl(undefined, [Validators.required]),
       end: new FormControl(undefined, [Validators.required]),
       countryCode: new FormControl('', [Validators.required]),
+      latitude: new FormControl(undefined),
+      longitude: new FormControl(undefined)
     })
   }
 
@@ -79,6 +81,9 @@ export class FormCreateTripComponent {
   onSubmit() {
     if(this.tripForm.valid) {
       this.isSubmitting = true
+
+      console.log(this.tripForm.value)
+      return
 
       this.tripForm.patchValue({
         'start' : dayjs( this.tripForm.get('start')?.value).format('YYYY-MM-DD HH:mm:ss'),
