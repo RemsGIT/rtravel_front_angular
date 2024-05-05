@@ -44,7 +44,6 @@ export class BudgetTripComponent implements OnInit{
       .subscribe({
         next: response => {
           this.budget = response
-          this.isLoaded = true
         }
       })
 
