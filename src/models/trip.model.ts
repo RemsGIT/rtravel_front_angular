@@ -62,6 +62,6 @@ export const listTypesIcons = [
   {icon: '/assets/images/icons/sport.png', code: 'sport', name: 'Sport' },
   {icon: '/assets/images/icons/restaurant.png', code: 'restaurant', name: 'Restaurant' },
   {icon: '/assets/images/icons/sea.png', code: 'sea', name: 'Plage' },
-  {icon: '/assets/images/icons/keys.png', code: 'sea', name: 'Logement' },
+  {icon: '/assets/images/icons/keys.png', code: 'accommodation', name: 'Logement' },
   {icon: '/assets/images/icons/redflag.png', code: 'other', name: 'Autre' },
 ]
