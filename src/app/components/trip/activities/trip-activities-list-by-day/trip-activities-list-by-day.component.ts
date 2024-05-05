@@ -8,6 +8,7 @@ import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {CreateActivityBtnComponent} from "../create-activity-btn/create-activity-btn.component";
 import {ActivityDropdownActionsComponent} from "../activity-dropdown-actions/activity-dropdown-actions.component";
+import {listTypesIcons} from "../../../../../models/trip.model";
 
 @Component({
   selector: 'app-trip-activities-list-by-day',
@@ -50,6 +51,19 @@ export class TripActivitiesListByDayComponent implements AfterViewInit{
     });
 
     return filteredActivities;
+  }
+
+
+  getIconByType(icon: string) {
+    const selectedType = listTypesIcons.find(lt => lt.code === icon)
+
+    if(selectedType) {
+      return selectedType.icon
+    }
+
+    return "plane"
+
+
   }
 
 }

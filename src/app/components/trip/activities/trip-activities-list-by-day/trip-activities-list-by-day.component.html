@@ -12,7 +12,7 @@
                     <div class="font-bold p-2">
                       <div class="flex justify-between">
                         <div class="flex gap-2">
-                          <lucide-icon name="plane" size="18" />
+                          <img [src]="getIconByType(activity.icon)" class="w-[18px] h-[18px]" alt="" />
                           <span>{{activity.name}}</span>
                         </div>
                         <app-activity-dropdown-actions [activity]="activity" />

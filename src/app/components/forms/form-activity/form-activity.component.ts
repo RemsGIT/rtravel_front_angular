@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import {CalendarModule} from "primeng/calendar";
 import {DropdownModule} from "primeng/dropdown";
 import {InputTextModule} from "primeng/inputtext";
-import {Activity} from "../../../../models/trip.model";
+import {Activity, listTypesIcons} from "../../../../models/trip.model";
 import fr from "dayjs/locale/fr";
 import {SelectLocationComponent} from "../../utils/select-location/select-location.component";
 
@@ -33,16 +33,6 @@ export class FormActivityComponent implements OnInit{
 
   onSubmitSuccess = output()
 
-  listTypesIcons = [
-    {icon: '/assets/images/icons/transport.png', code: 'transport', name: 'Transport' },
-    {icon: '/assets/images/icons/visit.png', code: 'visit', name: 'Visite' },
-    {icon: '/assets/images/icons/hiking.png', code: 'hiking', name: 'Randonnée' },
-    {icon: '/assets/images/icons/sport.png', code: 'sport', name: 'Sport' },
-    {icon: '/assets/images/icons/restaurant.png', code: 'restaurant', name: 'Restaurant' },
-    {icon: '/assets/images/icons/sea.png', code: 'sea', name: 'Plage' },
-    {icon: '/assets/images/icons/redflag.png', code: 'other', name: 'Autre' },
-  ]
-
   constructor(private fb: FormBuilder, private tripService: TripService) {
     this.activityForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
@@ -63,7 +53,7 @@ export class FormActivityComponent implements OnInit{
     }
     else if(this.activityToEdit()) {
 
-      const selectedType = this.listTypesIcons.find(lt => lt.code === this.activityToEdit()?.icon)
+      const selectedType = listTypesIcons.find(lt => lt.code === this.activityToEdit()?.icon)
 
       this.activityForm.patchValue({
         name: this.activityToEdit()?.name,
@@ -160,4 +150,6 @@ export class FormActivityComponent implements OnInit{
       this.activityForm.markAllAsTouched()
     }
   }
+
+  protected readonly listTypesIcons = listTypesIcons;
 }

@@ -53,3 +53,14 @@ export interface IActivityRequest {
   icon: string,
   place: string,
 }
+
+
+export const listTypesIcons = [
+  {icon: '/assets/images/icons/transport.png', code: 'transport', name: 'Transport' },
+  {icon: '/assets/images/icons/visit.png', code: 'visit', name: 'Visite' },
+  {icon: '/assets/images/icons/hiking.png', code: 'hiking', name: 'Randonnée' },
+  {icon: '/assets/images/icons/sport.png', code: 'sport', name: 'Sport' },
+  {icon: '/assets/images/icons/restaurant.png', code: 'restaurant', name: 'Restaurant' },
+  {icon: '/assets/images/icons/sea.png', code: 'sea', name: 'Plage' },
+  {icon: '/assets/images/icons/redflag.png', code: 'other', name: 'Autre' },
+]
