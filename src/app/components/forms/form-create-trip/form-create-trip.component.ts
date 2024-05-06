@@ -82,9 +82,6 @@ export class FormCreateTripComponent {
     if(this.tripForm.valid) {
       this.isSubmitting = true
 
-      console.log(this.tripForm.value)
-      return
-
       this.tripForm.patchValue({
         'start' : dayjs( this.tripForm.get('start')?.value).format('YYYY-MM-DD HH:mm:ss'),
         'end' : dayjs( this.tripForm.get('end')?.value).format('YYYY-MM-DD HH:mm:ss')
