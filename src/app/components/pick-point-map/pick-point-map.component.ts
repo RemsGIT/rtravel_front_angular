@@ -62,7 +62,7 @@ export class PickPointMapComponent implements OnInit {
     }).setView([49.89863424051644, 2.2990098595619206], 2) as L.Map
 
     if(latitude && longitude) {
-      this.map.setView(L.latLng(latitude, longitude), 10)
+      this.map.setView(L.latLng(latitude, longitude), 15)
     }
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicmVteWNhcyIsImEiOiJjbGxzY3Y3c3YweDB2M2VwcHhzOTh2aGE2In0.g4kYgrf9FzOCjuEmHW8-Qg', {
