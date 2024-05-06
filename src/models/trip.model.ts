@@ -15,7 +15,9 @@ export interface Trip {
   user?: IUser,
   participants?: Participant[],
   payments?: Payment[],
-  isShared?: boolean
+  latitude?: number,
+  longitude?: number
+  isShared?: boolean,
 }
 
 export interface Activity {
@@ -25,6 +27,8 @@ export interface Activity {
   city: string,
   start: Date,
   icon: string,
+  latitude?: number,
+  longitude?: number
 }
 
 export interface ITripRequest {
@@ -33,7 +37,6 @@ export interface ITripRequest {
   start: Date,
   end: Date,
   countryCode: string,
-
 }
 
 export interface ITripUpdateRequest {
@@ -44,6 +47,8 @@ export interface ITripUpdateRequest {
   countryCode?: string,
   thumbnail?: string,
   cover?: string,
+  latitude?: number,
+  longitude?: number
 }
 
 export interface IActivityRequest {
@@ -52,6 +57,8 @@ export interface IActivityRequest {
   city: string,
   icon: string,
   place: string,
+  latitude?: number,
+  longitude?: number
 }
 
 

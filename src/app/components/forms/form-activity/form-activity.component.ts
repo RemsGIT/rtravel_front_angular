@@ -10,6 +10,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {Activity, listTypesIcons} from "../../../../models/trip.model";
 import fr from "dayjs/locale/fr";
 import {SelectLocationComponent} from "../../utils/select-location/select-location.component";
+import {PickPointMapComponent} from "../../pick-point-map/pick-point-map.component";
+import {LucideAngularModule} from "lucide-angular";
 
 @Component({
   selector: 'app-form-activity',
@@ -19,7 +21,9 @@ import {SelectLocationComponent} from "../../utils/select-location/select-locati
     CalendarModule,
     DropdownModule,
     InputTextModule,
-    SelectLocationComponent
+    SelectLocationComponent,
+    PickPointMapComponent,
+    LucideAngularModule
   ],
   templateUrl: './form-activity.component.html',
 })
@@ -33,6 +37,9 @@ export class FormActivityComponent implements OnInit{
 
   onSubmitSuccess = output()
 
+  openPickPointOnMap = false
+  showPickPointSidebar = false
+
   constructor(private fb: FormBuilder, private tripService: TripService) {
     this.activityForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
@@ -40,14 +47,16 @@ export class FormActivityComponent implements OnInit{
       place: new FormControl(''),
       type: new FormControl('', [Validators.required]),
       start: new FormControl(undefined, [Validators.required]),
-      icon: new FormControl('')
+      icon: new FormControl(''),
+      latitude: new FormControl(),
+      longitude: new FormControl()
     })
   }
 
   ngOnInit(): void {
     if(this.selectedDate()) {
       this.activityForm.patchValue({
-      // @ts-ignore
+        // @ts-ignore
         start : new Date(this.selectedDate().setHours(10,0,0))
       })
     }
@@ -63,6 +72,8 @@ export class FormActivityComponent implements OnInit{
         type: selectedType,
         //@ts-ignore
         start: new Date(this.activityToEdit()?.start),
+        latitude: this.activityToEdit()?.latitude,
+        longitude: this.activityToEdit()?.longitude
 
       })
     }
@@ -151,5 +162,31 @@ export class FormActivityComponent implements OnInit{
     }
   }
 
+  onChangeVisibilityPickPointMap (state: boolean) {
+    if(!state) {
+      this.openPickPointOnMap = false
+      setTimeout(() => {
+        this.showPickPointSidebar = false
+      }, 300)
+    }
+    else {
+      this.showPickPointSidebar = true
+    }
+  }
+
+  onChangeLocation(coords: [number | undefined, number | undefined]) {
+    if(coords[0] && coords[1]) {
+      this.activityForm.patchValue({
+        latitude: coords[0],
+        longitude: coords[1]
+      })
+    }
+    this.openPickPointOnMap = false
+    setTimeout(() => {
+      this.showPickPointSidebar = false
+    }, 300)
+  }
+
   protected readonly listTypesIcons = listTypesIcons;
+  protected readonly open = open;
 }

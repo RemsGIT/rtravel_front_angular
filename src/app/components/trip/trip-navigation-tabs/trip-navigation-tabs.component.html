@@ -6,7 +6,15 @@
           <!--
           <app-trip-widget-tickets class="block" />
           -->
-          <app-trip-widget-next-activity class="block" />
+          <div>
+            <app-trip-widget-next-activity class="block" />
+          </div>
+
+          <div>
+            @if(isPlatformBrowser(platformId)) {
+              <app-widget-map />
+            }
+          </div>
         </div>
       </ng-template>
     </p-tabPanel>

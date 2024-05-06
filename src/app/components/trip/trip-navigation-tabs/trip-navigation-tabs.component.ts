@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Inject, PLATFORM_ID} from '@angular/core';
 
 import {animate, query, stagger, state, style, transition, trigger} from "@angular/animations";
 
@@ -15,6 +15,8 @@ import {TripWidgetTicketsComponent} from "../preview/trip-widget-tickets/trip-wi
 import {UpdateTripSettingsComponent} from "../settings/update-trip-settings/update-trip-settings.component";
 import {BudgetCircleRecapChartComponent} from "../budget/budget-circle-recap-chart/budget-circle-recap-chart.component";
 import {BudgetTripComponent} from "../budget/budget-trip/budget-trip.component";
+import {WidgetMapComponent} from "../preview/widget-map/widget-map.component";
+import {isPlatformBrowser} from "@angular/common";
 
 
 type Tabs = "preview" | "activities" | "participants" | "budget"
@@ -31,7 +33,8 @@ type Tabs = "preview" | "activities" | "participants" | "budget"
     TripWidgetTicketsComponent,
     UpdateTripSettingsComponent,
     BudgetCircleRecapChartComponent,
-    BudgetTripComponent
+    BudgetTripComponent,
+    WidgetMapComponent
   ],
   templateUrl: './trip-navigation-tabs.component.html',
   animations: [
@@ -46,7 +49,7 @@ type Tabs = "preview" | "activities" | "participants" | "budget"
 export class TripNavigationTabsComponent {
   activeIndex: number = 0
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) protected platformId: Object) {
     this.route.queryParams.subscribe(params => {
       const tabParam = params['tab'];
       if (tabParam) {
@@ -73,4 +76,6 @@ export class TripNavigationTabsComponent {
       return uri + separator + key + "=" + value;
     }
   }
+
+  protected readonly isPlatformBrowser = isPlatformBrowser;
 }

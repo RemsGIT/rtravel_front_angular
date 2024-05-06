@@ -35,15 +35,15 @@ import imageCompression from "browser-image-compression";
   styleUrl: './update-trip-informations.scss',
   animations: [
     trigger('slideInRight', [
-    transition(':enter', [
-      style({ transform: 'translateX(100%)' }),
-      animate('150ms ease-out', style({ transform: 'translateX(0)' })),
-    ]),
-    transition(":leave", [
-      animate('150ms ease-out', style({ transform: 'translateX(100%)' })),
+      transition(':enter', [
+        style({transform: 'translateX(100%)'}),
+        animate('150ms ease-out', style({transform: 'translateX(0)'})),
+      ]),
+      transition(":leave", [
+        animate('150ms ease-out', style({transform: 'translateX(100%)'})),
+      ])
     ])
-  ])
-],
+  ],
 })
 export class UpdateTripInformationsComponent {
   tripService = inject(TripService)
@@ -60,7 +60,12 @@ export class UpdateTripInformationsComponent {
 
 
   name = this.tripService.tripSelected()?.name
-  city: {city: string, countryCode: string} = {city: this.tripService.tripSelected()?.city ?? '', countryCode: this.tripService.tripSelected()?.countryCode ?? ''}
+  city: { city: string, countryCode: string, latitude?: number, longitude?: number } = {
+    city: this.tripService.tripSelected()?.city ?? '',
+    countryCode: this.tripService.tripSelected()?.countryCode ?? '',
+    latitude: this.tripService.tripSelected()?.latitude,
+    longitude: this.tripService.tripSelected()?.longitude
+  }
   start = new Date(this.tripService.tripSelected()?.start as Date)
   end = new Date(this.tripService.tripSelected()?.end as Date)
   thumbnail: File | undefined
@@ -79,8 +84,8 @@ export class UpdateTripInformationsComponent {
         },
         error: e => {
           this.is_submitting = false
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
+          if (e.status === 400) {
+            if (e.error.error === "NOT_AUTHORIZED") {
               toast.warning(constants.messages.ERROR_NEED_WRITE)
               return
             }
@@ -92,7 +97,7 @@ export class UpdateTripInformationsComponent {
 
   onChangeCity() {
     this.is_submitting = true
-    this.tripService.updateTrip({city: this.city.city, countryCode: this.city.countryCode}, this.tripService.tripSelected()?.id as number)
+    this.tripService.updateTrip(this.city, this.tripService.tripSelected()?.id as number)
       .subscribe({
         next: response => {
           this.is_submitting = false
@@ -102,8 +107,8 @@ export class UpdateTripInformationsComponent {
         },
         error: e => {
           this.is_submitting = false
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
+          if (e.status === 400) {
+            if (e.error.error === "NOT_AUTHORIZED") {
               toast.warning(constants.messages.ERROR_NEED_WRITE)
               return
             }
@@ -116,14 +121,14 @@ export class UpdateTripInformationsComponent {
   onChangeStart() {
 
     // Check if start is before the end
-    if(dayjs(this.start).isAfter(dayjs(this.tripService.tripSelected()?.end))) {
+    if (dayjs(this.start).isAfter(dayjs(this.tripService.tripSelected()?.end))) {
       toast.error("La date de début doit être avant la date de fin")
       return
     }
 
 
     this.is_submitting = true
-    this.tripService.updateTrip({start: dayjs( this.start).format('YYYY-MM-DD')}, this.tripService.tripSelected()?.id as number)
+    this.tripService.updateTrip({start: dayjs(this.start).format('YYYY-MM-DD')}, this.tripService.tripSelected()?.id as number)
       .subscribe({
         next: response => {
           this.is_submitting = false
@@ -133,8 +138,8 @@ export class UpdateTripInformationsComponent {
         },
         error: e => {
           this.is_submitting = false
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
+          if (e.status === 400) {
+            if (e.error.error === "NOT_AUTHORIZED") {
               toast.warning(constants.messages.ERROR_NEED_WRITE)
               return
             }
@@ -146,7 +151,7 @@ export class UpdateTripInformationsComponent {
 
   onChangeEnd() {
     // Check if start is before the end
-    if(dayjs(this.end).isBefore(dayjs(this.tripService.tripSelected()?.start))) {
+    if (dayjs(this.end).isBefore(dayjs(this.tripService.tripSelected()?.start))) {
       toast.error("La date de fin doit être après la date de début")
       return
     }
@@ -156,7 +161,6 @@ export class UpdateTripInformationsComponent {
     this.tripService.updateTrip({end: dayjs(this.end).format('YYYY-MM-DD')}, this.tripService.tripSelected()?.id as number)
       .subscribe({
         next: response => {
-          console.log(response)
           this.is_submitting = false
           this.edit_end_visible = false
           this.tripService.tripSelected.set(response)
@@ -164,8 +168,8 @@ export class UpdateTripInformationsComponent {
         },
         error: e => {
           this.is_submitting = false
-          if(e.status === 400) {
-            if(e.error.error === "NOT_AUTHORIZED") {
+          if (e.status === 400) {
+            if (e.error.error === "NOT_AUTHORIZED") {
               toast.warning(constants.messages.ERROR_NEED_WRITE)
               return
             }
@@ -195,8 +199,8 @@ export class UpdateTripInformationsComponent {
             },
             error: e => {
               this.is_submitting = false
-              if(e.status === 400) {
-                if(e.error.error === "NOT_AUTHORIZED") {
+              if (e.status === 400) {
+                if (e.error.error === "NOT_AUTHORIZED") {
                   toast.warning(constants.messages.ERROR_NEED_WRITE)
                   return
                 }
@@ -227,8 +231,8 @@ export class UpdateTripInformationsComponent {
             },
             error: e => {
               this.is_submitting = false
-              if(e.status === 400) {
-                if(e.error.error === "NOT_AUTHORIZED") {
+              if (e.status === 400) {
+                if (e.error.error === "NOT_AUTHORIZED") {
                   toast.warning(constants.messages.ERROR_NEED_WRITE)
                   return
                 }
@@ -252,4 +256,5 @@ export class UpdateTripInformationsComponent {
   protected readonly apiEndpoint = apiEndpoint;
   protected readonly constants = constants;
   protected readonly URL = URL;
+  protected readonly console = console;
 }
