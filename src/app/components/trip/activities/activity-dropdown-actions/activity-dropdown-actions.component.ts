@@ -45,7 +45,6 @@ export class ActivityDropdownActionsComponent implements OnInit{
         disabled: !this.activity().latitude || !this.activity().longitude,
         command: () => {
           if(this.activity().latitude && this.activity().longitude) {
-            const link = `geo:${this.activity().latitude},${this.activity().longitude}`
             window.open(`maps://maps.google.com/?q=${this.activity().latitude},${this.activity().longitude}`);
           }
         }
