@@ -40,6 +40,20 @@ export class ActivityDropdownActionsComponent implements OnInit{
         }
       },
       {
+        label: 'GPS',
+        icon: 'map',
+        disabled: !this.activity().latitude || !this.activity().longitude,
+        command: () => {
+          if(this.activity().latitude && this.activity().longitude) {
+            const link = `geo:${this.activity().latitude},${this.activity().longitude}`
+            window.open(`maps://maps.google.com/?q=-${this.activity().latitude},${this.activity().longitude}`);
+          }
+        }
+      },
+      {
+        separator: true
+      },
+      {
         label: 'Supprimer',
         icon: 'trash',
         command: () => {
