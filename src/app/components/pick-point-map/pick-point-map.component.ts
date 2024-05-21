@@ -66,8 +66,8 @@ export class PickPointMapComponent implements OnInit {
       zoom: 2,
       maxZoom: 18,
       accessToken: 'pk.eyJ1IjoicmVteWNhcyIsImEiOiJjbGxzY3Y3c3YweDB2M2VwcHhzOTh2aGE2In0.g4kYgrf9FzOCjuEmHW8-Qg',
-      //style: 'mapbox://styles/mapbox/streets-v12',
-      //pitchWithRotate: false,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      pitchWithRotate: false,
     })
 
     // If trip has coordinates (center on city/country...)
