@@ -1,4 +1,13 @@
-import {afterNextRender, afterRender, AfterRenderPhase, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {
+  afterNextRender,
+  afterRender,
+  AfterRenderPhase,
+  AfterViewInit,
+  Component,
+  Inject,
+  OnInit,
+  PLATFORM_ID
+} from '@angular/core';
 import {CardModule} from "primeng/card";
 import {LucideAngularModule} from "lucide-angular";
 import {SharedModule} from "primeng/api";
@@ -24,13 +33,13 @@ import dayjs from "dayjs";
   styleUrl: './widget-map.component.scss',
 
 })
-export class WidgetMapComponent implements OnInit {
+export class WidgetMapComponent implements AfterViewInit {
 
   map : L.Map | undefined
 
-  constructor(private tripService: TripService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private tripService: TripService) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initMap()
   }
 
