@@ -13,12 +13,13 @@ import {LucideAngularModule} from "lucide-angular";
 import {SharedModule} from "primeng/api";
 import {TripService} from "../../../../services/trip/trip.service";
 import {isPlatformBrowser} from "@angular/common";
-import * as L from 'leaflet'
+import * as mapboxgl from 'mapbox-gl'
 
-import {listTypesIcons} from "../../../../../models/trip.model";
-import 'leaflet.fullscreen/Control.FullScreen.js'
+import {Activity, listTypesIcons} from "../../../../../models/trip.model";
 import fr from "dayjs/locale/fr";
 import dayjs from "dayjs";
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 
 
 @Component({
@@ -33,13 +34,13 @@ import dayjs from "dayjs";
   styleUrl: './widget-map.component.scss',
 
 })
-export class WidgetMapComponent implements AfterViewInit {
+export class WidgetMapComponent implements OnInit {
 
-  map : L.Map | undefined
+  map : mapboxgl.Map | undefined
 
   constructor(private tripService: TripService) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.initMap()
   }
 
@@ -49,53 +50,62 @@ export class WidgetMapComponent implements AfterViewInit {
     const latitude = this.tripService.tripSelected()?.latitude
     const longitude = this.tripService.tripSelected()?.longitude
 
-    this.map = new L.Map('map-widget', {
-      zoomControl: false,
+    this.map = new mapboxgl.Map({
       attributionControl: false,
-      //@ts-ignore
-      fullscreenControl: true,
-      fullscreenControlOptions: {
-        position: 'topleft'
-      }
-    }).setView([49.89863424051644, 2.2990098595619206], 2) as L.Map
+      container: 'map-widget',
+      center: [2.2990098595619206, 49.89863424051644],
+      zoom: 2,
+      maxZoom: 18,
+      accessToken: 'pk.eyJ1IjoicmVteWNhcyIsImEiOiJjbGxzY3Y3c3YweDB2M2VwcHhzOTh2aGE2In0.g4kYgrf9FzOCjuEmHW8-Qg',
+      //style: 'mapbox://styles/mapbox/streets-v12',
+      //pitchWithRotate: false,
+    })
 
+
+    // If trip has coordinates (center on city/country...)
     if(latitude && longitude) {
-      this.map.setView(L.latLng(latitude, longitude), 9)
+      this.map.setCenter([longitude, latitude]).setZoom(9)
     }
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmVteWNhcyIsImEiOiJjbGxzY3Y3c3YweDB2M2VwcHhzOTh2aGE2In0.g4kYgrf9FzOCjuEmHW8-Qg', {
-      maxZoom: 19,
-      id: 'mapbox/streets-v12',
-      zoomOffset: -1,
-      tileSize: 512,
-      detectRetina: true,
-    }).addTo(this.map);
-
     this.showActivitiesMarker()
+
+
   }
 
   showActivitiesMarker() {
     this.tripService.tripSelected()?.activities?.forEach(activity => {
       if(this.map && (activity.latitude && activity.longitude)) {
-        const marker = L.marker(L.latLng(activity.latitude, activity.longitude), {
-          icon: L.divIcon({
-            className: '',
-            html: `<div class="w-[40px] h-[40px] bg-white rounded-full flex justify-center items-center"><img src="${this.getIconByType(activity.icon)}" class="w-[25px] h-[25px]" alt="" /></div>`})
-        }).addTo(this.map);
+        const marker = new mapboxgl.Marker(this.getMarkerIcon(activity))
+          .setLngLat([activity.longitude, activity.latitude])
+          .setPopup(
+            new mapboxgl.Popup()
+              .setHTML(
+                `
+                <div class="flex items-center gap-2">
+                    <img src="${this.getIconByType(activity.icon)}" class="w-[25px] h-[25px]" alt="" />
+                      <h4 class="text-[1.15rem]">${activity.name}</h4>
+                </div>
+                <p class="first-letter:uppercase mt-2">
+                  <span>${dayjs(activity.start).locale(fr).format('dddd DD MMMM à HH:mm')}</span>
+                </p>
+            `
+          ))
 
-        // Pop up
-        marker.bindPopup(`
-            <div class="flex items-center gap-2">
-                <img src="${this.getIconByType(activity.icon)}" class="w-[25px] h-[25px]" alt="" />
-                  <h4 class="text-[1.15rem]">${activity.name}</h4>
-            </div>
-            <p class="first-letter:uppercase">
-              <span>${dayjs(activity.start).locale(fr).format('dddd DD MMMM à HH:mm:ss')}</span>
-            </p>
-        `)
+          .addTo(this.map);
+
+
 
       }
     })
+
+  }
+
+  getMarkerIcon(activity: Activity) {
+    const el = document.createElement('div')
+    el.className = 'w-[40px] h-[40px] bg-white rounded-full flex justify-center items-center'
+    el.innerHTML = `<img src="${this.getIconByType(activity.icon)}" class="w-[25px] h-[25px]" alt="" />`
+
+    return el
   }
 
   getIconByType(icon: string) {

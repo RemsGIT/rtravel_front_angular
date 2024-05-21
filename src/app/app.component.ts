@@ -38,7 +38,7 @@ export class AppComponent {
   routesWithoutHeader = ['','/connexion', '/inscription', '/verification-mail']
   routesWithoutAuth = ['','/connexion', '/inscription', '/verification-mail']
 
-  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts) {
+  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object) {
 
     this.router.events.subscribe(val => {
       if(val instanceof NavigationEnd) {
@@ -58,28 +58,31 @@ export class AppComponent {
     // If routes = login/signup or landing page, not check
     if(this.routesWithoutAuth.includes(this.location.path())) return;
 
-      this.http.get<IUser>(`${apiEndpoint}/auth/me`)
-        .subscribe({
-          next: (response) => {
+      if(isPlatformBrowser(this.platformId)) {
+        this.http.get<IUser>(`${apiEndpoint}/auth/me`)
+          .subscribe({
+            next: (response) => {
               this.authService.currentUserSig.set(response)
-          },
-          error: (e) => {
-            let redirectTo = '/connexion'
-            switch (e.status) {
-              case 400:
-                if(e.error.error === "ACCOUNT_NOT_VERIFIED") {
-                  redirectTo = '/verification-mail'
-                }
-                break;
-              case 401:
-                this.authService.currentUserSig.set(null)
-                this.tokenService.setToken('')
-                break;
-            }
+            },
+            error: (e) => {
+              let redirectTo = '/connexion'
+              switch (e.status) {
+                case 400:
+                  if(e.error.error === "ACCOUNT_NOT_VERIFIED") {
+                    redirectTo = '/verification-mail'
+                  }
+                  break;
+                case 401:
+                  this.authService.currentUserSig.set(null)
+                  this.tokenService.setToken('')
+                  break;
+              }
 
-            this.router.navigateByUrl(redirectTo)
-          }
-        })
+              this.router.navigateByUrl(redirectTo)
+            }
+          })
+      }
+
   }
 
   changeLang(lang: string) {
@@ -90,4 +93,5 @@ export class AppComponent {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 
+  protected readonly isPlatformBrowser = isPlatformBrowser;
 }

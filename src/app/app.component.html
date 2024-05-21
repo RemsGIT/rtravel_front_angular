@@ -1,5 +1,6 @@
-<ngx-sonner-toaster richColors position="top-right"/>
-@if (showHeader) {
+@if (isPlatformBrowser(platformId)) {
+  <ngx-sonner-toaster richColors position="top-right"/>
+}@if (showHeader) {
   <app-header />
 }
 
