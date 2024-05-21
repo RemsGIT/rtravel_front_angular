@@ -7,7 +7,7 @@
   </ng-template>
 
   <div [class]="mode === 'normal' ? 'p-6 pt-0' : ' h-screen absolute top-0 left-0 w-full z-50'" >
-    <p-button (onClick)="changeMapMode()" class="absolute right-16 mt-2.5 z-10" styleClass="px-0.5 py-1" severity="contrast">
+    <p-button (onClick)="changeMapMode()" [class]="'absolute mt-2.5 z-10 ' + (mode === 'normal' ? ' right-16 ': ' right-4 ')" styleClass="px-0.5 py-1" severity="contrast">
       @if(mode === "normal") {
         <lucide-icon name="maximize2" size="20" class="h-[16px]" strokeWidth="3"/>
       }
