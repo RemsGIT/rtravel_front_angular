@@ -63,11 +63,12 @@ export class WidgetMapComponent implements AfterViewInit {
       this.map.setView(L.latLng(latitude, longitude), 9)
     }
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicmVteWNhcyIsImEiOiJjbGxzY3Y3c3YweDB2M2VwcHhzOTh2aGE2In0.g4kYgrf9FzOCjuEmHW8-Qg', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmVteWNhcyIsImEiOiJjbGxzY3Y3c3YweDB2M2VwcHhzOTh2aGE2In0.g4kYgrf9FzOCjuEmHW8-Qg', {
       maxZoom: 19,
-      id: 'mapbox/outdoors-v12',
+      id: 'mapbox/streets-v12',
       zoomOffset: -1,
       tileSize: 512,
+      detectRetina: true,
     }).addTo(this.map);
 
     this.showActivitiesMarker()
