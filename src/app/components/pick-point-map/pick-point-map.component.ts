@@ -5,7 +5,6 @@ import {TripService} from "../../services/trip/trip.service";
 import {ButtonModule} from "primeng/button";
 
 import * as mapboxgl from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css';
 import {Activity} from "../../../models/trip.model";
 
 

@@ -14,11 +14,11 @@ import {SharedModule} from "primeng/api";
 import {TripService} from "../../../../services/trip/trip.service";
 import {isPlatformBrowser} from "@angular/common";
 import * as mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import {Activity, listTypesIcons} from "../../../../../models/trip.model";
 import fr from "dayjs/locale/fr";
 import dayjs from "dayjs";
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 
@@ -60,6 +60,7 @@ export class WidgetMapComponent implements OnInit {
       //style: 'mapbox://styles/mapbox/streets-v12',
       //pitchWithRotate: false,
     })
+      .addControl(new mapboxgl.FullscreenControl())
 
 
     // If trip has coordinates (center on city/country...)
