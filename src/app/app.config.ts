@@ -36,13 +36,15 @@ import {
   Search,
   Calculator,
   List,
-  Mail
+  Mail,
+  Maximize2,
+  Minimize2
 
 
 } from "lucide-angular";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import { provideServiceWorker } from '@angular/service-worker';
+import {provideServiceWorker} from '@angular/service-worker';
 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -54,47 +56,49 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(LucideAngularModule.pick({
-        Hourglass,
-        Check,
-        Map,
-        MapPin,
-        Clock,
-        Flag,
-        Coins,
-        Plane,
-        Plus,
-        CircleHelp,
-        EllipsisVertical,
-        Pencil,
-        Trash,
-        User,
-        Users,
-        LogOut,
-        TentTree,
-        ArrowRight,
-        ArrowLeft,
-        BedDouble,
-        Car,
-        Train,
-        Bus,
-        PiggyBank,
-        Eye,
-        Search,
-        Calculator,
-        List,
-        Mail
+      Hourglass,
+      Check,
+      Map,
+      MapPin,
+      Clock,
+      Flag,
+      Coins,
+      Plane,
+      Plus,
+      CircleHelp,
+      EllipsisVertical,
+      Pencil,
+      Trash,
+      User,
+      Users,
+      LogOut,
+      TentTree,
+      ArrowRight,
+      ArrowLeft,
+      BedDouble,
+      Car,
+      Train,
+      Bus,
+      PiggyBank,
+      Eye,
+      Search,
+      Calculator,
+      List,
+      Mail,
+      Maximize2,
+      Minimize2
     }), TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        },
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
     })),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
-        enabled: !isDevMode(),
-        registrationStrategy: 'registerWhenStable:30000'
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
     }),
-]
+  ]
 };

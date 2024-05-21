@@ -19,8 +19,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {Activity, listTypesIcons} from "../../../../../models/trip.model";
 import fr from "dayjs/locale/fr";
 import dayjs from "dayjs";
-
-
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-widget-map',
@@ -29,6 +28,7 @@ import dayjs from "dayjs";
     CardModule,
     LucideAngularModule,
     SharedModule,
+    ButtonModule,
   ],
   templateUrl: './widget-map.component.html',
   styleUrl: './widget-map.component.scss',
@@ -37,6 +37,7 @@ import dayjs from "dayjs";
 export class WidgetMapComponent implements OnInit {
 
   map : mapboxgl.Map | undefined
+  mode: "normal" | "fullscreen" = "normal"
 
   constructor(private tripService: TripService) {}
 
@@ -60,9 +61,6 @@ export class WidgetMapComponent implements OnInit {
       style: 'mapbox://styles/mapbox/streets-v12',
       pitchWithRotate: false,
     })
-      .addControl(new mapboxgl.FullscreenControl())
-
-
     // If trip has coordinates (center on city/country...)
     if(latitude && longitude) {
       this.map.setCenter([longitude, latitude]).setZoom(9)
@@ -117,5 +115,16 @@ export class WidgetMapComponent implements OnInit {
     }
 
     return "plane"
+  }
+
+  changeMapMode() {
+    this.mode = this.mode === "normal" ? "fullscreen" : "normal"
+
+    if(this.map) {
+      setTimeout(() => {
+        console.log('ok')
+        this.map?.resize()
+      })
+    }
   }
 }

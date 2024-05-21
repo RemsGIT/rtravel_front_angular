@@ -6,8 +6,16 @@
     </div>
   </ng-template>
 
-  <div class="p-6 pt-0">
-    <div class="w-full h-[300px] rounded-2xl" id="map-widget"></div>
+  <div [class]="mode === 'normal' ? 'p-6 pt-0' : ' h-screen absolute top-0 left-0 w-full z-50'" >
+    <p-button (onClick)="changeMapMode()" class="absolute right-16 mt-2.5 z-10" styleClass="px-0.5 py-1" severity="contrast">
+      @if(mode === "normal") {
+        <lucide-icon name="maximize2" size="20" class="h-[16px]" strokeWidth="3"/>
+      }
+      @else {
+        <lucide-icon name="minimize2" size="20" class="h-[16px]" strokeWidth="3" />
+      }
+    </p-button>
+    <div [class]="(mode === 'normal' ? 'h-[300px]' : 'h-full') + ' w-full rounded-2xl absolute'" id="map-widget"></div>
   </div>
 
 </p-card>
