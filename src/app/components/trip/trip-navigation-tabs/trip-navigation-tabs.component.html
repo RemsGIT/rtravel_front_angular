@@ -7,20 +7,18 @@
           <app-trip-widget-tickets class="block" />
           -->
           <div>
-            <app-trip-widget-next-activity class="block" />
+            <app-trip-widget-next-activity class="block"/>
           </div>
 
           <div>
-            @if(isPlatformBrowser(platformId)) {
-              <app-widget-map />
-            }
+            <app-widget-map/>
           </div>
         </div>
       </ng-template>
     </p-tabPanel>
     <p-tabPanel header="Activités" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
-          <app-trip-activities-date-tabs/>
+        <app-trip-activities-date-tabs/>
       </ng-template>
 
     </p-tabPanel>
@@ -34,14 +32,14 @@
     <p-tabPanel header="Budgets" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
         <div class="space-y-4">
-          <app-budget-trip />
+          <app-budget-trip/>
         </div>
       </ng-template>
     </p-tabPanel>
     <p-tabPanel header="Paramètres" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
         <div class="space-y-4">
-          <app-update-trip-settings />
+          <app-update-trip-settings/>
         </div>
       </ng-template>
     </p-tabPanel>

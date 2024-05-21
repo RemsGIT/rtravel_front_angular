@@ -49,7 +49,7 @@ type Tabs = "preview" | "activities" | "participants" | "budget"
 export class TripNavigationTabsComponent {
   activeIndex: number = 0
 
-  constructor(private route: ActivatedRoute, @Inject(PLATFORM_ID) protected platformId: Object) {
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       const tabParam = params['tab'];
       if (tabParam) {

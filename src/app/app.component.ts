@@ -32,14 +32,13 @@ export class AppComponent {
   http = inject(HttpClient)
 
   showHeader: Boolean = false;
-  protected isClient: boolean = false;
   title = 'rtravel-angular-primeng';
 
 
   routesWithoutHeader = ['','/connexion', '/inscription', '/verification-mail']
   routesWithoutAuth = ['','/connexion', '/inscription', '/verification-mail']
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts) {
+  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts) {
 
     this.router.events.subscribe(val => {
       if(val instanceof NavigationEnd) {
@@ -56,18 +55,13 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isClient = true;
-    }
-
     // If routes = login/signup or landing page, not check
     if(this.routesWithoutAuth.includes(this.location.path())) return;
 
-    if(typeof localStorage !== 'undefined') { // Execute only in CSR -> need localstorage
       this.http.get<IUser>(`${apiEndpoint}/auth/me`)
         .subscribe({
           next: (response) => {
-            this.authService.currentUserSig.set(response)
+              this.authService.currentUserSig.set(response)
           },
           error: (e) => {
             let redirectTo = '/connexion'
@@ -86,7 +80,6 @@ export class AppComponent {
             this.router.navigateByUrl(redirectTo)
           }
         })
-    }
   }
 
   changeLang(lang: string) {
