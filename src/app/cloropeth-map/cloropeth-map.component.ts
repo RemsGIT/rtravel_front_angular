@@ -31,10 +31,6 @@ export class CloropethMapComponent {
       //@ts-ignore
       await import('../../../lib/map/world.js')
 
-      //@ts-ignore
-      await import('jsvectormap/dist/css/jsvectormap.css')
-
-
 
       const app = this
 
