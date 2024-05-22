@@ -1,4 +1,4 @@
-import {Component, inject, Inject, PLATFORM_ID} from '@angular/core';
+import {Component, inject, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ChildrenOutletContexts, NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {ButtonModule} from "primeng/button";
 import {NgxSonnerToaster} from "ngx-sonner";
@@ -25,7 +25,7 @@ import {MenuSidebarComponent} from "./components/utils/menu-sidebar/menu-sidebar
     fadeAnimation,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   authService = inject(AuthService)
   tokenService = inject(TokenService)
   router = inject(Router)
@@ -47,17 +47,17 @@ export class AppComponent {
     this.translateService.stream('primeng').subscribe(data => {
       this.config.setTranslation(data);
     });
-  }
-
-  ngOnInit(): void {
-    // If routes = login/signup or landing page, not check
-    if (this.routesWithoutAuth.includes(this.location.path())) return;
 
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         this.showHeader = !this.routesWithoutHeader.includes(this.location.path())
       }
     })
+  }
+
+  ngOnInit(): void {
+    // If routes = login/signup or landing page, not check
+    if (this.routesWithoutAuth.includes(this.location.path())) return;
 
     if (isPlatformBrowser(this.platformId)) {
       this.http.get<IUser>(`${apiEndpoint}/auth/me`)
