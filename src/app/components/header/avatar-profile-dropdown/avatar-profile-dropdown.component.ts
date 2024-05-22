@@ -38,6 +38,13 @@ export class AvatarProfileDropdownComponent implements OnInit{
         }
       },
       {
+        label: 'Ma carte',
+        icon: 'map',
+        command: () => {
+          this.router.navigateByUrl('/map')
+        }
+      },
+      {
         separator: true,
       },
       {

@@ -9,6 +9,7 @@ import {CreateTripComponent} from "./pages/create-trip/create-trip.component";
 import {ListPaymentsComponent} from "./pages/list-payments/list-payments.component";
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
+import {WorldMapComponent} from "./pages/world-map/world-map.component";
 
 export const routes: Routes = [
 
@@ -25,5 +26,6 @@ export const routes: Routes = [
   {path: 'voyage/:id', component: TripDetailComponent, canActivate: [authGuard], data: {animation: 'NewTripPage'}},
   {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage', data: {animation: 'PaymentsPage'}},
 
-  {path: 'profil', component: ProfileComponent, canActivate: [authGuard], title: 'Rtravel | Profil utilisateur' ,data: {animation: 'ProfilePage'}}
+  {path: 'profil', component: ProfileComponent, canActivate: [authGuard], title: 'Rtravel | Profil utilisateur' ,data: {animation: 'ProfilePage'}},
+  {path: 'map', component: WorldMapComponent, canActivate: [authGuard], title: 'Rtravel | Carte des pays visités' ,data: {animation: 'WorldMapPage'}}
 ];
