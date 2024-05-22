@@ -12,7 +12,6 @@ import {CardModule} from "primeng/card";
 import {LucideAngularModule} from "lucide-angular";
 import {SharedModule} from "primeng/api";
 import {TripService} from "../../../../services/trip/trip.service";
-import {isPlatformBrowser} from "@angular/common";
 import * as mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -34,14 +33,14 @@ import {ButtonModule} from "primeng/button";
   styleUrl: './widget-map.component.scss',
 
 })
-export class WidgetMapComponent implements OnInit {
+export class WidgetMapComponent implements AfterViewInit {
 
   map : mapboxgl.Map | undefined
   mode: "normal" | "fullscreen" = "normal"
 
   constructor(private tripService: TripService) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initMap()
   }
 
