@@ -32,6 +32,12 @@ export class TripFutureSliderComponent implements OnInit {
 
   isLoaded = false
 
+  swiperBreakpoints = {
+    750: {
+      slidesPerView: 4.3
+    },
+  }
+
   ngOnInit(): void {
     this.http.get<{trips: Trip[]}>(`${apiEndpoint}/trips/future`)
       .subscribe(response => {
@@ -44,4 +50,5 @@ export class TripFutureSliderComponent implements OnInit {
   protected readonly dayjs = dayjs;
   protected readonly constants = constants;
   protected readonly apiEndpoint = apiEndpoint;
+    protected readonly JSON = JSON;
 }

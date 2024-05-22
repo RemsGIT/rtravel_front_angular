@@ -8,7 +8,9 @@
         slides-per-view="2.3"
         space-between="15"
         free-mode="true"
+        [breakpoints]="JSON.stringify(swiperBreakpoints)"
       >
+      <!-- TODO: responsive: desktop mettre 4.3 -->
         @for (trip of trips; track trip) {
           <swiper-slide class="pb-2">
             <p-card class="rounded-3xl h-[180px] cursor-pointer" [routerLink]="['/voyage', trip.id]">

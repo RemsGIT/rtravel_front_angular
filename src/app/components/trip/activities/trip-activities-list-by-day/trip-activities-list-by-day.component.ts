@@ -3,7 +3,7 @@ import {TripService} from "../../../../services/trip/trip.service";
 import dayjs from 'dayjs';
 
 import {LucideAngularModule} from "lucide-angular";
-import {ArrowComponent} from "../../../ui/arrow/arrow.component";
+import {ArrowComponent} from "../../../utils/arrow/arrow.component";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
 import {CreateActivityBtnComponent} from "../create-activity-btn/create-activity-btn.component";

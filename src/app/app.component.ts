@@ -13,11 +13,12 @@ import {PrimeNGConfig} from "primeng/api";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CalendarModule} from "primeng/calendar";
 import {fadeAnimation} from "./animations";
+import {MenuSidebarComponent} from "./components/utils/menu-sidebar/menu-sidebar.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule, NgxSonnerToaster, HeaderComponent, TranslateModule, CalendarModule],
+  imports: [RouterOutlet, ButtonModule, NgxSonnerToaster, HeaderComponent, TranslateModule, CalendarModule, MenuSidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
@@ -26,25 +27,19 @@ import {fadeAnimation} from "./animations";
 })
 export class AppComponent {
   authService = inject(AuthService)
-  tokenService =  inject(TokenService)
-  router= inject(Router)
-  location= inject(Location)
+  tokenService = inject(TokenService)
+  router = inject(Router)
+  location = inject(Location)
   http = inject(HttpClient)
 
   showHeader: Boolean = false;
   title = 'rtravel-angular-primeng';
 
 
-  routesWithoutHeader = ['','/connexion', '/inscription', '/verification-mail']
-  routesWithoutAuth = ['','/connexion', '/inscription', '/verification-mail']
+  routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail']
+  routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail']
 
   constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object) {
-
-    this.router.events.subscribe(val => {
-      if(val instanceof NavigationEnd) {
-        this.showHeader = !this.routesWithoutHeader.includes(this.location.path())
-      }
-    })
 
     translateService.addLangs(['en', 'fr']);
     translateService.setDefaultLang('fr');
@@ -56,32 +51,38 @@ export class AppComponent {
 
   ngOnInit(): void {
     // If routes = login/signup or landing page, not check
-    if(this.routesWithoutAuth.includes(this.location.path())) return;
+    if (this.routesWithoutAuth.includes(this.location.path())) return;
 
-      if(isPlatformBrowser(this.platformId)) {
-        this.http.get<IUser>(`${apiEndpoint}/auth/me`)
-          .subscribe({
-            next: (response) => {
-              this.authService.currentUserSig.set(response)
-            },
-            error: (e) => {
-              let redirectTo = '/connexion'
-              switch (e.status) {
-                case 400:
-                  if(e.error.error === "ACCOUNT_NOT_VERIFIED") {
-                    redirectTo = '/verification-mail'
-                  }
-                  break;
-                case 401:
-                  this.authService.currentUserSig.set(null)
-                  this.tokenService.setToken('')
-                  break;
-              }
-
-              this.router.navigateByUrl(redirectTo)
-            }
-          })
+    this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        this.showHeader = !this.routesWithoutHeader.includes(this.location.path())
       }
+    })
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.http.get<IUser>(`${apiEndpoint}/auth/me`)
+        .subscribe({
+          next: (response) => {
+            this.authService.currentUserSig.set(response)
+          },
+          error: (e) => {
+            let redirectTo = '/connexion'
+            switch (e.status) {
+              case 400:
+                if (e.error.error === "ACCOUNT_NOT_VERIFIED") {
+                  redirectTo = '/verification-mail'
+                }
+                break;
+              case 401:
+                this.authService.currentUserSig.set(null)
+                this.tokenService.setToken('')
+                break;
+            }
+
+            this.router.navigateByUrl(redirectTo)
+          }
+        })
+    }
 
   }
 

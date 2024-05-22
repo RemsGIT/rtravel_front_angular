@@ -1,9 +1,26 @@
 @if (isPlatformBrowser(platformId)) {
   <ngx-sonner-toaster richColors position="top-right"/>
-}@if (showHeader) {
-  <app-header />
 }
 
-<div [@routeAnimations]="getRouteAnimationData()">
-  <router-outlet #outlet="outlet" />
+@if (showHeader) {
+  <div class="block lg:hidden">
+    <app-header />
+  </div>
+}
+
+
+
+<div [class]="showHeader ? 'lg:grid lg:grid-cols-[300px,1fr]' : ''">
+
+  <!-- Desktop menu -->
+  @if(showHeader) {
+    <div class="hidden lg:block">
+      <app-menu-sidebar />
+    </div>
+
+  }
+
+  <div [@routeAnimations]="getRouteAnimationData()">
+    <router-outlet #outlet="outlet" />
+  </div>
 </div>

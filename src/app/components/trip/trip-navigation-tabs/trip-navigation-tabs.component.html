@@ -9,10 +9,6 @@
           <div>
             <app-trip-widget-next-activity class="block"/>
           </div>
-
-          <div>
-            <app-widget-map/>
-          </div>
         </div>
       </ng-template>
     </p-tabPanel>
@@ -29,10 +25,17 @@
         </div>
       </ng-template>
     </p-tabPanel>
-    <p-tabPanel header="Budgets" headerStyleClass="text-sm tab-small-padding">
+    <p-tabPanel header="Budget" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
         <div class="space-y-4">
           <app-budget-trip/>
+        </div>
+      </ng-template>
+    </p-tabPanel>
+    <p-tabPanel header="Carte" headerStyleClass="text-sm tab-small-padding">
+      <ng-template pTemplate="content">
+        <div class="space-y-4">
+          <app-widget-map/>
         </div>
       </ng-template>
     </p-tabPanel>
