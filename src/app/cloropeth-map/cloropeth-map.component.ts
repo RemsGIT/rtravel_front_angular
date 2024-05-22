@@ -21,8 +21,6 @@ import {toast} from "ngx-sonner";
 })
 export class CloropethMapComponent {
 
-  countriesVisited: string[] = []
-
   constructor(private http: HttpClient) {
     afterNextRender(async () => {
 
@@ -34,14 +32,13 @@ export class CloropethMapComponent {
 
       const app = this
 
-      this.countriesVisited = await app.getAllCountriesVisited()
       const map = new jsvectormap({
         selector: '#map',
         zoomOnScrollSpeed: 0.5,
         regionStyle: {
           selected: { fill: '#B6D89F' },
         },
-        selectedRegions: this.countriesVisited,
+        selectedRegions: await app.getAllCountriesVisited(),
         regionsSelectable: true,
         onLoaded(map: any) {
           window.addEventListener('resize', () => {
@@ -51,8 +48,8 @@ export class CloropethMapComponent {
         onRegionTooltipShow(event: any, tooltip: any) {
           tooltip.css({ backgroundColor: '#12B981' })
         },
-        onRegionClick(event: any, code: string) {
-          if(!app.countriesVisited.includes(code)) {
+        onRegionSelected(code: string, isSelected: boolean) {
+          if(isSelected) {
             app.handleCreateCountryVisited(code)
           }
           else {
@@ -76,7 +73,6 @@ export class CloropethMapComponent {
         next: res => {
           if(res.countryCode) {
             toast.success('Nouveau pays ajouté')
-            this.countriesVisited.push(res.countryCode)
           }
         }
       })
@@ -88,7 +84,6 @@ export class CloropethMapComponent {
         next: res => {
           if(res.message) {
             toast.success('Pays supprimé')
-            this.countriesVisited = this.countriesVisited.filter(country => country !== res.countryCode);
           }
         }
       })
