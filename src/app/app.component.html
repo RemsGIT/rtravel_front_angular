@@ -20,7 +20,14 @@
 
   }
 
-  <div [@routeAnimations]="getRouteAnimationData()">
+  <!-- No animation landing page -->
+  @if(router.url === '/') {
     <router-outlet #outlet="outlet" />
-  </div>
+  }
+  @else {
+    <div [@routeAnimations]="getRouteAnimationData()">
+      <router-outlet #outlet="outlet" />
+    </div>
+  }
+
 </div>

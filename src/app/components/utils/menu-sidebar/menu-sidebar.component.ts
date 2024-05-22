@@ -45,4 +45,5 @@ export class MenuSidebarComponent implements OnInit{
 
 
   protected readonly resizeTextByLength = resizeTextByLength;
+    protected readonly JSON = JSON;
 }

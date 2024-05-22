@@ -25,7 +25,7 @@ import {MenuSidebarComponent} from "./components/utils/menu-sidebar/menu-sidebar
     fadeAnimation,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   authService = inject(AuthService)
   tokenService = inject(TokenService)
   router = inject(Router)
@@ -51,39 +51,36 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         this.showHeader = !this.routesWithoutHeader.includes(this.location.path())
+
+        if(!this.authService.currentUserSig()) {
+          if (this.routesWithoutAuth.includes(this.location.path())) return;
+          if (isPlatformBrowser(this.platformId)) {
+            this.http.get<IUser>(`${apiEndpoint}/auth/me`)
+              .subscribe({
+                next: (response) => {
+                  this.authService.currentUserSig.set(response)
+                },
+                error: (e) => {
+                  let redirectTo = '/connexion'
+                  switch (e.status) {
+                    case 400:
+                      if (e.error.error === "ACCOUNT_NOT_VERIFIED") {
+                        redirectTo = '/verification-mail'
+                      }
+                      break;
+                    case 401:
+                      this.authService.currentUserSig.set(null)
+                      this.tokenService.setToken('')
+                      break;
+                  }
+
+                  this.router.navigateByUrl(redirectTo)
+                }
+              })
+          }
+        }
       }
     })
-  }
-
-  ngOnInit(): void {
-    // If routes = login/signup or landing page, not check
-    if (this.routesWithoutAuth.includes(this.location.path())) return;
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.http.get<IUser>(`${apiEndpoint}/auth/me`)
-        .subscribe({
-          next: (response) => {
-            this.authService.currentUserSig.set(response)
-          },
-          error: (e) => {
-            let redirectTo = '/connexion'
-            switch (e.status) {
-              case 400:
-                if (e.error.error === "ACCOUNT_NOT_VERIFIED") {
-                  redirectTo = '/verification-mail'
-                }
-                break;
-              case 401:
-                this.authService.currentUserSig.set(null)
-                this.tokenService.setToken('')
-                break;
-            }
-
-            this.router.navigateByUrl(redirectTo)
-          }
-        })
-    }
-
   }
 
   changeLang(lang: string) {
@@ -91,6 +88,7 @@ export class AppComponent implements OnInit {
   }
 
   getRouteAnimationData() {
+
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 
