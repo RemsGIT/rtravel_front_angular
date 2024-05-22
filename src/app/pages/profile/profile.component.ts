@@ -4,6 +4,8 @@ import {MenuItem} from "primeng/api";
 import {ProfileTabsComponent} from "../../components/profile/profile-tabs/profile-tabs.component";
 import {CardModule} from "primeng/card";
 import {AuthService} from "../../services/auth/auth.service";
+import dayjs from "dayjs";
+import fr from "dayjs/locale/fr";
 
 @Component({
   selector: 'app-profile',
@@ -21,5 +23,7 @@ export class ProfileComponent  {
   authService = inject(AuthService)
 
 
-
+  protected readonly JSON = JSON;
+  protected readonly dayjs = dayjs;
+  protected readonly fr = fr;
 }

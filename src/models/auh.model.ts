@@ -8,7 +8,8 @@ export interface IUser {
   id: number,
   username: string,
   email: string,
-  role: ERole
+  role: ERole,
+  createdAt: Date
 }
 
 export interface IUserRequest {

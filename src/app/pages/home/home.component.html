@@ -1,7 +1,10 @@
 <div class="pb-8 mx-4 h-[90%]">
+
+  <h1 class="text-4xl text-primary font-semibold mt-6 ml-2 hidden lg:block ">Mes voyages</h1>
+
   @if (hasTrip && isDataLoaded) {
     <div class="space-y-8 pb-6" @fade>
-      <div>
+      <div class="mt-8">
         <app-trip-upcoming-card/>
       </div>
 

@@ -1,10 +1,22 @@
 <div class="m-4">
 
+  <h1 class="text-4xl text-primary font-semibold mb-8 mt-6 ml-2 hidden lg:block ">Mon profil</h1>
+
   <p-card>
     <div class="px-4 py-6">
 
-      <div class="w-1/2 h-[80px] bg-primary flex justify-center items-center text-2xl text-white font-semibold rounded-3xl mx-auto">
-        {{authService.currentUserSig()?.username}}
+      <div class="flex flex-row lg:flex-col justify-center items-center gap-3">
+        <div class="w-14 h-14 rounded-full bg-primary flex justify-center items-center text-white text-3xl">
+          {{authService.currentUserSig()?.username?.charAt(0)}}
+        </div>
+
+        <div class="flex flex-col lg:gap-2 lg:items-center">
+          <p>{{authService.currentUserSig()?.username}}</p>
+          <p class="text-gray-500 text-sm">{{authService.currentUserSig()?.email}}</p>
+          <p class="text-gray-400 text-xs italic mt-1 lg:mt-0">Membre depuis le {{dayjs(authService.currentUserSig()?.createdAt).locale(fr).format('dddd DD MMMM')}}</p>
+
+        </div>
+
       </div>
 
     </div>
