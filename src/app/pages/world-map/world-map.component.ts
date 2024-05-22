@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {CloropethMapComponent} from "../../cloropeth-map/cloropeth-map.component";
 
 @Component({
@@ -11,5 +11,4 @@ import {CloropethMapComponent} from "../../cloropeth-map/cloropeth-map.component
   styleUrl: './world-map.component.scss'
 })
 export class WorldMapComponent{
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object) { }
 }
