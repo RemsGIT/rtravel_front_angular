@@ -2,14 +2,14 @@
   @if (budget || payments.length > 0) {
     <div class="flex flex-col gap-4 pb-6">
 
-      <div [class]="'grid grid-cols-1 gap-4'  + (budget ? ' lg:grid-cols-2' : '')">
+      <div [class]="'grid grid-cols-1 gap-4 '  + (budget ? ' lg:grid-cols-2' : '')">
         @if (budget) {
           <app-budget-circle-recap-chart [budget]="budget"
                                          [totalPaymentsAmount]="getTotalPaymentsAmount()"
                                          (onUpdateBudget)="budget = $event" (onRemoveBudget)="budget = undefined"/>
         }
         @if (payments.length > 0) {
-          <p-card class="h-full" styleClass="h-full">
+          <p-card styleClass="h-full">
             <ng-template pTemplate="header">
               <div class="flex gap-2 items-center font-semibold p-3 pb-0">
                 <lucide-icon name="coins" size="30"/>
