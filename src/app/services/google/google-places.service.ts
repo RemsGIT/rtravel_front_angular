@@ -29,7 +29,6 @@ export class GooglePlacesService {
 
   searchCountriesAndCitiesByText(query: string): Promise<PlaceResult[]> {
     return new Promise((resolve, reject) => {
-      console.log(this.sessionToken);
       this.autocompleteService.getPlacePredictions({
         input: query,
         sessionToken: this.sessionToken,
