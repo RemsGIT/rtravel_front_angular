@@ -12,6 +12,7 @@ import {constants} from "../../../constants";
 import {TripService} from "../../../services/trip/trip.service";
 import dayjs from "dayjs";
 import {Router, RouterLink} from "@angular/router";
+import {CountryVisitedService} from "../../../services/country-visited/country-visited.service";
 
 type StepType = "name" | "city" | "dates"
 
@@ -47,7 +48,7 @@ export class FormCreateTripComponent {
   endMinDate = undefined
   now = new Date()
 
-  constructor(private fb: FormBuilder, private tripService: TripService, private router: Router) {
+  constructor(private fb: FormBuilder, private tripService: TripService, private countryVisitedService: CountryVisitedService, private router: Router) {
     this.tripForm = this.fb.group({
       name: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
@@ -99,6 +100,9 @@ export class FormCreateTripComponent {
               spread: 160,
               origin: { y: 0.5 },
             });
+
+            // Set the country as visited -> will returns '400' if already exists
+            this.countryVisitedService.persistCountryVisited(response.countryCode).subscribe()
           },
           error: err => {
             this.isSubmitting = false

@@ -1,16 +1,7 @@
-import {
-  afterNextRender,
-  AfterRenderPhase,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  ViewChild
-} from '@angular/core';
-import {isPlatformBrowser} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
-import {apiEndpoint} from "../constants";
+import {afterNextRender, AfterRenderPhase, Component} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {toast} from "ngx-sonner";
+import {CountryVisitedService} from "../services/country-visited/country-visited.service";
 
 @Component({
   selector: 'app-cloropeth-map',
@@ -21,7 +12,7 @@ import {toast} from "ngx-sonner";
 })
 export class CloropethMapComponent {
 
-  constructor(private http: HttpClient) {
+  constructor(private countryVisitedService: CountryVisitedService) {
     afterNextRender(async () => {
 
       //@ts-ignore
@@ -61,14 +52,11 @@ export class CloropethMapComponent {
   }
 
   async getAllCountriesVisited() {
-    const res = await lastValueFrom(this.http.get<string[]>(`${apiEndpoint}/countries/`))
-    return res
+    return await lastValueFrom(this.countryVisitedService.getCountriesVisited())
   }
 
   handleCreateCountryVisited(country_code: string) {
-    this.http.post<any>(`${apiEndpoint}/countries/`, {
-      country_code: country_code
-    })
+    this.countryVisitedService.persistCountryVisited(country_code)
       .subscribe({
         next: res => {
           if(res.countryCode) {
@@ -79,7 +67,7 @@ export class CloropethMapComponent {
   }
 
   handleDeleteCountryVisited(country_code: string) {
-    this.http.delete<any>(`${apiEndpoint}/countries/${country_code}`)
+    this.countryVisitedService.deleteCountryVisited(country_code)
       .subscribe({
         next: res => {
           if(res.message) {
