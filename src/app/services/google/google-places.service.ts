@@ -133,7 +133,7 @@ export class GooglePlacesService {
    * @param country
    * @param query
    */
-  searchCitiesByCountryAndText(country: string, query: string): Promise<string[]> {
+  searchCitiesByCountryAndText(country: string, query: string): Promise<PlaceResult[]> {
     return new Promise((resolve, reject) => {
       this.autocompleteService.getPlacePredictions({
         input: query,
@@ -146,7 +146,9 @@ export class GooglePlacesService {
         //@ts-ignore
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           if (predictions) {
-            resolve(predictions.map(prediction => prediction.terms[0].value));
+            resolve(predictions.map(prediction => ({
+              value: `${prediction.terms[0].value}, ${prediction.terms[prediction.terms.length - 1].value}`,
+            })));
           } else resolve([])
         } else {
           console.log(status)

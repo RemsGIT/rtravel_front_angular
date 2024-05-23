@@ -1,7 +1,6 @@
 import {Component, inject, input, OnInit, output} from '@angular/core';
 import {GooglePlacesService, PlaceResult} from "../../../services/google/google-places.service";
 import {TripService} from "../../../services/trip/trip.service";
-import {GooglePlaceOption} from "../../../../models/google.model";
 import {AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent} from "primeng/autocomplete";
 import {FormsModule} from "@angular/forms";
 import {TagModule} from "primeng/tag";
@@ -42,19 +41,28 @@ export class SelectLocationComponent implements OnInit {
       case 'city':
         this.googlePlacesService.searchCitiesByText(event.query)
           .then(response => {
-            this.predictions = response.map(prediction => ({value: prediction.value}));
+            const uniqueValues: any[] = []
+            this.predictions = response.filter(item => {
+              if(!uniqueValues.includes(item.value)) {
+                uniqueValues.push(item.value)
+                return true
+              }
+              return false
+            })
           })
         break;
       case 'country_city':
         this.googlePlacesService.searchCountriesAndCitiesByText(event.query)
           .then(response => {
-            this.predictions = response.map(prediction => ({
-              value: prediction.value,
-              countryCode: prediction.countryCode,
-              type: prediction.type,
-              latitude: prediction.latitude,
-              longitude: prediction.longitude
-            }));
+            // Unique result
+            const uniqueValues: any[] = []
+            this.predictions = response.filter(item => {
+              if (!uniqueValues.includes(item.value)) {
+                uniqueValues.push(item.value);
+                return true;
+              }
+              return false;
+            })
           })
         break;
     }
