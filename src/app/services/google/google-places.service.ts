@@ -29,6 +29,7 @@ export class GooglePlacesService {
 
   searchCountriesAndCitiesByText(query: string): Promise<PlaceResult[]> {
     return new Promise((resolve, reject) => {
+      console.log(this.sessionToken);
       this.autocompleteService.getPlacePredictions({
         input: query,
         sessionToken: this.sessionToken,
@@ -42,31 +43,28 @@ export class GooglePlacesService {
             const placesPromises = predictions.map(prediction => {
               return new Promise<PlaceResult>((resolvePlace, rejectPlace) => {
                 //@ts-ignore
-                const placeService = new google.maps.places.PlacesService(document.createElement('div'));
-                placeService.getDetails({
-                  placeId: prediction.place_id
+                const geocoder = new google.maps.Geocoder();
+                //@ts-ignore
+                geocoder.geocode({ placeId: prediction.place_id }, (results, geocodeStatus) => {
                   //@ts-ignore
-                }, (place: google.maps.places.PlaceResult | null, placeStatus: google.maps.places.PlacesServiceStatus) => {
-                  //@ts-ignore
-                  if (placeStatus === google.maps.places.PlacesServiceStatus.OK && place) {
+                  if (geocodeStatus === google.maps.GeocoderStatus.OK && results && results[0]) {
+                    const place = results[0];
                     let type: 'country' | 'city' | 'island' = 'city';
 
                     // Check if country
                     if (prediction.types && prediction.types.includes('country')) {
                       type = 'country';
                     } else if (prediction.types.includes('natural_feature')) { // Check if island
-                      type = 'island'
+                      type = 'island';
                     }
                     let countryCode = '';
 
                     // Get the country code
-                    if (place.address_components) {
-                      const countryComponent = place.address_components.find((component: any) =>
-                        component.types.includes('country')
-                      );
-                      if (countryComponent) {
-                        countryCode = countryComponent.short_name;
-                      }
+                    const countryComponent = place.address_components.find((component: any) =>
+                      component.types.includes('country')
+                    );
+                    if (countryComponent) {
+                      countryCode = countryComponent.short_name;
                     }
 
                     resolvePlace({
