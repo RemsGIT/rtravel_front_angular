@@ -29,6 +29,7 @@
     "@types/mapbox-gl": "^3.1.0",
     "browser-image-compression": "^2.0.2",
     "canvas-confetti": "^1.9.2",
+    "chart.js": "^4.4.3",
     "dayjs": "^1.11.10",
     "express": "^4.18.2",
     "jsvectormap": "^1.5.3",
