@@ -32,7 +32,7 @@
 
       <div class="mt-12">
         <p class="text-center">Tu n'as pas reçu de code ? </p>
-        <button class="bg-white border-none block mx-auto mt-2 text-primary disabled:opacity-50" [disabled]="isSubmitting" (click)="onResendCode($event)" >Renvoyer un code</button>
+        <button class="bg-white border-none block mx-auto mt-2 text-primary disabled:opacity-50 cursor-pointer" [disabled]="isSubmitting" (click)="onResendCode($event)" >Renvoyer un code</button>
       </div>
     }
     @else {
