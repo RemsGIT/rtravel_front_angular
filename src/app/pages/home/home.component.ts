@@ -45,11 +45,8 @@ export class HomeComponent implements OnInit{
     this.http.get(`${apiEndpoint}/user/hastrips`)
       .subscribe({
         next: (res: any) => {
-          setTimeout(() => {
             this.hasTrip = res.result
             this.isDataLoaded = true
-          }, 3000)
-
         },
         error: e => { // User is not logged in
           if(e.status === 401) this.router.navigateByUrl("/connexion")
