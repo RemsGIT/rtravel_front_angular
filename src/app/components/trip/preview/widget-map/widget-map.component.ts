@@ -36,12 +36,17 @@ import {ButtonModule} from "primeng/button";
 export class WidgetMapComponent implements AfterViewInit {
 
   map : mapboxgl.Map | undefined
+
+  showMap = false
   mode: "normal" | "fullscreen" = "normal"
 
   constructor(private tripService: TripService) {}
 
   ngAfterViewInit() {
-    this.initMap()
+    setTimeout(() => {
+      this.showMap = true
+      this.initMap()
+    }, 800)
   }
 
 
