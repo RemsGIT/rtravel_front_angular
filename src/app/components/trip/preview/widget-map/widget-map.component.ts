@@ -44,9 +44,16 @@ export class WidgetMapComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.showMap = true
       this.initMap()
-    }, 800)
+
+      setTimeout(() => {
+        this.showMap = true
+        setTimeout(() => {
+          this.map?.resize()
+        })
+      }, 500)
+    }, 300)
+
   }
 
 

@@ -28,7 +28,9 @@
         </div>
     }
 
-    <div [class]="(mode === 'normal' ? 'h-[300px] rounded-2xl' : 'h-full') + ' w-full absolute'" id="map-widget"></div>
+    <div [class]="showMap ? '' : ' hidden'">
+      <div [class]="(mode === 'normal' ? 'h-[300px] rounded-2xl' : 'h-full') + ' w-full absolute'" id="map-widget"></div>
+    </div>
   </div>
 
 
