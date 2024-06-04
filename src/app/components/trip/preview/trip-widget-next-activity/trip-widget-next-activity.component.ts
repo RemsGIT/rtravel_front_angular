@@ -26,15 +26,19 @@ export class TripWidgetNextActivityComponent implements OnInit{
   nextActivity: Activity | undefined
 
   ngOnInit(): void {
-    const currentDate = dayjs();
+    if (this.tripService.tripSelected()?.activities) {
+      const currentDate = dayjs();
 
-    if(this.tripService.tripSelected()?.activities) {
-      const activities = this.tripService.tripSelected()?.activities as Activity[]
-      const closestActivity = this.tripService.tripSelected()?.activities?.filter(activity => dayjs(activity.start).isAfter(currentDate))
-        .reduce((closest, activity) =>
-          dayjs(activity.start).isBefore(dayjs(closest.start)) ? activity : closest, activities[0]);
+      // Get all future activities
+      const futureActivities = (this.tripService.tripSelected()?.activities as Activity[]).filter(activity => dayjs(activity.start).isAfter(currentDate));
 
-      this.nextActivity = closestActivity
+      if (futureActivities.length > 0) {
+        // Get most recent future activity
+        const closestActivity = futureActivities.reduce((closest, activity) =>
+          dayjs(activity.start).isBefore(dayjs(closest.start)) ? activity : closest, futureActivities[0]);
+
+        this.nextActivity = closestActivity;
+      }
     }
 
   }
