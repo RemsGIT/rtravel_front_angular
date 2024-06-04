@@ -12,6 +12,7 @@ export const constants = {
     activity: {
       SUCCESS_CREATE: "L'activité a bien été ajoutée",
       SUCCESS_UPDATE: "L'activité a bien été modifiée",
+      SUCCESS_DELETE: "L'activité a bien été supprimée",
     },
     participant: {
       SUCCESS_CREATE: "Un participant a été ajouté",

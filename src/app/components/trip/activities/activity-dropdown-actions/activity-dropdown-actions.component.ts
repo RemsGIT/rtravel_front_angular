@@ -1,5 +1,5 @@
 import {Component, inject, input, OnInit} from '@angular/core';
-import {MenuItem} from "primeng/api";
+import {ConfirmationService, MenuItem} from "primeng/api";
 import {MenuModule} from "primeng/menu";
 import {ButtonModule} from "primeng/button";
 import {LucideAngularModule} from "lucide-angular";
@@ -9,6 +9,7 @@ import {EditActivityBtnComponent} from "../edit-activity-btn/edit-activity-btn.c
 import {TripService} from "../../../../services/trip/trip.service";
 import {toast} from "ngx-sonner";
 import {constants} from "../../../../constants";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-activity-dropdown-actions',
@@ -18,11 +19,14 @@ import {constants} from "../../../../constants";
     ButtonModule,
     LucideAngularModule,
     CreateActivityBtnComponent,
-    EditActivityBtnComponent
+    EditActivityBtnComponent,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
   templateUrl: './activity-dropdown-actions.component.html',
 })
 export class ActivityDropdownActionsComponent implements OnInit{
+  confirmationService = inject(ConfirmationService)
   tripService = inject(TripService)
 
   items: MenuItem[] | undefined;
@@ -56,24 +60,33 @@ export class ActivityDropdownActionsComponent implements OnInit{
         label: 'Supprimer',
         icon: 'trash',
         command: () => {
-          this.tripService.deleteActivity(this.activity().id)
-            .subscribe({
-              next: (response) => {
-                const trip = this.tripService.tripSelected();
+          this.confirmationService.confirm({
+            key: this.activity().id.toString(),
+            header: "Êtes-vous sûr ?",
+            message: 'Cette action est irréversible',
+            accept: () => {
+              this.tripService.deleteActivity(this.activity().id)
+                .subscribe({
+                  next: (response) => {
+                    const trip = this.tripService.tripSelected();
 
-                // Remove activity to list
-                if (trip && trip.activities) {
-                  const index = trip.activities.findIndex(activity => activity.id === this.activity().id);
-                  if (index !== -1) {
-                    trip.activities.splice(index, 1);
-                    this.tripService.tripSelected.set(trip);
+                    // Remove activity to list
+                    if (trip && trip.activities) {
+                      const index = trip.activities.findIndex(activity => activity.id === this.activity().id);
+                      if (index !== -1) {
+                        trip.activities.splice(index, 1);
+                        this.tripService.tripSelected.set(trip);
+                      }
+                    }
+
+                    toast.success(constants.messages.activity.SUCCESS_DELETE)
+                  },
+                  error: (e) => {
+                    toast.error(constants.messages.ERROR_DELETE)
                   }
-                }
-              },
-              error: (e) => {
-                toast.error(constants.messages.ERROR_DELETE)
-              }
-            })
+                })
+            }
+          })
         }
       }
     ];

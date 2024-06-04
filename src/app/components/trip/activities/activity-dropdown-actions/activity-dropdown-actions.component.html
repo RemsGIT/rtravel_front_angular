@@ -9,3 +9,20 @@
 <lucide-icon name="ellipsis-vertical" (click)="menu.toggle($event)" class="text-slate-300 cursor-pointer" size="20"></lucide-icon>
 
 <app-edit-activity-btn [sidebarVisible]="sidebarEditOpen"  [activityToEdit]="activity()" (onChangeVisible)="sidebarEditOpen = $event" />
+
+
+<p-confirmDialog #cd [key]="activity().id.toString()">
+  <ng-template pTemplate="headless" let-message>
+    <div class="flex flex-col items-center p-5 surface-overlay border-round">
+      <div class="rounded-full bg-primary inline-flex justify-center items-center h-[6rem] w-[6rem] -mt-16">
+        <lucide-icon name="circle-help" size="50" class="text-white h-[50px]"></lucide-icon>
+      </div>
+      <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
+      <p class="mb-0 text-center text-gray-400 min-w-[300px] lg:min-w-[500px]">{{ message.message }}</p>
+      <div class="flex align-items-center gap-2 mt-4">
+        <button pButton label="Supprimer" (click)="cd.accept()"></button>
+        <button pButton label="Annuler" (click)="cd.reject()" outlined></button>
+      </div>
+    </div>
+  </ng-template>
+</p-confirmDialog>
