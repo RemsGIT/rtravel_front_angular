@@ -10,6 +10,7 @@
         slides-per-view="2.3"
         space-between="15"
         free-mode="true"
+        [breakpoints]="JSON.stringify(swiperBreakpoints)"
       >
         @for (trip of trips; track trip) {
           <swiper-slide class="pb-2">
