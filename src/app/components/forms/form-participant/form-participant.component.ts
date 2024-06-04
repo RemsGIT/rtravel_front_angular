@@ -53,7 +53,6 @@ export class FormParticipantComponent implements OnInit{
       }
     }
   }
-  BpGB2*tMxudYGAvwqGR4CRdMBMQM@L
   async onSubmit() {
     if (this.participantForm.valid) {
       this.isSubmitting = true
