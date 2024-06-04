@@ -16,6 +16,7 @@ export const constants = {
     participant: {
       SUCCESS_CREATE: "Un participant a été ajouté",
       SUCCESS_DELETE: "Le participant a bien été supprimé",
+      SUCCESS_UPDATE: "Le participant a bien été modifié",
       ERROR_EXISTS: "Le participant est déjà dans le voyage"
     },
     ERROR_CREATE: "Erreur lors de la création, réessayez plus tard",
