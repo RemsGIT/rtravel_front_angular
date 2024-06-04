@@ -18,7 +18,7 @@
         </p>
       </div>
 
-      @if(!participant.isOwner) {
+      @if(participant.email !== authService?.currentUserSig()?.email && !participant.isOwner) {
         <lucide-icon name="ellipsis-vertical" class="absolute top-1.5 right-1.5 cursor-pointer text-slate-300" size="20" (click)="onClickEditParticipant.emit(participant)"></lucide-icon>
       }
     </ng-template>
