@@ -6,9 +6,16 @@
   <!-- Loop through participants -->
   @for (participant of participants; track participant) {
     <div>
-      <app-participant-card [participant]="participant" (onDeleteParticipant)="handleRemoveParticipantFromList($event)" class="h-full" />
+      <app-participant-card (onClickEditParticipant)="participantToEdit = $event" [participant]="participant" (onDeleteParticipant)="handleRemoveParticipantFromList($event)" class="h-full" />
     </div>
   }
 </div>
 
 <app-create-participant-btn (onCreateParticipant)="handleCreateParticipantFromList($event)" />
+
+<app-edit-participant-sidebar
+  (onCloseSidebar)="participantToEdit = undefined"
+  [ParticipantToEdit]="participantToEdit"
+  [sidebarVisible]="participantToEdit !== undefined"
+  (onEditParticipant)="handleEditParticipantFromList($event)"
+/>

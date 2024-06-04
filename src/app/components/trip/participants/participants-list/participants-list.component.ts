@@ -9,6 +9,9 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {CreateParticipantBtnComponent} from "../create-participant-btn/create-participant-btn.component";
 import {IUser} from "../../../../../models/auh.model";
+import {FormParticipantComponent} from "../../../forms/form-participant/form-participant.component";
+import {SidebarModule} from "primeng/sidebar";
+import {EditParticipantSidebarComponent} from "../edit-participant-sidebar/edit-participant-sidebar.component";
 
 @Component({
   selector: 'app-participants-list',
@@ -16,7 +19,10 @@ import {IUser} from "../../../../../models/auh.model";
   imports: [
     ParticipantCardComponent,
     ConfirmDialogModule,
-    CreateParticipantBtnComponent
+    CreateParticipantBtnComponent,
+    FormParticipantComponent,
+    SidebarModule,
+    EditParticipantSidebarComponent
   ],
   providers: [ConfirmationService],
   templateUrl: './participants-list.component.html',
@@ -26,6 +32,7 @@ export class ParticipantsListComponent implements OnInit {
   private http = inject(HttpClient)
 
   participants: Participant[] | null = null
+  participantToEdit: Participant | undefined
 
   tripOwner: Participant | undefined = undefined
 
@@ -61,6 +68,19 @@ export class ParticipantsListComponent implements OnInit {
   protected handleCreateParticipantFromList(participant: Participant) {
     if(this.participants) {
       this.participants.push(participant)
+    }
+  }
+
+  protected handleEditParticipantFromList(participant: Participant) {
+    if(this.participants) {
+      this.participantToEdit = undefined
+
+      // Update the participant in list
+      const index = this.participants.findIndex(p => p.id === participant.id);
+      if (index !== -1) {
+        this.participants[index] = participant;
+      }
+
     }
   }
 }

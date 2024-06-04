@@ -19,21 +19,7 @@
       </div>
 
       @if(!participant.isOwner) {
-        <div
-          class="absolute top-2 right-2 bg-slate-200 p-1.5 rounded-full cursor-pointer"
-          [pTooltip]="participant.policy === ParticipantPolicy.READ ? 'Ce participant peut voir le voyage' : 'Ce participant peut modifier le voyage'"
-          tooltipStyleClass="text-xs"
-          tooltipEvent="focus"
-        >
-          @switch (participant.policy) {
-            @case (ParticipantPolicy.READ) {
-              <lucide-icon name="eye" size="12" class="block h-[12px]" />
-            }
-            @case (ParticipantPolicy.WRITE) {
-              <lucide-icon name="pencil" size="12" class="block h-[12px]"/>
-            }
-          }
-        </div>
+        <lucide-icon name="ellipsis-vertical" class="absolute top-1.5 right-1.5 cursor-pointer text-slate-300" size="20" (click)="onClickEditParticipant.emit(participant)"></lucide-icon>
       }
     </ng-template>
     <hr class="border-[#F1F5F9] border-t-0 border-x-0"/>

@@ -16,6 +16,10 @@ export class ParticipantService {
     return this.http.post<Participant>(`${apiEndpoint}/trips/${tripId}/participants`, data)
   }
 
+  updateParticipant(data: Participant, tripId: number) {
+    return this.http.patch<Participant>(`${apiEndpoint}/trips/${tripId}/participants/${data.id}`, data)
+  }
+
   deleteParticipant(id: number, tripId: number) {
     return this.http.delete(`${apiEndpoint}/trips/${tripId}/participants/${id}`)
   }
