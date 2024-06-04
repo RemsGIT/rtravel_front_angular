@@ -21,7 +21,9 @@
       @if(!participant.isOwner) {
         <div
           class="absolute top-2 right-2 bg-slate-200 p-1.5 rounded-full cursor-pointer"
-          [pTooltip]="participant.policy === ParticipantPolicy.READ ? 'Ce participant peut voir le voyage' : 'Ce participant peut modifier le voyage'" tooltipStyleClass="text-xs"
+          [pTooltip]="participant.policy === ParticipantPolicy.READ ? 'Ce participant peut voir le voyage' : 'Ce participant peut modifier le voyage'"
+          tooltipStyleClass="text-xs"
+          tooltipEvent="focus"
         >
           @switch (participant.policy) {
             @case (ParticipantPolicy.READ) {
