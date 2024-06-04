@@ -32,14 +32,18 @@
           }
         </ol>
       </div>
-      <app-create-activity-btn class="hidden" id="btn-create-activity-floating"  [selectedDate]="date()" [style]="'floating'" />
+      @defer {
+        <app-create-activity-btn class="hidden" id="btn-create-activity-floating"  [selectedDate]="date()" [style]="'floating'" />
+      }
     }
     @else if (activities.length === 0) {
       <div>
         <h3 class="text-lg text-center mt-2 text-black">Aucune activité à ce jour</h3>
         <div class="flex flex-col items-center mt-2 space-y-2">
           <app-arrow />
-          <app-create-activity-btn [selectedDate]="date()"  />
+          @defer {
+            <app-create-activity-btn [selectedDate]="date()"  />
+          }
         </div>
       </div>
     }

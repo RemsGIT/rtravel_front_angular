@@ -1,18 +1,12 @@
 import {
-  afterNextRender,
-  afterRender,
-  AfterRenderPhase,
   AfterViewInit,
   Component,
-  Inject,
-  OnInit,
-  PLATFORM_ID
 } from '@angular/core';
 import {CardModule} from "primeng/card";
 import {LucideAngularModule} from "lucide-angular";
 import {SharedModule} from "primeng/api";
 import {TripService} from "../../../../services/trip/trip.service";
-import * as mapboxgl from 'mapbox-gl'
+import {Map,Popup,Marker} from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import {Activity, listTypesIcons} from "../../../../../models/trip.model";
@@ -35,7 +29,7 @@ import {ButtonModule} from "primeng/button";
 })
 export class WidgetMapComponent implements AfterViewInit {
 
-  map : mapboxgl.Map | undefined
+  map : Map | undefined
 
   showMap = false
   mode: "normal" | "fullscreen" = "normal"
@@ -62,7 +56,7 @@ export class WidgetMapComponent implements AfterViewInit {
     const latitude = this.tripService.tripSelected()?.latitude
     const longitude = this.tripService.tripSelected()?.longitude
 
-    this.map = new mapboxgl.Map({
+    this.map = new Map({
       attributionControl: false,
       container: 'map-widget',
       center: [2.2990098595619206, 49.89863424051644],
@@ -85,10 +79,10 @@ export class WidgetMapComponent implements AfterViewInit {
   showActivitiesMarker() {
     this.tripService.tripSelected()?.activities?.forEach(activity => {
       if(this.map && (activity.latitude && activity.longitude)) {
-        const marker = new mapboxgl.Marker(this.getMarkerIcon(activity))
+        const marker = new Marker(this.getMarkerIcon(activity))
           .setLngLat([activity.longitude, activity.latitude])
           .setPopup(
-            new mapboxgl.Popup()
+            new Popup()
               .setHTML(
                 `
                 <div class="flex items-center gap-2">

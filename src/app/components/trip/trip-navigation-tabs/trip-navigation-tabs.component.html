@@ -14,14 +14,18 @@
     </p-tabPanel>
     <p-tabPanel header="Activités" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
-        <app-trip-activities-date-tabs/>
+        @defer {
+          <app-trip-activities-date-tabs/>
+        }
       </ng-template>
 
     </p-tabPanel>
     <p-tabPanel header="Participants" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
         <div class="space-y-4">
-          <app-participants-list/>
+          @defer {
+            <app-participants-list/>
+          }
         </div>
       </ng-template>
     </p-tabPanel>
@@ -35,14 +39,18 @@
     <p-tabPanel header="Carte" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
         <div class="space-y-4">
-          <app-widget-map/>
+          @defer{
+            <app-widget-map/>
+          }
         </div>
       </ng-template>
     </p-tabPanel>
     <p-tabPanel header="Paramètres" headerStyleClass="text-sm tab-small-padding">
       <ng-template pTemplate="content">
         <div class="space-y-4">
-          <app-update-trip-settings/>
+          @defer {
+            <app-update-trip-settings/>
+          }
         </div>
       </ng-template>
     </p-tabPanel>

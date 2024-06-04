@@ -4,8 +4,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {TripService} from "../../services/trip/trip.service";
 import {ButtonModule} from "primeng/button";
 
-import * as mapboxgl from 'mapbox-gl'
-import {Activity} from "../../../models/trip.model";
+import {Map,Marker} from 'mapbox-gl'
 
 
 @Component({
@@ -59,7 +58,7 @@ export class PickPointMapComponent implements OnInit {
       longitude = this.defaultLongitude()
     }
 
-    this.map = new mapboxgl.Map({
+    this.map = new Map({
       attributionControl: false,
       container: 'map',
       center: [2.2990098595619206, 49.89863424051644],
@@ -76,12 +75,12 @@ export class PickPointMapComponent implements OnInit {
     }
 
 
-    this.centerMarker = new mapboxgl.Marker(this.getCenterMarkerIcon())
+    this.centerMarker = new Marker(this.getCenterMarkerIcon())
       .setLngLat(this.map.getCenter())
       .addTo(this.map)
 
     this.map.on('move', () => {
-      this.centerMarker?.setLngLat((this.map as mapboxgl.Map).getCenter());
+      this.centerMarker?.setLngLat((this.map as Map).getCenter());
     });
   }
 

@@ -45,6 +45,7 @@ import {
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {provideServiceWorker} from '@angular/service-worker';
+import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -95,7 +96,7 @@ export const appConfig: ApplicationConfig = {
       },
     })),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
-    provideAnimations(),
+    provideAnimationsAsync(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
