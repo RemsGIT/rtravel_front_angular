@@ -1,7 +1,7 @@
 @if (participant) {
-  <p-card class="h-full" styleClass="h-full">
+  <p-card class="h-full relative" styleClass="h-full">
     <ng-template pTemplate="header">
-      <div class="space-y-4 min-h-[120px]">
+      <div class="space-y-4 min-h-[132px]">
         <div class="w-12 h-12 rounded-full bg-primary flex text-xl justify-center items-center mx-auto mt-2 text-white">
           {{participant?.name && participant.name[0]}}
         </div>
@@ -16,8 +16,23 @@
           }
 
         </p>
-
       </div>
+
+      @if(!participant.isOwner) {
+        <div
+          class="absolute top-2 right-2 bg-slate-200 p-1.5 rounded-full cursor-pointer"
+          [pTooltip]="participant.policy === ParticipantPolicy.READ ? 'Ce participant peut voir le voyage' : 'Ce participant peut modifier le voyage'" tooltipStyleClass="text-xs"
+        >
+          @switch (participant.policy) {
+            @case (ParticipantPolicy.READ) {
+              <lucide-icon name="eye" size="12" class="block h-[12px]" />
+            }
+            @case (ParticipantPolicy.WRITE) {
+              <lucide-icon name="pencil" size="12" class="block h-[12px]"/>
+            }
+          }
+        </div>
+      }
     </ng-template>
     <hr class="border-[#F1F5F9] border-t-0 border-x-0"/>
     <div class="pb-2">

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, output} from '@angular/core';
-import {Participant} from "../../../../../models/participant.model";
+import {Participant, ParticipantPolicy} from "../../../../../models/participant.model";
 import { NgOptimizedImage } from "@angular/common";
 import {CardModule} from "primeng/card";
 import {AvatarModule} from "primeng/avatar";
@@ -13,6 +13,7 @@ import {toast} from "ngx-sonner";
 import {TripService} from "../../../../services/trip/trip.service";
 import {AuthService} from "../../../../services/auth/auth.service";
 import {TagModule} from "primeng/tag";
+import {TooltipModule} from "primeng/tooltip";
 
 @Component({
   selector: 'app-participant-card',
@@ -25,6 +26,7 @@ import {TagModule} from "primeng/tag";
     ConfirmDialogModule,
     LucideAngularModule,
     TagModule,
+    TooltipModule,
   ],
   templateUrl: './participant-card.component.html',
 })
@@ -68,4 +70,5 @@ export class ParticipantCardComponent {
   }
 
 
+  protected readonly ParticipantPolicy = ParticipantPolicy;
 }
