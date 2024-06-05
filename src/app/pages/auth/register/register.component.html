@@ -14,6 +14,12 @@
         <label for="username"
                [class]="registerForm.get('username')?.touched && registerForm.get('username')?.errors ? 'text-red-500' : ''">Nom d'utilisateur</label>
         <input id="username" pInputText type="text" formControlName="username" class="w-full" placeholder="Matthieu"/>
+
+        @if (registerForm.get('username')?.touched && registerForm.get('username')?.errors) {
+          <span class="text-red-500 block">
+           Le nom d'utilisateur doit contenir au moins 3 caractères
+          </span>
+        }
       </div>
       <div class="space-y-2 w-full">
         <label for="email"
