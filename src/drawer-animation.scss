@@ -14,11 +14,15 @@ main.overlay-active {
   transform-origin: center top;
   transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1) 0s, border-radius;
   transition-delay: 50ms;
-  border-radius: 30px;
+  border-radius: 15px;
   overflow: hidden;
   transform: scale(0.9371980676328503) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0);
   background-color: white;
   min-height: 100vh;
+
+  .trip_detail_cover {
+    border-radius: 15px;
+  }
 }
 
 body.overlay-closed {
