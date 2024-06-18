@@ -123,7 +123,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   // CSS Class for animation drawer
   checkForOverlay() {
-      const overlayExists = !!document.querySelector('p-sidebar[ng-reflect-visible="true"]');
+      const overlayExists = !!document.querySelector('.p-component-overlay');
       if (overlayExists) {
         this.renderer?.addClass(document.body, 'overlay-active');
         this.renderer?.addClass(document.querySelector('main'), 'overlay-active');
