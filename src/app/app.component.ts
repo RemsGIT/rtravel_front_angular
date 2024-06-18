@@ -123,17 +123,25 @@ export class AppComponent implements OnDestroy, AfterViewInit {
 
   // CSS Class for animation drawer
   checkForOverlay() {
-    const overlayExists = !!document.querySelector('.p-component-overlay.p-sidebar-mask');
-    if (overlayExists) {
-      this.renderer?.addClass(document.body, 'overlay-active');
-      this.renderer?.addClass(document.querySelector('main'), 'overlay-active');
-      this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
-      this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
+      const overlayExists = !!document.querySelector('p-sidebar[ng-reflect-visible="true"]');
+      if (overlayExists) {
+        this.renderer?.addClass(document.body, 'overlay-active');
+        this.renderer?.addClass(document.querySelector('main'), 'overlay-active');
+        this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
+        this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
 
-    } else {
+      } else {
         this.renderer?.addClass(document.querySelector('main'), 'overlay-closed');
         this.renderer?.addClass(document.querySelector('body'), 'overlay-closed');
-    }
+
+        setTimeout(() => {
+          this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
+          this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
+          this.renderer?.removeClass(document.querySelector('main'), 'overlay-active');
+          this.renderer?.removeClass(document.querySelector('body'), 'overlay-active');
+        }, 100)
+      }
+
   }
 
   // Move all sidebar component to body tag
