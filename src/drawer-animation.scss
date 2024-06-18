@@ -1,5 +1,4 @@
 // Scale the background drawer
-
 body.overlay-active {
   right: 0px;
   position: fixed !important;
@@ -17,7 +16,7 @@ main.overlay-active {
   border-radius: 15px;
   overflow: hidden;
   transform: scale(0.9371980676328503) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0);
-  background-color: white;
+  background-color: black;
   min-height: 100vh;
 
   .trip_detail_cover {
@@ -39,5 +38,4 @@ main.overlay-closed {
   transform: scale(1) translate3d(0, 0, 0);
   transition-delay: 0s;
   min-height: 100vh;
-
 }
