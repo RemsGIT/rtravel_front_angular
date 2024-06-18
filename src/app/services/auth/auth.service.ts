@@ -1,5 +1,5 @@
 import {Injectable, signal} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {IUser, IUserRegisterRequest, IUserRequest} from "../../../models/auh.model";
 import {apiEndpoint} from "../../constants";
 import {map} from "rxjs";

@@ -1,6 +1,6 @@
 import {Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit} from '@angular/core';
 import {LucideAngularModule} from "lucide-angular";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Trip} from "../../../../models/trip.model";
 import {apiEndpoint, constants} from "../../../constants";
 import dayjs from 'dayjs';

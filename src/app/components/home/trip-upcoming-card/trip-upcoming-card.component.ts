@@ -1,6 +1,6 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {Trip} from "../../../../models/trip.model";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {apiEndpoint, constants} from "../../../constants";
 import {RouterLink} from "@angular/router";
 import {CardModule} from "primeng/card";

@@ -14,7 +14,7 @@ import {ParticipantService} from "../../../../services/participant/participant.s
 import {Participant, ParticipantPolicy} from "../../../../../models/participant.model";
 import {IUser} from "../../../../../models/auh.model";
 import {apiEndpoint, constants} from "../../../../constants";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-form-payment',

@@ -1,5 +1,5 @@
 import {Component, inject, Injectable, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Participant, ParticipantPolicy} from "../../../../../models/participant.model";
 import {apiEndpoint, constants} from "../../../../constants";
 import {TripService} from "../../../../services/trip/trip.service";

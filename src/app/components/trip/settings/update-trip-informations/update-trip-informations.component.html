@@ -72,7 +72,7 @@
         <hr class="mt-3 border-gray-100">
       </div>
 
-      <app-select-location typeLocation="country_city" (onValueChange)="city = {city: $event.value ?? '', countryCode: $event.countryCode ?? '', latitude: $event.latitude, longitude: $event.longitude}" [defaultValue]="city.city"/>
+      <app-select-location typeLocation="country_city" (onValueChange)="city = {city: $event.value, countryCode: $event.countryCode ?? '', latitude: $event.latitude, longitude: $event.longitude}" [defaultValue]="city.city"/>
 
 
       <p-button styleClass="w-5/6 flex mx-auto mt-24  " (onClick)="onChangeCity()" [loading]="is_submitting" label="Enregistrer"></p-button>

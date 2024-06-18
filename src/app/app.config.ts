@@ -4,7 +4,7 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {provideClientHydration} from '@angular/platform-browser';
 import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
-import {HttpClient, provideHttpClient, withFetch, withInterceptors} from "@angular/common/http";
+import { HttpClient, provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
 import {authInterceptor} from "./interceptors/auth.interceptor";
 import {
   LucideAngularModule,

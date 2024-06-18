@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Budget, BudgetRequest, Payment, PaymentRequest} from "../../../models/budget.model";
 import {Participant} from "../../../models/participant.model";
 import {apiEndpoint} from "../../constants";

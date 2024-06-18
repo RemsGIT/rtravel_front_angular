@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CardModule} from "primeng/card";
 import {TripService} from "../../../services/trip/trip.service";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {apiEndpoint} from "../../../constants";
 import {Trip} from "../../../../models/trip.model";
 

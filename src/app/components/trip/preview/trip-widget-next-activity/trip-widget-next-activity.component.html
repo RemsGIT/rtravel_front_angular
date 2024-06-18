@@ -10,19 +10,19 @@
     @if (nextActivity) {
       <div class="flex gap-2 items-center">
         <img [src]="getIconByType(nextActivity.icon)" class="w-[22px] h-[22px]" alt="" />
-        <h4 class="text-lg">{{ nextActivity?.name }}</h4>
+        <h4 class="text-lg">{{ nextActivity.name }}</h4>
       </div>
 
 
       <div class="space-y-2 mt-2">
         <p class="text-xs text-muted-foreground flex gap-2">
           <lucide-icon name="map-pin" size="16"/>
-          {{ nextActivity?.place ? nextActivity.place + ' - ' : '' }}{{ nextActivity?.city }}
+          {{ nextActivity.place ? nextActivity.place + ' - ' : '' }}{{ nextActivity.city }}
         </p>
 
         <p class="text-xs text-muted-foreground flex gap-2">
           <lucide-icon name="clock" size="16"/>
-          {{ dayjs(nextActivity?.start).locale(fr).format('DD MMMM YYYY à HH:mm') }}
+          {{ dayjs(nextActivity.start).locale(fr).format('DD MMMM YYYY à HH:mm') }}
         </p>
       </div>
     } @else {

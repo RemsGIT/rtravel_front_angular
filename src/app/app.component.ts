@@ -5,7 +5,7 @@ import {NgxSonnerToaster} from "ngx-sonner";
 import {isPlatformBrowser, Location} from "@angular/common";
 import {AuthService} from "./services/auth/auth.service";
 import {TokenService} from "./services/token/token.service";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {IUser} from "../models/auh.model";
 import {apiEndpoint} from "./constants";
 import {HeaderComponent} from "./components/header/header.component";

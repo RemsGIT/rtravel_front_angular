@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {NgOptimizedImage} from "@angular/common";
 import {TripService} from "../../services/trip/trip.service";
 import {AuthService} from "../../services/auth/auth.service";
