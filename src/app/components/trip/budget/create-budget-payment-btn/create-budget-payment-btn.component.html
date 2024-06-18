@@ -42,7 +42,5 @@
 <app-form-budget [sidebarVisible]="openFormBudget" (onCreateBudget)="onCreateBudget.emit($event)"
                  (onChangeVisibility)="onChangeVisibilityFormBudget($event)"/>
 
-@if(openFormPayment) {
-  <app-form-payment [sidebarVisible]="openFormPayment" (onCreatePayment)="onCreatePayment.emit($event)" (onChangeVisibility)="onChangeVisibilityFormPayment($event)" />
-}
+<app-form-payment [sidebarVisible]="openFormPayment" (onCreatePayment)="onCreatePayment.emit($event)" (onChangeVisibility)="onChangeVisibilityFormPayment($event)" />
 
