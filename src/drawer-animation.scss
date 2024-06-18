@@ -21,7 +21,8 @@ main.overlay-active {
   min-height: 100vh;
 
   .trip_detail_cover {
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
   }
 }
 
