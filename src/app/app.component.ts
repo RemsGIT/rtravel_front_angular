@@ -131,15 +131,17 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
 
       } else {
-        this.renderer?.addClass(document.querySelector('main'), 'overlay-closed');
-        this.renderer?.addClass(document.querySelector('body'), 'overlay-closed');
+        if(document.querySelector('body')?.classList.contains('overlay-active')) {
+          this.renderer?.addClass(document.querySelector('main'), 'overlay-closed');
+          this.renderer?.addClass(document.querySelector('body'), 'overlay-closed');
 
-        setTimeout(() => {
-          this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
-          this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
-          this.renderer?.removeClass(document.querySelector('main'), 'overlay-active');
-          this.renderer?.removeClass(document.querySelector('body'), 'overlay-active');
-        }, 100)
+          setTimeout(() => {
+            this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
+            this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
+            this.renderer?.removeClass(document.querySelector('main'), 'overlay-active');
+            this.renderer?.removeClass(document.querySelector('body'), 'overlay-active');
+          }, 100)
+        }
       }
 
   }
