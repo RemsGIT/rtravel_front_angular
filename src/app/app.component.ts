@@ -1,12 +1,8 @@
 import {
-  AfterViewInit,
   Component,
   inject,
   Inject,
-  OnDestroy,
   PLATFORM_ID,
-  Renderer2,
-  RendererFactory2
 } from '@angular/core';
 import {ChildrenOutletContexts, NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {ButtonModule} from "primeng/button";
@@ -34,7 +30,7 @@ import {MenuSidebarComponent} from "./components/utils/menu-sidebar/menu-sidebar
     fadeAnimation,
   ],
 })
-export class AppComponent implements OnDestroy, AfterViewInit {
+export class AppComponent {
   authService = inject(AuthService)
   tokenService = inject(TokenService)
   router = inject(Router)
@@ -49,10 +45,7 @@ export class AppComponent implements OnDestroy, AfterViewInit {
   routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail']
   routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail']
 
-  private renderer: Renderer2 | null = null;
-  private observer: MutationObserver | null = null;
-
-  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object,rendererFactory: RendererFactory2) {
+  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object) {
 
     translateService.addLangs(['en', 'fr']);
     translateService.setDefaultLang('fr');
@@ -94,22 +87,6 @@ export class AppComponent implements OnDestroy, AfterViewInit {
         }
       }
     })
-
-
-    // Use to improve the sidebar bottomsheet of primeng -> simular to vaul drawer react
-    if(this.isPlatformBrowser(platformId)) {
-      this.renderer = rendererFactory.createRenderer(null, null);
-      this.observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'childList') {
-            this.moveSidebars();
-            this.checkForOverlay();
-          }
-        });
-      });
-
-      this.observer.observe(document.body, { childList: true, subtree: true });
-    }
   }
 
   changeLang(lang: string) {
@@ -121,48 +98,4 @@ export class AppComponent implements OnDestroy, AfterViewInit {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 
-  // CSS Class for animation drawer
-  checkForOverlay() {
-      const overlayExists = !!document.querySelector('.p-component-overlay.p-sidebar-mask ');
-      if (overlayExists) {
-        this.renderer?.addClass(document.body, 'overlay-active');
-        this.renderer?.addClass(document.querySelector('main'), 'overlay-active');
-        this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
-        this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
-
-      } else {
-        if(document.querySelector('body')?.classList.contains('overlay-active')) {
-          this.renderer?.addClass(document.querySelector('main'), 'overlay-closed');
-          this.renderer?.addClass(document.querySelector('body'), 'overlay-closed');
-
-          setTimeout(() => {
-            this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
-            this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
-            this.renderer?.removeClass(document.querySelector('main'), 'overlay-active');
-            this.renderer?.removeClass(document.querySelector('body'), 'overlay-active');
-          }, 100)
-        }
-      }
-
-  }
-
-  // Move all sidebar component to body tag
-  moveSidebars() {
-    const sidebars = document.querySelectorAll('p-sidebar');
-
-    sidebars.forEach((sidebar: any) => {
-      if (sidebar.parentNode.nodeName !== 'BODY') { // if not already in body tag
-        this.renderer?.appendChild(document.body, sidebar);
-      }
-    });
-  }
-
-  ngAfterViewInit() {
-    this.observer?.observe(document.body, { childList: true, subtree: true });
-    this.moveSidebars();
-  }
-
-  ngOnDestroy() {
-    this.observer?.disconnect();
-  }
 }
