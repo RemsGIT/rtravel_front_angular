@@ -1,14 +1,27 @@
-<p-sidebar [(visible)]="sidebarVisible" position="bottom" styleClass="h-[90%] rounded-t-3xl"   transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)">
-  <ng-template pTemplate="header">
-    <div>
-      <h3 class="text-2xl font-extrabold">Nouveau participant</h3>
-    </div>
-  </ng-template>
 
-  <ng-template pTemplate="content">
-    <app-form-participant (onSubmitParticipant)="handleSubmit($event.participant)" />
-  </ng-template>
-</p-sidebar>
+@if(sidebarVisible) {
+  <p-sidebar
+    [(visible)]="sidebarVisible"
+    position="bottom"
+    styleClass="h-[90%] rounded-t-3xl"
+    transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"
+    [modal]="true"
+
+  >
+    <ng-template pTemplate="header">
+      <div>
+        <h3 class="text-2xl font-extrabold">Nouveau participant</h3>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <app-form-participant (onSubmitParticipant)="handleSubmit($event.participant)" />
+    </ng-template>
+
+    <button (click)="sidebarVisible = false">Fermer</button>
+  </p-sidebar>
+
+}
 
 <div class="fixed right-3 bottom-5" >
   <p-button (click)="sidebarVisible = true" styleClass="p-2 rounded-full">

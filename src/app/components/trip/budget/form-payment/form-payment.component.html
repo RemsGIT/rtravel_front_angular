@@ -1,95 +1,98 @@
-<p-sidebar [visible]="sidebarVisible()" position="bottom" styleClass="h-[78%] rounded-t-3xl  " (visibleChange)="onVisibilityChange($event)"   transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)">
-  <ng-template pTemplate="header">
-    <div>
-      <h3 class="text-2xl font-extrabold">
-        {{paymentEditingValue() ? "Modifier une dépense" : "Ajouter une dépense"}}
-      </h3>
-    </div>
-  </ng-template>
-
-  <ng-template pTemplate="content">
-
-    <form [formGroup]="paymentForm" (ngSubmit)="onSubmitCreatePayment()" novalidate class="space-y-5">
-
+@if(sidebarVisible()) {
+  <p-sidebar [visible]="sidebarVisible()" position="bottom" styleClass="h-[78%] rounded-t-3xl  " (visibleChange)="onVisibilityChange($event)"   transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)">
+    <ng-template pTemplate="header">
       <div>
-        <label for="amount" [class]="(paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Montant</label>
-        <p-inputNumber
-          mode="currency"
-          id="amount"
-          formControlName="amount"
-          currency="EUR"
-          locale="fr-FR"
-
-          [class]="(paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full block mt-2'"
-          styleClass="w-full"
-
-        />
+        <h3 class="text-2xl font-extrabold">
+          {{paymentEditingValue() ? "Modifier une dépense" : "Ajouter une dépense"}}
+        </h3>
       </div>
+    </ng-template>
 
-      <div>
-        <label for="description" [class]="(paymentForm.get('description')?.touched && paymentForm.get('description')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Notes</label>
-        <input
-          id="description"
-          pInputText
-          formControlName="description"
-          [class]="(paymentForm.get('description')?.touched && paymentForm.get('description')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
-          placeholder="Visite du colisée, goûter à la plage..."
-        />
-      </div>
+    <ng-template pTemplate="content">
 
-      <div>
-        <label for="category" [class]="(paymentForm.get('category')?.touched && paymentForm.get('category')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Catégorie</label>
-        <p-dropdown
-          id="category"
-          [options]="paymentCategories"
-          optionLabel="name"
-          [showClear]="true"
-          placeholder="Sélectionne une catégorie"
-          formControlName="category"
-          styleClass="w-full"
-          optionValue="code"
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmitCreatePayment()" novalidate class="space-y-5">
 
-          [class]="(paymentForm.get('category')?.touched && paymentForm.get('category')?.errors ? 'ng-invalid ng-dirty  ' : '')"
-        />
-      </div>
+        <div>
+          <label for="amount" [class]="(paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Montant</label>
+          <p-inputNumber
+            mode="currency"
+            id="amount"
+            formControlName="amount"
+            currency="EUR"
+            locale="fr-FR"
 
-      <div>
-        <label for="participantId" [class]="(paymentForm.get('participantId')?.touched && paymentForm.get('participantId')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Personne qui a payé</label>
-        <p-dropdown
-          id="participantId"
-          [options]="participantsOptions"
-          optionLabel="name"
-          [showClear]="true"
-          placeholder="Sélectionne un participant"
-          formControlName="participantId"
-          styleClass="w-full"
-          optionValue="code"
-          [class]="(paymentForm.get('participantId')?.touched && paymentForm.get('participantId')?.errors ? 'ng-invalid ng-dirty  ' : '')"
-        >
-          <ng-template let-selected pTemplate="selectedItem">
-            <div class="flex items-center gap-2">
-              <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
-                {{selected.name[0]}}
+            [class]="(paymentForm.get('amount')?.touched && paymentForm.get('amount')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full block mt-2'"
+            styleClass="w-full"
+
+          />
+        </div>
+
+        <div>
+          <label for="description" [class]="(paymentForm.get('description')?.touched && paymentForm.get('description')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Notes</label>
+          <input
+            id="description"
+            pInputText
+            formControlName="description"
+            [class]="(paymentForm.get('description')?.touched && paymentForm.get('description')?.errors ? 'ng-invalid ng-dirty  ' : '') + 'w-full'"
+            placeholder="Visite du colisée, goûter à la plage..."
+          />
+        </div>
+
+        <div>
+          <label for="category" [class]="(paymentForm.get('category')?.touched && paymentForm.get('category')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Catégorie</label>
+          <p-dropdown
+            id="category"
+            [options]="paymentCategories"
+            optionLabel="name"
+            [showClear]="true"
+            placeholder="Sélectionne une catégorie"
+            formControlName="category"
+            styleClass="w-full"
+            optionValue="code"
+
+            [class]="(paymentForm.get('category')?.touched && paymentForm.get('category')?.errors ? 'ng-invalid ng-dirty  ' : '')"
+          />
+        </div>
+
+        <div>
+          <label for="participantId" [class]="(paymentForm.get('participantId')?.touched && paymentForm.get('participantId')?.errors ? 'text-red-500 ' : '') + 'block mb-2 font-normal'">Personne qui a payé</label>
+          <p-dropdown
+            id="participantId"
+            [options]="participantsOptions"
+            optionLabel="name"
+            [showClear]="true"
+            placeholder="Sélectionne un participant"
+            formControlName="participantId"
+            styleClass="w-full"
+            optionValue="code"
+            [class]="(paymentForm.get('participantId')?.touched && paymentForm.get('participantId')?.errors ? 'ng-invalid ng-dirty  ' : '')"
+          >
+            <ng-template let-selected pTemplate="selectedItem">
+              <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
+                  {{selected.name[0]}}
+                </div>
+                <div>{{ selected.name }}</div>
               </div>
-              <div>{{ selected.name }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-participant pTemplate="item">
-            <div class="flex items-center gap-2">
-              <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
-                {{participant.name[0]}}
+            </ng-template>
+            <ng-template let-participant pTemplate="item">
+              <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-full bg-primary flex justify-center items-center text-white">
+                  {{participant.name[0]}}
+                </div>
+                <div>{{ participant.name }}</div>
               </div>
-              <div>{{ participant.name }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
 
 
-      <p-button styleClass="mt-12" type="submit">Enregistrer</p-button>
+        <p-button styleClass="mt-12" type="submit">Enregistrer</p-button>
 
-    </form>
+      </form>
 
 
-  </ng-template>
-</p-sidebar>
+    </ng-template>
+  </p-sidebar>
+
+}

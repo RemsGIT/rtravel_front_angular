@@ -1,21 +1,23 @@
-<p-sidebar [visible]="sidebarVisible()" position="bottom" styleClass="h-[65%] rounded-t-3xl  " (visibleChange)="onVisibilityChange($event)"   transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)">
-  <ng-template pTemplate="header">
-    <div>
-      <h3 class="text-2xl font-extrabold">
-        {{budgetEditingValue() ? "Modifier le budget" : "Créer un budget"}}
-      </h3>
-    </div>
-  </ng-template>
+@if(sidebarVisible()) {
+  <p-sidebar [visible]="sidebarVisible()" position="bottom" styleClass="h-[65%] rounded-t-3xl  " (visibleChange)="onVisibilityChange($event)"   transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)">
+    <ng-template pTemplate="header">
+      <div>
+        <h3 class="text-2xl font-extrabold">
+          {{budgetEditingValue() ? "Modifier le budget" : "Créer un budget"}}
+        </h3>
+      </div>
+    </ng-template>
 
-  <ng-template pTemplate="content">
-    <p class="text-gray-400 leading-6">En renseignant un budget, tu pourras suivre son évolution au cours de ton voyage afin de t'aider à le respecter au mieux.</p>
-    <p class="text-gray-400 leading-6 mt-4">Le budget est optionnel, tu peux tout de même enregistrer des dépenses sans.</p>
-    <div class="mt-8">
-      <label for="budget">Budget estimé</label>
-      <p-inputNumber [(ngModel)]="budgetValue" mode="currency" id="budget" inputId="budget" currency="EUR" locale="fr-FR" class="w-full block mt-2" styleClass="w-full" placeholder="650" />
-    </div>
+    <ng-template pTemplate="content">
+      <p class="text-gray-400 leading-6">En renseignant un budget, tu pourras suivre son évolution au cours de ton voyage afin de t'aider à le respecter au mieux.</p>
+      <p class="text-gray-400 leading-6 mt-4">Le budget est optionnel, tu peux tout de même enregistrer des dépenses sans.</p>
+      <div class="mt-8">
+        <label for="budget">Budget estimé</label>
+        <p-inputNumber [(ngModel)]="budgetValue" mode="currency" id="budget" inputId="budget" currency="EUR" locale="fr-FR" class="w-full block mt-2" styleClass="w-full" placeholder="650" />
+      </div>
 
-    <p-button styleClass="mt-12" (onClick)="onSubmitCreateBudget()">Enregistrer</p-button>
+      <p-button styleClass="mt-12" (onClick)="onSubmitCreateBudget()">Enregistrer</p-button>
 
-  </ng-template>
-</p-sidebar>
+    </ng-template>
+  </p-sidebar>
+}

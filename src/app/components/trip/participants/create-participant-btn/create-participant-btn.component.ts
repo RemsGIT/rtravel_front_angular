@@ -1,6 +1,6 @@
-import {Component, output} from '@angular/core';
+import {Component, output, ViewChild} from '@angular/core';
 import {ButtonModule} from "primeng/button";
-import {SidebarModule} from "primeng/sidebar";
+import {Sidebar, SidebarModule} from "primeng/sidebar";
 import {LucideAngularModule} from "lucide-angular";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {TripService} from "../../../../services/trip/trip.service";
@@ -31,7 +31,6 @@ export class CreateParticipantBtnComponent {
   protected isSubmitting: boolean = false;
 
   onCreateParticipant = output<Participant>();
-
 
   handleSubmit(newParticipant: Participant) {
     this.onCreateParticipant.emit(newParticipant)

@@ -1,27 +1,30 @@
+@if (sidebarVisible) {
 
-<p-sidebar
-  [visible]="sidebarVisible"
-  position="bottom"
-  styleClass="h-[90%] rounded-t-3xl"
-  (visibleChange)="onVisibilityChange($event)"
-  transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"
->
-  <!--transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"-->
-  <!--transitionOptions="400ms cubic-bezier(0.32, 0.72, 0, 1)"-->
-  <ng-template pTemplate="header">
-    <div>
-      <h3 class="text-2xl font-extrabold">Nouvelle activité</h3>
-      <div class="flex items-center gap-1 text-gray-500 mt-2">
-        <lucide-icon name="clock" size="16" class="h-[16px]" />
-        <span>{{dayjs(selectedDate()).locale('fr').format('dddd DD MMMM')}}</span>
+  <p-sidebar
+    [visible]="sidebarVisible"
+    position="bottom"
+    styleClass="h-[90%] rounded-t-3xl"
+    (visibleChange)="onVisibilityChange($event)"
+    transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"
+  >
+    <!--transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"-->
+    <!--transitionOptions="400ms cubic-bezier(0.32, 0.72, 0, 1)"-->
+    <ng-template pTemplate="header">
+      <div>
+        <h3 class="text-2xl font-extrabold">Nouvelle activité</h3>
+        <div class="flex items-center gap-1 text-gray-500 mt-2">
+          <lucide-icon name="clock" size="16" class="h-[16px]" />
+          <span>{{dayjs(selectedDate()).locale('fr').format('dddd DD MMMM')}}</span>
+        </div>
       </div>
-    </div>
-  </ng-template>
+    </ng-template>
 
-  <ng-template pTemplate="content">
-    <app-form-activity [selectedDate]="selectedDate()" (onSubmitSuccess)="handleSubmitSuccess()" />
-  </ng-template>
-</p-sidebar>
+    <ng-template pTemplate="content">
+      <app-form-activity [selectedDate]="selectedDate()" (onSubmitSuccess)="handleSubmitSuccess()" />
+    </ng-template>
+  </p-sidebar>
+
+}
 
 @switch (style()) {
   @case ("solid") {
