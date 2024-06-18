@@ -16,8 +16,8 @@ main.overlay-active {
   border-radius: 15px;
   overflow: hidden;
   transform: scale(0.9371980676328503) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0);
-  background-color: black;
   min-height: 100vh;
+  background-color: black;
 
   .trip_detail_cover {
     border-top-left-radius: 15px;
