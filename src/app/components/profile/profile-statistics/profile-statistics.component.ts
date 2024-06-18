@@ -3,7 +3,7 @@ import {CardModule} from "primeng/card";
 import {TripService} from "../../../services/trip/trip.service";
 import { HttpClient } from "@angular/common/http";
 import {apiEndpoint} from "../../../constants";
-import {Trip} from "../../../../models/trip.model";
+import {CountryVisitedService} from "../../../services/country-visited/country-visited.service";
 
 @Component({
   selector: 'app-profile-statistics',
@@ -16,6 +16,7 @@ import {Trip} from "../../../../models/trip.model";
 export class ProfileStatisticsComponent implements OnInit {
   httpClient = inject(HttpClient)
   tripService = inject(TripService)
+  countryVisitedService = inject(CountryVisitedService)
 
   countTrip: number = 0
   countCountry: number = 0
@@ -25,30 +26,17 @@ export class ProfileStatisticsComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.countTrip = response.trips.length + response.shared.length
-          this.countCountry = this.countUniqueCountryCodes(response)
         },
         error: e => {
           console.log(e)
         }
       })
+
+    this.countryVisitedService.getCountriesVisited()
+      .subscribe({
+        next: countries => {
+          this.countCountry = countries.length
+        }
+      })
   }
-
-   countUniqueCountryCodes = (data: any) => {
-    const uniqueCountryCodes = new Set();
-
-    data.trips.forEach((trip: Trip) => {
-      if (trip.countryCode) {
-        uniqueCountryCodes.add(trip.countryCode);
-      }
-    });
-
-    data.shared.forEach((sharedItem: Trip) => {
-      if (sharedItem.countryCode) {
-        uniqueCountryCodes.add(sharedItem.countryCode);
-      }
-    });
-
-    return uniqueCountryCodes.size;
-  };
-
 }
