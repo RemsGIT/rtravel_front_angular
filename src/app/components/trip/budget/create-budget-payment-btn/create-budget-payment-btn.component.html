@@ -1,4 +1,4 @@
-<p-sidebar [(visible)]="sidebarVisible" position="bottom" styleClass="h-[45%] rounded-t-3xl" [showCloseIcon]="false" >
+<p-sidebar [(visible)]="sidebarVisible" position="bottom" styleClass="h-[45%] rounded-t-3xl" [showCloseIcon]="false"   transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)">
   <ng-template pTemplate="content">
     <div class="flex flex-col gap-4">
       @if(!isBudgetExist()) {

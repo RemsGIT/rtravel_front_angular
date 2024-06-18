@@ -1,5 +1,13 @@
 
-<p-sidebar [visible]="sidebarVisible" position="bottom" styleClass="h-[90%] rounded-t-3xl  " (visibleChange)="onVisibilityChange($event)">
+<p-sidebar
+  [visible]="sidebarVisible"
+  position="bottom"
+  styleClass="h-[90%] rounded-t-3xl"
+  (visibleChange)="onVisibilityChange($event)"
+  transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"
+>
+  <!--transitionOptions="400ms cubic-bezier(.44, .63, 0, 1)"-->
+  <!--transitionOptions="400ms cubic-bezier(0.32, 0.72, 0, 1)"-->
   <ng-template pTemplate="header">
     <div>
       <h3 class="text-2xl font-extrabold">Nouvelle activité</h3>

@@ -2,32 +2,35 @@
   <ngx-sonner-toaster richColors position="top-right"/>
 }
 
-@if (showHeader) {
-  <div class="block lg:hidden">
-    <app-header />
-  </div>
-}
-
-
-
-<div [class]="showHeader ? 'lg:grid lg:grid-cols-[300px,1fr]' : ''">
-
-  <!-- Desktop menu -->
-  @if(showHeader) {
-    <div class="hidden lg:block">
-      <app-menu-sidebar />
+<main>
+  @if (showHeader) {
+    <div class="block lg:hidden">
+      <app-header />
     </div>
-
   }
 
-  <!-- No animation landing page -->
-  @if(router.url === '/') {
-    <router-outlet #outlet="outlet" />
-  }
-  @else {
-    <div [@routeAnimations]="getRouteAnimationData()" [class]="showHeader ? 'lg:w-[calc(100vw-300px)]' : ''">
+
+
+  <div [class]="showHeader ? 'lg:grid lg:grid-cols-[300px,1fr]' : ''">
+
+    <!-- Desktop menu -->
+    @if(showHeader) {
+      <div class="hidden lg:block">
+        <app-menu-sidebar />
+      </div>
+
+    }
+
+    <!-- No animation landing page -->
+    @if(router.url === '/') {
       <router-outlet #outlet="outlet" />
-    </div>
-  }
+    }
+    @else {
+      <div [@routeAnimations]="getRouteAnimationData()" [class]="showHeader ? 'lg:w-[calc(100vw-300px)]' : ''">
+        <router-outlet #outlet="outlet" />
+      </div>
+    }
 
-</div>
+  </div>
+
+</main>

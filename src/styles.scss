@@ -1,6 +1,6 @@
 @import "primeng/resources/themes/aura-light-green/theme.css";
 @import "primeng/resources/primeng.css";
-@import "./leaflet";
+@import './drawer-animation';
 
 @tailwind base;
 @tailwind components;
@@ -87,3 +87,4 @@ body,h1,h2,h3,h4,h5,h6 {
     min-height: -webkit-fill-available;
   }
 }
+

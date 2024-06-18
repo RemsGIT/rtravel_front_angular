@@ -1,4 +1,13 @@
-import {Component, inject, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  Inject,
+  OnDestroy,
+  PLATFORM_ID,
+  Renderer2,
+  RendererFactory2
+} from '@angular/core';
 import {ChildrenOutletContexts, NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {ButtonModule} from "primeng/button";
 import {NgxSonnerToaster} from "ngx-sonner";
@@ -25,7 +34,7 @@ import {MenuSidebarComponent} from "./components/utils/menu-sidebar/menu-sidebar
     fadeAnimation,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy, AfterViewInit {
   authService = inject(AuthService)
   tokenService = inject(TokenService)
   router = inject(Router)
@@ -34,12 +43,16 @@ export class AppComponent {
 
   showHeader: Boolean = false;
   title = 'rtravel-angular-primeng';
+  protected readonly isPlatformBrowser = isPlatformBrowser;
 
 
   routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail']
   routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail']
 
-  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object) {
+  private renderer: Renderer2 | null = null;
+  private observer: MutationObserver | null = null;
+
+  constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object,rendererFactory: RendererFactory2) {
 
     translateService.addLangs(['en', 'fr']);
     translateService.setDefaultLang('fr');
@@ -81,6 +94,22 @@ export class AppComponent {
         }
       }
     })
+
+
+    // Use to improve the sidebar bottomsheet of primeng -> simular to vaul drawer react
+    if(this.isPlatformBrowser(platformId)) {
+      this.renderer = rendererFactory.createRenderer(null, null);
+      this.observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            this.moveSidebars();
+            this.checkForOverlay();
+          }
+        });
+      });
+
+      this.observer.observe(document.body, { childList: true, subtree: true });
+    }
   }
 
   changeLang(lang: string) {
@@ -92,5 +121,38 @@ export class AppComponent {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 
-  protected readonly isPlatformBrowser = isPlatformBrowser;
+  // CSS Class for animation drawer
+  checkForOverlay() {
+    const overlayExists = !!document.querySelector('.p-component-overlay.p-sidebar-mask');
+    if (overlayExists) {
+      this.renderer?.addClass(document.body, 'overlay-active');
+      this.renderer?.addClass(document.querySelector('main'), 'overlay-active');
+      this.renderer?.removeClass(document.querySelector('main'), 'overlay-closed');
+      this.renderer?.removeClass(document.querySelector('body'), 'overlay-closed');
+
+    } else {
+        this.renderer?.addClass(document.querySelector('main'), 'overlay-closed');
+        this.renderer?.addClass(document.querySelector('body'), 'overlay-closed');
+    }
+  }
+
+  // Move all sidebar component to body tag
+  moveSidebars() {
+    const sidebars = document.querySelectorAll('p-sidebar');
+
+    sidebars.forEach((sidebar: any) => {
+      if (sidebar.parentNode.nodeName !== 'BODY') { // if not already in body tag
+        this.renderer?.appendChild(document.body, sidebar);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    this.observer?.observe(document.body, { childList: true, subtree: true });
+    this.moveSidebars();
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
+  }
 }
