@@ -87,3 +87,18 @@ body,h1,h2,h3,h4,h5,h6 {
   }
 }
 
+.features_container {
+  .p-tabview-panels, .p-tabview-nav,.p-tabview-nav-link {
+    @apply bg-[#EEFBF8] border-none;
+  }
+  .p-tabview-nav {
+    @apply md:gap-5;
+
+    a {
+      @apply tracking-wider text-xs md:text-base md:font-semibold;
+    }
+  }
+}
+
+
+

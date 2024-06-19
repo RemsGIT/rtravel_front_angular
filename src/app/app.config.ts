@@ -3,7 +3,6 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideClientHydration} from '@angular/platform-browser';
-import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
 import { HttpClient, provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
 import {authInterceptor} from "./interceptors/auth.interceptor";
 import {
@@ -38,7 +37,9 @@ import {
   List,
   Mail,
   Maximize2,
-  Minimize2
+  Minimize2,
+  GanttChart,
+  X
 
 
 } from "lucide-angular";
@@ -87,7 +88,10 @@ export const appConfig: ApplicationConfig = {
       List,
       Mail,
       Maximize2,
-      Minimize2
+      Minimize2,
+      GanttChart,
+      X
+
     }), TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

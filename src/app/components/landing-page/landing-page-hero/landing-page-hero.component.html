@@ -1,0 +1,47 @@
+<section class="relative">
+
+  <div class="hero_bg mt-24 md:mt-0"></div>
+
+  <h1 class="text-3xl md:text-5xl text-center font-semibold text-slate-600 mx-4 lg:mx-0">L'application de voyage tout-en-un pour</h1>
+
+
+  <ngx-typed-writer
+    [strings]="['Planifier votre voyage', 'Gérer toutes vos activités', 'Maîtriser votre budget et vos dépenses', 'Collaborez à plusieurs sur votre voyage']"
+    [cursorChar]="'_'"
+    [showCursor]="true"
+    [backSpeed]="30"
+    [typeSpeed]="30"
+    class="block mx-auto max-w-max text-2xl text-center md:text-5xl mt-4 text-primary font-extrabold h-[60px] md:h-[110px] lg:h-auto"
+  />
+
+  <p class="text-center mt-4 text-sm md:text-lg text-slate-600">Prenez enfin du plaisir à planifier votre voyage</p>
+
+  <p-button styleClass="block mx-auto mt-6 rounded-full py-3 hover:bg-white hover:text-primary" routerLink="/accueil">Commencer à planifier</p-button>
+
+
+  <div class="relative mt-14 md:mt-20">
+    <img
+      ngSrc="assets/images/landing-page/trip-details-screen.png"
+      width="860"
+      height="500"
+      class="mx-auto mt-10 rounded-xl shadow-[0_-7px_32px_#0000001f] w-full md:w-auto hidden md:block"
+      alt="Rtravel | Planificateur de voyage"
+    />
+
+    <video
+      poster="/assets/images/landing-page/video_img.jpg"
+      width="300"
+      height="auto"
+      autoplay
+      loop
+      oncanplay="this.play()"
+      onloadedmetadata="this.muted = true"
+      class="block mx-auto md:absolute -top-16 right-24 shadow-[0_-7px_32px_#0000001f] rounded-2xl"
+    >
+      <source src="/assets/images/landing-page/presentation.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+
+  </div>
+
+</section>
