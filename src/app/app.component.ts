@@ -42,8 +42,8 @@ export class AppComponent {
   protected readonly isPlatformBrowser = isPlatformBrowser;
 
 
-  routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail']
-  routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail']
+  routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail', '/mentions-legales', '/cgu']
+  routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail', '/mentions-legales', '/cgu']
 
   constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object) {
 

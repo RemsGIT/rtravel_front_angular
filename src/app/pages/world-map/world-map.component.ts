@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CloropethMapComponent} from "../../cloropeth-map/cloropeth-map.component";
+import {CloropethMapComponent} from "../../components/cloropeth-map/cloropeth-map.component";
 
 @Component({
   selector: 'app-world-map',

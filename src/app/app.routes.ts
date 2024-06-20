@@ -8,10 +8,15 @@ import {ListPaymentsComponent} from "./pages/list-payments/list-payments.compone
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
 import {WorldMapComponent} from "./pages/world-map/world-map.component";
+import {LegalNoticesComponent} from "./pages/legal-notices/legal-notices.component";
+import {TermsConditionsComponent} from "./pages/terms-conditions/terms-conditions.component";
 
 export const routes: Routes = [
 
   {path: '', component: LandingPageComponent, title: 'Rtravel | Planificateur de voyage'},
+  {path: 'mentions-legales', component: LegalNoticesComponent, title: 'Rtravel | Mentions légales'},
+  {path: 'cgu', component: TermsConditionsComponent, title: 'Rtravel | CGU'},
+
 
   {path: 'connexion', component: LoginComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'ConnectPage'}},
   {path: 'inscription', component: RegisterComponent, title: "Rtravel | Planificateur de voyage", data: {animation: 'RegisterPage'}},
@@ -25,5 +30,7 @@ export const routes: Routes = [
   {path: 'voyage/:id/depenses', component: ListPaymentsComponent, canActivate: [authGuard], title: 'Rtravel | Liste des dépenses de ton voyage', data: {animation: 'PaymentsPage'}},
 
   {path: 'profil', component: ProfileComponent, canActivate: [authGuard], title: 'Rtravel | Profil utilisateur' ,data: {animation: 'ProfilePage'}},
-  {path: 'map', component: WorldMapComponent, canActivate: [authGuard], title: 'Rtravel | Carte des pays visités' ,data: {animation: 'WorldMapPage'}}
+  {path: 'map', component: WorldMapComponent, canActivate: [authGuard], title: 'Rtravel | Carte des pays visités' ,data: {animation: 'WorldMapPage'}},
+
+
 ];

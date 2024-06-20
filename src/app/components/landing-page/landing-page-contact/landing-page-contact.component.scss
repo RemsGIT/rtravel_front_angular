@@ -1,0 +1,12 @@
+.form-group {
+
+  @apply space-y-3;
+
+  label {
+    @apply text-lg;
+  }
+  input, textarea {
+    @apply p-3 outline-primary rounded-xl transition resize-none border-gray-200;
+  }
+
+}

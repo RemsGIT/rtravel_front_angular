@@ -1,8 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {NgOptimizedImage} from "@angular/common";
 import {DividerModule} from "primeng/divider";
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 import {LucideAngularModule} from "lucide-angular";
 import dayjs from "dayjs";
 import {LandingPageHeroComponent} from "../../components/landing-page/landing-page-hero/landing-page-hero.component";
@@ -13,6 +13,15 @@ import {
   LandingPageRegisterComponent
 } from "../../components/landing-page/landing-page-register/landing-page-register.component";
 import {SidebarModule} from "primeng/sidebar";
+import {
+  LandingPageContactComponent
+} from "../../components/landing-page/landing-page-contact/landing-page-contact.component";
+import {
+  LandingPageHeaderComponent
+} from "../../components/landing-page/landing-page-header/landing-page-header.component";
+import {
+  LandingPageFooterComponent
+} from "../../components/landing-page/landing-page-footer/landing-page-footer.component";
 
 @Component({
   selector: 'app-landing-page',
@@ -26,21 +35,16 @@ import {SidebarModule} from "primeng/sidebar";
     LandingPageHeroComponent,
     LandingPageFeaturesComponent,
     LandingPageRegisterComponent,
-    SidebarModule
+    SidebarModule,
+    LandingPageContactComponent,
+    LandingPageHeaderComponent,
+    LandingPageFooterComponent
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent {
-  router = inject(Router)
 
   protected readonly dayjs = dayjs;
-
-  sidebarVisible: boolean = false;
-
-  async onClickFeatures() {
-    this.sidebarVisible = false
-    window.location.href = 'http://localhost:4200/#features'
-  }
 
 }

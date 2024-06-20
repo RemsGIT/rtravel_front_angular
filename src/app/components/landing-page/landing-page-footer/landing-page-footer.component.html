@@ -1,0 +1,40 @@
+<footer class="mt-4">
+  <div class="max-w-screen-lg px-4 sm:px-6 text-gray-800 grid grid-cols-2 md:grid-cols-4 mx-auto">
+    <div class="p-5">
+      <img
+        ngSrc="assets/images/logo-text.svg"
+        width="200"
+        height="100"
+        alt=""
+        class="w-[100px] h-auto"
+      />
+    </div>
+    <div class="p-5">
+      <div class="text-sm uppercase text-primary-dark font-bold">Liens utiles</div>
+      <a class="my-3 block text-black no-underline" routerLink="/connexion">Se connecter</a>
+      <a class="my-3 block text-black no-underline" routerLink="/inscription">S'inscrire</a>
+    </div>
+    <div class="p-5">
+      <div class="text-sm uppercase text-primary-dark font-bold">LÉGAL</div>
+      <a class="my-3 block text-black no-underline" routerLink="/mentions-legales">Mentions légales</a>
+      <a class="my-3 block text-black no-underline" routerLink="/cgu">Conditions</a>
+    </div>
+    <div class="p-5">
+      <div class="text-sm uppercase text-primary-dark font-bold">Contactez-nous</div>
+      <a class="my-3 block text-black no-underline" href="/#contact">Formulaire</a>
+      <a class="my-3 text-black no-underline flex items-center gap-2" href="mailto:contact@rcastro.fr">
+        {{ "contact@rcastro.fr" }}
+      </a>
+    </div>
+  </div>
+
+  <div>
+
+    <p-divider styleClass="w-[50%] mx-auto"/>
+
+    <div class="pb-5 px-3 pt-5 border-t text-gray-800 text-sm text-center">
+      <p>Développé par <a href="https://rcastro.fr" target="_blank">Rémy Castro</a></p>
+      <div class="my-3">© Copyright {{ dayjs().year() }}. Tous droits réservés.</div>
+    </div>
+  </div>
+</footer>

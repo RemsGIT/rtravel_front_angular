@@ -1,7 +1,7 @@
 import {afterNextRender, AfterRenderPhase, Component} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {toast} from "ngx-sonner";
-import {CountryVisitedService} from "../services/country-visited/country-visited.service";
+import {CountryVisitedService} from "../../services/country-visited/country-visited.service";
 
 @Component({
   selector: 'app-cloropeth-map',
@@ -18,7 +18,7 @@ export class CloropethMapComponent {
       //@ts-ignore
       const jsvectormap = await import('jsvectormap/dist/js/jsvectormap.js').then(m => m.default);
       //@ts-ignore
-      await import('../../../lib/map/world.js')
+      await import('../../../../lib/map/world.js')
 
 
       const app = this

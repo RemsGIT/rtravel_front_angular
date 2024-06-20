@@ -1,0 +1,80 @@
+<header class="sticky top-0 bg-white z-50">
+  <div class="grid grid-cols-3">
+    <div class="flex items-center p-3 ">
+      <img
+        ngSrc="assets/images/logo-no-text.svg"
+        width="80"
+        height="58"
+        alt=""
+        class="w-[40px] md:w-[80px] h-auto"
+      />
+      <p class="font-bold text-lg md:text-2xl text-primary mt-0.5 md:mt-1.5">Rtravel</p>
+
+    </div>
+    <!-- Menu desktop -->
+
+    <nav class="hidden md:flex  items-center justify-center">
+      <ul class="flex list-none gap-10 p-0">
+        <li>
+          <a href="#features" class="no-underline text-black hover:text-primary transition cursor-pointer duration-200">Fonctionnalités</a>
+        </li>
+        <li class="hover:text-primary transition cursor-pointer duration-200">
+          <a href="#contact" class="no-underline text-black hover:text-primary transition cursor-pointer duration-200">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="hidden md:flex justify-end items-center gap-4 mr-6 ">
+      <a routerLink="/accueil" class="no-underline text-black">Connexion</a>
+      <p-button styleClass="rounded-full hover:bg-white hover:text-primary py-3 font-semibold text-sm" routerLink="/inscription" >
+        Inscription gratuite
+      </p-button>
+    </div>
+
+    <div class="block md:hidden"></div>
+    <!-- Menu hidden -->
+    <div class="flex md:hidden items-center justify-end mt-0.5 mr-6">
+      <p-button styleClass="w-[40px] h-[40px] rounded-xl" (onClick)="sidebarVisible = true">
+        <lucide-icon name="gantt-chart" size="20" class="h-[20px]"/>
+      </p-button>
+    </div>
+  </div>
+
+
+</header>
+
+
+
+<!-- Mobile menu -->
+<p-sidebar [(visible)]="sidebarVisible" position="top" [showCloseIcon]="false" styleClass="h-[18rem]">
+  <div class="relative">
+    <div class="flex items-center">
+      <img
+        ngSrc="assets/images/logo-no-text.svg"
+        width="80"
+        height="58"
+        alt=""
+        class="w-[40px] md:w-[80px] h-auto"
+      />
+      <p class="font-bold text-lg md:text-2xl text-primary mt-0.5 md:mt-1.5">Rtravel</p>
+    </div>
+    <nav class="nav_mobile">
+      <ul>
+        <li><span class="no-underline text-slate-600" (click)="onClickFeatures()">Fonctionnalités</span></li>
+        <li><span class="no-underline text-slate-600" (click)="onClickContact()">Contact</span></li>
+      </ul>
+      <div class="flex justify-center items-center gap-6 mt-12">
+        <a routerLink="/accueil" class="no-underline text-black">Connexion</a>
+        <p-button styleClass="rounded-full hover:bg-white hover:text-primary py-3 font-semibold text-sm" routerLink="/inscription" >
+          Inscription gratuite
+        </p-button>
+      </div>
+    </nav>
+
+    <lucide-icon name="x" class="absolute -top-0 right-0 text-primary-dark" (click)="sidebarVisible = false"></lucide-icon>
+
+  </div>
+
+
+
+</p-sidebar>

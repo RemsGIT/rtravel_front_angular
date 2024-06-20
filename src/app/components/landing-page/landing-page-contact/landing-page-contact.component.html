@@ -1,0 +1,60 @@
+<section class="mt-12 bg-[#FCF7EB] p-6 rounded-tl-[20%] rounded-br-[20%]" id="contact">
+  <div class="space-y-3 ">
+    <p class="text-center tracking-widest text-gray-500 text-sm md:text-base">CONTACT</p>
+    <h2 class="text-center text-slate-600 text-xl md:text-3xl font-semibold mx-4 md:mx-0">Une question ?
+      Contactez-nous</h2>
+  </div>
+
+
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()" novalidate class="space-y-8 md:w-1/2 mx-auto mt-8">
+    <div class="w-full form-group">
+      <label for="name"
+             [class]="contactForm.get('name')?.touched && contactForm.get('name')?.errors ? 'text-red-500' : ''">Nom
+        complet</label>
+      <input id="name" pInputText type="text" formControlName="name" class="w-full" placeholder="John Doe"/>
+
+      @if (contactForm.get('name')?.touched && contactForm.get('name')?.errors) {
+        <span class="text-red-500 block">
+         Veuillez saisir ce champ
+        </span>
+      }
+    </div>
+
+    <div class="w-full form-group">
+      <label for="email"
+             [class]="contactForm.get('email')?.touched && contactForm.get('email')?.errors ? 'text-red-500' : ''">Adresse
+        mail</label>
+      <input id="email" pInputText type="email" formControlName="email" class="w-full"
+             placeholder="john.doe@gmail.com"/>
+
+      @if (contactForm.get('email')?.touched && contactForm.get('email')?.errors) {
+        <span class="text-red-500 block">
+         Veuillez saisir une adresse mail valide
+        </span>
+      }
+    </div>
+
+    <div class="w-full form-group">
+      <label for="body"
+             [class]="contactForm.get('body')?.touched && contactForm.get('body')?.errors ? 'text-red-500' : ''">Message</label>
+      <textarea
+        id="body"
+        type="text"
+        formControlName="body"
+        class="w-full"
+        rows="5"
+        cols="10"
+        placeholder=""></textarea>
+
+      @if (contactForm.get('body')?.touched && contactForm.get('body')?.errors) {
+        <span class="text-red-500 block">
+         Le contenu de votre message doit faire au moins 10 caractères
+        </span>
+      }
+    </div>
+
+    <div>
+      <p-button type="submit" [loading]="isSubmitting()" label="Envoyer"></p-button>
+    </div>
+  </form>
+</section>
