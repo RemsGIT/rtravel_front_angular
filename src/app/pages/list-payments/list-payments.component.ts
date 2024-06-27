@@ -157,7 +157,7 @@ export class ListPaymentsComponent implements OnInit {
   }
 
   getTotalPaymentsAmount() {
-    return this.payments.length ? this.payments.reduce((acc, item) => acc + item.amount, 0) : 0
+    return this.payments.length ? Number(this.payments.reduce((acc, item) => acc + item.amount, 0).toFixed(2)) : 0
   }
 
   groupPaymentsByDate(payments: any[]): { [key: string]: any[] } {

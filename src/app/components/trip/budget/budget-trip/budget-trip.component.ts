@@ -48,6 +48,7 @@ export class BudgetTripComponent implements OnInit{
       })
 
 
+
     this.budgetService.getAllPaymentsByTrip(this.tripService.tripSelected()?.id as number)
       .subscribe({
         next: response => {
@@ -58,6 +59,8 @@ export class BudgetTripComponent implements OnInit{
   }
 
   getTotalPaymentsAmount() {
-    return this.payments.reduce((acc, item) => acc + item.amount, 0)
+    return Number(this.payments.reduce((acc, item) => acc + item.amount, 0).toFixed(2))
   }
+
+  protected readonly Number = Number;
 }
