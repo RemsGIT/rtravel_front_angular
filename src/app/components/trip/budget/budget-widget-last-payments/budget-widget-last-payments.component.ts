@@ -42,6 +42,13 @@ export class BudgetWidgetLastPaymentsComponent implements OnInit{
         command: () => {
           this.router.navigateByUrl(`/voyage/${this.tripService.tripSelected()?.id as number}/depenses`)
         }
+      },
+      {
+        label: 'Répartition',
+        icon: 'calculator',
+        command: () => {
+          this.router.navigateByUrl(`/voyage/${this.tripService.tripSelected()?.id as number}/depenses?tab=repartition`)
+        }
       }
     ];
   }

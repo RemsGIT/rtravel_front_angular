@@ -95,6 +95,16 @@ export class ListPaymentsComponent implements OnInit {
                 this.participantsWithTotal = this.getTotalByParticipant()
 
                 this.transactionRepartition = this.calculateEqualDistribution()
+
+                // Handle default tab => with param url
+                this.route.queryParams.subscribe(params => {
+                  if(params['tab']) {
+                    switch(params['tab']) {
+                      case 'repartition': this.showRepartition = true; this.firstLoad = false; break; // enable animation
+                      case 'list': this.showRepartition = false;
+                    }
+                  }
+                });
               }
             })
         },
@@ -369,5 +379,31 @@ export class ListPaymentsComponent implements OnInit {
     });
 
     return expensesByPerson
+  }
+
+  onClickShowRepartition() {
+    this.showRepartition = true
+    const queryParams = { ...this.route.snapshot.queryParams };
+    queryParams['tab'] = 'repartition';
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
+
+    this.firstLoad = false
+  }
+
+  onClickShowList() {
+    this.showRepartition = false
+    const queryParams = { ...this.route.snapshot.queryParams };
+    queryParams['tab'] = 'list';
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
   }
 }

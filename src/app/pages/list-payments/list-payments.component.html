@@ -17,12 +17,12 @@
       <p class="text-4xl font-semibold tracking-wider">{{ getTotalPaymentsAmount() % 1 !== 0 ? (getTotalPaymentsAmount() | number:'1.2-2') :getTotalPaymentsAmount() }} €</p>
 
       @if(showRepartition) {
-        <div class="w-12 h-12 rounded-full bg-gray-100 flex justify-center items-center cursor-pointer" (click)="showRepartition = false">
+        <div class="w-12 h-12 rounded-full bg-gray-100 flex justify-center items-center cursor-pointer" (click)="onClickShowList()">
           <lucide-icon name="list" size="23" class="h-[23px]"/>
         </div>
       }
       @else {
-        <div class="w-12 h-12 rounded-full bg-gray-100 flex justify-center items-center cursor-pointer" (click)="showRepartition = true; ; firstLoad = false">
+        <div class="w-12 h-12 rounded-full bg-gray-100 flex justify-center items-center cursor-pointer" (click)="onClickShowRepartition()">
           <lucide-icon name="calculator" size="23" class="h-[23px]"/>
         </div>
       }
