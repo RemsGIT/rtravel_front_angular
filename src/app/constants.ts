@@ -1,5 +1,5 @@
-//export const apiEndpoint = "https://api.rtravel.fr" // prod
-export const apiEndpoint = "http://localhost:3333" // dev
+export const apiEndpoint = "https://api.rtravel.fr" // prod
+//export const apiEndpoint = "http://localhost:3333" // dev
 
 export const constants = {
   TOKEN_NAME: 'rtravel_tk',
