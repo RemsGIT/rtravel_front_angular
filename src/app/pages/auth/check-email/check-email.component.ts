@@ -3,7 +3,6 @@ import {InputOtpChangeEvent, InputOtpModule} from "primeng/inputotp";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
-import {LoginOauthComponent} from "../../../components/auth/login-oauth/login-oauth.component";
 import {PasswordModule} from "primeng/password";
 import {RouterLink} from "@angular/router";
 import {NgOptimizedImage} from "@angular/common";
@@ -22,7 +21,6 @@ import {InputNumberModule} from "primeng/inputnumber";
     ButtonModule,
     InputTextModule,
     InputNumberModule,
-    LoginOauthComponent,
     PasswordModule,
     ReactiveFormsModule,
     RouterLink,

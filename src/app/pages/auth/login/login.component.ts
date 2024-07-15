@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {LoginOauthComponent} from "../../../components/auth/login-oauth/login-oauth.component";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth/auth.service";
 import {Router, RouterLink} from "@angular/router";
@@ -7,17 +6,18 @@ import {toast} from "ngx-sonner";
 import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {PasswordModule} from "primeng/password";
+import {OauthButtonsComponent} from "../../../components/auth/oauth-buttons/oauth-buttons.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    LoginOauthComponent,
     ButtonModule,
     InputTextModule,
     PasswordModule,
     RouterLink,
+    OauthButtonsComponent,
   ],
   templateUrl: './login.component.html',
 })

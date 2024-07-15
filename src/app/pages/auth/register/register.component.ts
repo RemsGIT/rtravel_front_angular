@@ -4,12 +4,12 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {Router, RouterLink} from "@angular/router";
 import {ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
-import {LoginOauthComponent} from "../../../components/auth/login-oauth/login-oauth.component";
 import {PaginatorModule} from "primeng/paginator";
 import {PasswordModule} from "primeng/password";
 import {CheckboxModule} from "primeng/checkbox";
 import {toast} from "ngx-sonner";
 import {constants} from "../../../constants";
+import {OauthButtonsComponent} from "../../../components/auth/oauth-buttons/oauth-buttons.component";
 
 @Component({
   selector: 'app-register',
@@ -17,12 +17,12 @@ import {constants} from "../../../constants";
   imports: [
     ButtonModule,
     InputTextModule,
-    LoginOauthComponent,
     PaginatorModule,
     PasswordModule,
     ReactiveFormsModule,
     RouterLink,
-    CheckboxModule
+    CheckboxModule,
+    OauthButtonsComponent
   ],
   templateUrl: './register.component.html',
 })

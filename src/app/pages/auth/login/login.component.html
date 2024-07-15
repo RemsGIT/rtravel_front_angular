@@ -9,7 +9,7 @@
     </div>
 
 
-    <div class="mt-8">
+    <div class="mt-8 md:w-1/2 mx-auto">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate class="space-y-8">
         <div class="space-y-2 w-full">
           <label for="email"
@@ -49,7 +49,12 @@
           <p-button label="Se connecter" type="submit"/>
         </div>
       </form>
+
+      <app-oauth-buttons />
     </div>
+
+
+
 
     <!--
     <div class="mt-12 space-y-2">

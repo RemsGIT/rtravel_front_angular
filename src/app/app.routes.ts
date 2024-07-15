@@ -10,6 +10,7 @@ import {ProfileComponent} from "./pages/profile/profile.component";
 import {WorldMapComponent} from "./pages/world-map/world-map.component";
 import {LegalNoticesComponent} from "./pages/legal-notices/legal-notices.component";
 import {TermsConditionsComponent} from "./pages/terms-conditions/terms-conditions.component";
+import {GoogleCallbackComponent} from "./pages/auth/oauth/google-callback/google-callback.component";
 
 export const routes: Routes = [
 
@@ -31,6 +32,9 @@ export const routes: Routes = [
 
   {path: 'profil', component: ProfileComponent, canActivate: [authGuard], title: 'Rtravel | Profil utilisateur' ,data: {animation: 'ProfilePage'}},
   {path: 'map', component: WorldMapComponent, canActivate: [authGuard], title: 'Rtravel | Carte des pays visités' ,data: {animation: 'WorldMapPage'}},
+
+  // OAUTH CALLBACK
+  {path: 'oauth/google/callback/:token', component: GoogleCallbackComponent}
 
 
 ];

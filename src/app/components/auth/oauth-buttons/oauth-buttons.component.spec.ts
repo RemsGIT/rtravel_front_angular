@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginOauthComponent } from './login-oauth.component';
+import { OauthButtonsComponent } from './oauth-buttons.component';
 
-describe('LoginOauthComponent', () => {
-  let component: LoginOauthComponent;
-  let fixture: ComponentFixture<LoginOauthComponent>;
+describe('OauthButtonsComponent', () => {
+  let component: OauthButtonsComponent;
+  let fixture: ComponentFixture<OauthButtonsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginOauthComponent]
+      imports: [OauthButtonsComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(LoginOauthComponent);
+
+    fixture = TestBed.createComponent(OauthButtonsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -42,8 +42,8 @@ export class AppComponent {
   protected readonly isPlatformBrowser = isPlatformBrowser;
 
 
-  routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail', '/mentions-legales', '/cgu']
-  routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail', '/mentions-legales', '/cgu']
+  routesWithoutHeader = ['', '/connexion', '/inscription', '/verification-mail', '/mentions-legales', '/cgu', '/oauth/**']
+  routesWithoutAuth = ['', '/connexion', '/inscription', '/verification-mail', '/mentions-legales', '/cgu', '/oauth/**']
 
   constructor(private config: PrimeNGConfig, private translateService: TranslateService, private contexts: ChildrenOutletContexts, @Inject(PLATFORM_ID) protected platformId: Object) {
 
@@ -56,10 +56,10 @@ export class AppComponent {
 
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
-        this.showHeader = !this.routesWithoutHeader.includes(this.location.path())
+        this.showHeader = !this.isRouteWithoutHeader(this.location.path())
 
         if(!this.authService.currentUserSig()) {
-          if (this.routesWithoutAuth.includes(this.location.path())) return;
+          if (this.isRouteWithoutAuth(this.location.path())) return;
           if (isPlatformBrowser(this.platformId)) {
             this.http.get<IUser>(`${apiEndpoint}/auth/me`)
               .subscribe({
@@ -91,6 +91,21 @@ export class AppComponent {
 
   changeLang(lang: string) {
     this.translateService.use(lang);
+  }
+
+  isRouteWithoutHeader(route: string) {
+    return this.routesWithoutHeader.some(pattern => this.matchRoute(route, pattern));
+  }
+  isRouteWithoutAuth(route: string) {
+    return this.routesWithoutAuth.some(pattern => this.matchRoute(route, pattern));
+  }
+
+  matchRoute(route: string, pattern: string): boolean {
+    if (pattern.includes('**')) {
+      const regex = new RegExp(pattern.replace('**', '.*'));
+      return regex.test(route);
+    }
+    return route === pattern;
   }
 
   getRouteAnimationData() {
