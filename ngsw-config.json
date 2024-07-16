@@ -10,16 +10,5 @@
         "files": ["/favicon.ico", "/index.html", "/*.css", "/*.js", "/assets/images/**"]
       }
     }
-  ],
-  "dataGroups": [
-    {
-      "name": "API",
-      "urls": ["http://localhost:3333", "https://api.rtravel.fr"],
-      "cacheConfig": {
-        "strategy": "performance",
-        "maxSize": 100,
-        "maxAge": "3d"
-      }
-    }
   ]
 }
