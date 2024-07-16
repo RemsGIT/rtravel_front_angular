@@ -34,7 +34,7 @@ export const routes: Routes = [
   {path: 'map', component: WorldMapComponent, canActivate: [authGuard], title: 'Rtravel | Carte des pays visités' ,data: {animation: 'WorldMapPage'}},
 
   // OAUTH CALLBACK
-  {path: 'auth/google/callback/:token', component: GoogleCallbackComponent}
+  {path: 'oauth/google/callback/:token', component: GoogleCallbackComponent}
 
 
 ];
