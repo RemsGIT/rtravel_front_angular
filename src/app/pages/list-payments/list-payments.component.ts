@@ -66,7 +66,7 @@ export class ListPaymentsComponent implements OnInit {
   payments: Payment[] = []
 
   firstLoad = true // use for disable animation at first load
-  isLoaded = true
+  isLoaded = false
   showRepartition = false
 
   paymentToEdit: Payment | undefined
@@ -85,28 +85,20 @@ export class ListPaymentsComponent implements OnInit {
         next: (response) => {
           this.tripService.tripSelected.set(response)
 
-          this.budgetService.getAllPaymentsByTrip(Number(id))
-            .subscribe({
-              next: response => {
-                this.isLoaded = true
+          this.isLoaded = true
+          this.payments = response.payments ?? []
+          this.participantsWithTotal = this.getTotalByParticipant()
+          this.transactionRepartition = this.calculateEqualDistribution()
 
-                this.payments = response
-
-                this.participantsWithTotal = this.getTotalByParticipant()
-
-                this.transactionRepartition = this.calculateEqualDistribution()
-
-                // Handle default tab => with param url
-                this.route.queryParams.subscribe(params => {
-                  if(params['tab']) {
-                    switch(params['tab']) {
-                      case 'repartition': this.showRepartition = true; this.firstLoad = false; break; // enable animation
-                      case 'list': this.showRepartition = false;
-                    }
-                  }
-                });
+          // Handle default tab => with param url
+          this.route.queryParams.subscribe(params => {
+            if(params['tab']) {
+              switch(params['tab']) {
+                case 'repartition': this.showRepartition = true; this.firstLoad = false; break; // enable animation
+                case 'list': this.showRepartition = false;
               }
-            })
+            }
+          });
         },
       })
 

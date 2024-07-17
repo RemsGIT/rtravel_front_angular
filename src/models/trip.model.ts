@@ -1,6 +1,6 @@
 import {Participant} from "./participant.model";
 import {IUser} from "./auh.model";
-import {Payment} from "./budget.model";
+import {Budget, Payment} from "./budget.model";
 
 export interface Trip {
   id: number,
@@ -11,6 +11,7 @@ export interface Trip {
   end: Date,
   thumbnail?: string,
   cover?: string,
+  budget?: Budget,
   activities?: Activity[],
   user?: IUser,
   participants?: Participant[],

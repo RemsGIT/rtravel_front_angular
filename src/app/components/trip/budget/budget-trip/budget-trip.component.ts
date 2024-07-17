@@ -40,22 +40,10 @@ export class BudgetTripComponent implements OnInit{
   constructor(private budgetService: BudgetService, private tripService: TripService) {}
 
   ngOnInit(): void {
-    this.budgetService.getBudgetByTrip(this.tripService.tripSelected()?.id as number)
-      .subscribe({
-        next: response => {
-          this.budget = response
-        }
-      })
+    this.payments = this.tripService.tripSelected()?.payments ?? []
+    this.budget = this.tripService.tripSelected()?.budget
 
-
-
-    this.budgetService.getAllPaymentsByTrip(this.tripService.tripSelected()?.id as number)
-      .subscribe({
-        next: response => {
-          this.payments = response
-          this.isLoaded = true
-        }
-      })
+    this.isLoaded = true
   }
 
   getTotalPaymentsAmount() {
