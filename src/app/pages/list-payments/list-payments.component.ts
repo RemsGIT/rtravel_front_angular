@@ -155,8 +155,6 @@ export class ListPaymentsComponent implements OnInit {
             id = event.originalEvent?.srcElement.getAttribute('payment')
           }
 
-
-          console.log(id)
           this.confirmationService.confirm({
             key: id,
             header: "Êtes-vous sûr ?",
@@ -273,8 +271,6 @@ export class ListPaymentsComponent implements OnInit {
         total: 0
       })
     }
-
-    console.log(this.tripService.tripSelected())
 
     this.tripService.tripSelected()?.participants?.forEach(participant => {
       participantsMap.set(participant.id, {
@@ -452,7 +448,6 @@ export class ListPaymentsComponent implements OnInit {
 
   private loadMorePayments() {
     if (this.displayedPayments.length < this.payments.length) {
-      console.log('load more')
       this.currentPage++;
       const newPayments = this.payments.slice((this.currentPage - 1) * this.paymentsPerPage, this.currentPage * this.paymentsPerPage);
       this.displayedPayments = this.displayedPayments.concat(newPayments);
