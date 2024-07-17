@@ -66,7 +66,7 @@ export class ListPaymentsComponent implements OnInit {
   payments: Payment[] = []
 
   firstLoad = true // use for disable animation at first load
-  isLoaded = false
+  isLoaded = true
   showRepartition = false
 
   paymentToEdit: Payment | undefined
