@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import {Payment} from "../../../models/budget.model";
 import {BudgetService} from "../../services/budget/budget.service";
 import {TripService} from "../../services/trip/trip.service";
@@ -64,6 +64,7 @@ export class ListPaymentsComponent implements OnInit {
 
   items: MenuItem[] = []
   payments: Payment[] = []
+  displayedPayments: Payment[] = []
 
   firstLoad = true // use for disable animation at first load
   isLoaded = false
@@ -73,6 +74,10 @@ export class ListPaymentsComponent implements OnInit {
   participantsWithTotal: any[] = []
 
   transactionRepartition: Transaction[] = []
+
+  // Lazy loading
+  private paymentsPerPage = 10;
+  private currentPage = 1;
 
   constructor(private tripService: TripService, private budgetService: BudgetService, private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) {
   }
@@ -87,15 +92,22 @@ export class ListPaymentsComponent implements OnInit {
 
           this.isLoaded = true
           this.payments = response.payments ?? []
+          this.loadPayments()
           this.participantsWithTotal = this.getTotalByParticipant()
           this.transactionRepartition = this.calculateEqualDistribution()
 
+          this.checkInitialLoad()
+
           // Handle default tab => with param url
           this.route.queryParams.subscribe(params => {
-            if(params['tab']) {
-              switch(params['tab']) {
-                case 'repartition': this.showRepartition = true; this.firstLoad = false; break; // enable animation
-                case 'list': this.showRepartition = false;
+            if (params['tab']) {
+              switch (params['tab']) {
+                case 'repartition':
+                  this.showRepartition = true;
+                  this.firstLoad = false;
+                  break; // enable animation
+                case 'list':
+                  this.showRepartition = false;
               }
             }
           });
@@ -158,6 +170,7 @@ export class ListPaymentsComponent implements OnInit {
     ]
   }
 
+
   getTotalPaymentsAmount() {
     return this.payments.length ? Number(this.payments.reduce((acc, item) => acc + item.amount, 0).toFixed(2)) : 0
   }
@@ -179,15 +192,14 @@ export class ListPaymentsComponent implements OnInit {
   }
 
   getOrganizedPayments(): { date: string, payments: any[] }[] {
-    if (!this.payments.length) return []
+    if (!this.displayedPayments.length) return []
 
-    const groupedPayments = this.groupPaymentsByDate(this.payments);
+    const groupedPayments = this.groupPaymentsByDate(this.displayedPayments);
     const organizedPayments = [];
 
     for (const dateKey in groupedPayments) {
       if (groupedPayments.hasOwnProperty(dateKey)) {
         const formattedDate = dayjs(dateKey).locale('fr').format('dddd DD MMMM');
-
 
         organizedPayments.push({
           date: (dayjs(dateKey).isSame(dayjs(), 'day') ? 'Aujourd\'hui' : dayjs().diff(dayjs(dateKey), 'day') === 1 ? 'Hier' : formattedDate),
@@ -254,7 +266,7 @@ export class ListPaymentsComponent implements OnInit {
     const participantsMap = new Map<number, { id: number; name: string; total: number }>();
 
     // Add all participants with 0 payment by default
-    if(this.tripService.tripSelected()?.user) {
+    if (this.tripService.tripSelected()?.user) {
       participantsMap.set(this.tripService.tripSelected()?.user?.id as number, {
         id: this.tripService.tripSelected()?.user?.id as number,
         name: this.tripService.tripSelected()?.user?.username as string,
@@ -375,7 +387,7 @@ export class ListPaymentsComponent implements OnInit {
 
   onClickShowRepartition() {
     this.showRepartition = true
-    const queryParams = { ...this.route.snapshot.queryParams };
+    const queryParams = {...this.route.snapshot.queryParams};
     queryParams['tab'] = 'repartition';
 
     this.router.navigate([], {
@@ -389,7 +401,7 @@ export class ListPaymentsComponent implements OnInit {
 
   onClickShowList() {
     this.showRepartition = false
-    const queryParams = { ...this.route.snapshot.queryParams };
+    const queryParams = {...this.route.snapshot.queryParams};
     queryParams['tab'] = 'list';
 
     this.router.navigate([], {
@@ -397,5 +409,53 @@ export class ListPaymentsComponent implements OnInit {
       queryParams: queryParams,
       queryParamsHandling: 'merge'
     });
+  }
+
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && this.displayedPayments.length < this.payments.length) {
+      this.loadMorePayments();
+    }
+  }
+
+  private checkInitialLoad() {
+
+    // If not on mobile -> always load all the data
+    const isMobile = window.innerWidth <= 768;
+
+    if(!isMobile) {
+      this.displayedPayments = this.payments;
+      return
+    }
+
+    setTimeout(() => {
+      const initialHeight = window.innerHeight - (140 + (document.getElementById('total-amount-participants')?.clientHeight ?? 0)) // Container of the payment list -> size of the header + list participants total amount
+      const requiredHeight = this.payments.length * 36; // 36px is the height of a payment line
+
+      if (requiredHeight <= initialHeight) {
+        this.displayedPayments = this.payments; // Affichez tous les paiements
+      } else {
+        this.loadPayments(); // Chargez uniquement la première page de paiements
+      }
+    })
+
+  }
+
+
+  private loadPayments() {
+    const start = (this.currentPage - 1) * this.paymentsPerPage;
+    const end = this.currentPage * this.paymentsPerPage;
+    this.displayedPayments = this.payments.slice(start, end);
+  }
+
+
+  private loadMorePayments() {
+    if (this.displayedPayments.length < this.payments.length) {
+      console.log('load more')
+      this.currentPage++;
+      const newPayments = this.payments.slice((this.currentPage - 1) * this.paymentsPerPage, this.currentPage * this.paymentsPerPage);
+      this.displayedPayments = this.displayedPayments.concat(newPayments);
+    }
   }
 }
